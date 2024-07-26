@@ -7,8 +7,10 @@ export default async function (self) {
 	} else if (self.config.device === choices.devices[1].id) {
 		//set L6000 variables
 	}
-	variableDefinitions.push({ variableId: 'variable1', name: 'My first variable' },
+	variableDefinitions.push(
+		{ variableId: 'variable1', name: 'My first variable' },
 		{ variableId: 'variable2', name: 'My second variable' },
-		{ variableId: 'variable3', name: 'Another variable' },)
+		{ variableId: 'variable3', name: 'Another variable' }
+	)
 	self.setVariableDefinitions(variableDefinitions)
 }

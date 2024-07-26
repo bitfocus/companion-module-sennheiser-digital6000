@@ -28,6 +28,17 @@ export function getConfigFields() {
 			choices: choices.devices,
 		},
 		{
+			type: 'number',
+			id: 'interval',
+			label: 'Metering Interval',
+			width: 6,
+			default: 250,
+			min: 50,
+			max: 1000,
+			step: 50,
+			range: true,
+		},
+		{
 			type: 'checkbox',
 			id: 'verbose',
 			label: 'Verbose Logging',

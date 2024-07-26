@@ -6,12 +6,13 @@ import UpdatePresets from './presets.js'
 import UpdateVariableDefinitions from './variables.js'
 import * as config from './config.js'
 import * as digital6000 from './digital6000.js'
+import * as subscriptions from './subscriptions.js'
 import * as udp from './udp.js'
 
 class Digital6000 extends InstanceBase {
 	constructor(internal) {
 		super(internal)
-		Object.assign(this, { ...config, ...digital6000, ...udp })
+		Object.assign(this, { ...config, ...digital6000, ...subscriptions, ...udp })
 	}
 
 	async init(config) {
@@ -35,6 +36,7 @@ class Digital6000 extends InstanceBase {
 		this.updatePresets() // export presets
 		this.updateVariableDefinitions() // export variable definitions
 		this.init_udp(this.config.host, this.config.port)
+		this.setupInitialSubscriptions(this.config.device, this.config.interval)
 	}
 
 	updateActions() {
