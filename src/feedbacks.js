@@ -1,8 +1,14 @@
 const { combineRgb } = require('@companion-module/base')
+import { choices } from './consts.js'
 
 module.exports = async function (self) {
-	self.setFeedbackDefinitions({
-		ChannelState: {
+	let feedbackDefinitions = []
+	if (self.config.device === choices.devices[0].id) {
+		//set EM6000 feedbacks
+	} else if (self.config.device === choices.devices[1].id) {
+		//set L6000 feedbacks
+	}
+	feedbackDefinitions['example'] = {
 			name: 'Example Feedback',
 			type: 'boolean',
 			label: 'Channel State',
@@ -28,6 +34,6 @@ module.exports = async function (self) {
 					return false
 				}
 			},
-		},
-	})
+		}
+	self.setFeedbackDefinitions(feedbackDefinitions)
 }

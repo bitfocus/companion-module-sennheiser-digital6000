@@ -1,7 +1,8 @@
 {
-	"name": "your-module-name",
+	"name": "sennheiser-digital6000",
 	"version": "0.1.0",
-	"main": "main.js",
+	"main": "src/main.js",
+	"type": "module",
 	"scripts": {
 		"format": "prettier -w .",
 		"package": "companion-module-build"
@@ -9,13 +10,13 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/bitfocus/companion-module-your-module-name.git"
+		"url": "git+https://github.com/phillipivan/companion-module-sennheiser-digital6000.git"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.7.0"
+		"@companion-module/base": "~1.8.0"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^1.4.2"
+		"@companion-module/tools": "^1.5.1"
 	},
 	"prettier": "@companion-module/tools/.prettierrc.json"
 }
