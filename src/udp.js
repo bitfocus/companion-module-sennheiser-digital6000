@@ -36,7 +36,7 @@ export function init_udp(host, port) {
 	this.updateStatus(InstanceStatus.Connecting)
 
 	if (host && port) {
-		this.socket = new UDPHelper(host, port)
+		this.socket = new UDPHelper(host, port, { bind_port: port })
 		this.updateStatus(InstanceStatus.Ok)
 		this.socket.on('error', (err) => {
 			this.updateStatus(InstanceStatus.ConnectionFailure, err.message)
@@ -45,6 +45,9 @@ export function init_udp(host, port) {
 
 		this.socket.on('listening', () => {
 			this.updateStatus(InstanceStatus.Ok)
+			if (this.config.verbose) {
+				this.log('debug', `UDP Socket listening on port :${port}`)
+			}
 		})
 
 		this.socket.on('data', (msg) => {

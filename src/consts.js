@@ -1,4 +1,4 @@
-export const default_port = 45
+export const default_port = 6970
 
 export const query = null
 

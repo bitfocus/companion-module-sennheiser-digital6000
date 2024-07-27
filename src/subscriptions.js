@@ -6,7 +6,7 @@ export function setupInitialSubscriptions(device, interval) {
 		const sub = {
 			osc: {
 				state: {
-					susbcribe: [
+					subscribe: [
 						{
 							'#': { min: interval, max: interval, lifetime: subscriptions.lifetime, count: subscriptions.count },
 							mm: query,
