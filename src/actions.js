@@ -2,9 +2,9 @@ import { choices } from './consts.js'
 
 export default function (self) {
 	let ActionDefinitions = []
-	if (self.config.device === choices.devices[0].id) {
+	if (self.config.device === choices.devices[0].id || self.config.device === choices.devices[1].id) {
 		//set EM6000 actions
-	} else if (self.config.device === choices.devices[1].id) {
+	} else if (self.config.device === choices.devices[2].id) {
 		//set L6000 actions
 	}
 	ActionDefinitions['sample'] = {

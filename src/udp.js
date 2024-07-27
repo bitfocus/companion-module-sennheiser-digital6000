@@ -1,20 +1,22 @@
 import { InstanceStatus, UDPHelper } from '@companion-module/base'
 
-export function sendCommand(msg) {
+export async function sendCommand(msg) {
 	if (msg !== undefined && msg instanceof Object) {
+		if (msg.osc === undefined) {
+			msg.osc = {}
+		}
 		msg.osc.xid = this.id
-		if (this.udp !== undefined && !this.udp.isDestoryed) {
-			if (this.config.verbose) {
-				this.log('debug', `Sending message: ${JSON.stringify(msg)}`)
-			}
-			this.udp
+		if (this.socket !== undefined && !this.socket.isDestoryed) {
+			await this.socket
 				.send(JSON.stringify(msg))
 				.then(() => {
-					this.updateStatus(InstanceStatus.Ok)
+					if (this.config.verbose) {
+						this.log('debug', `Sent message: ${JSON.stringify(msg)}`)
+					}
 				})
 				.catch((error) => {
 					this.log('error', `Message send failed!\nMessage: ${JSON.stringify(msg)}\nError: ${JSON.stringify(error)}`)
-					this.updateStatus(InstanceStatus.UnknownError, error.code)
+					this.updateStatus(InstanceStatus.ConnectionFailure, error.code)
 				})
 		} else {
 			this.log('warn', `Not connected, tried to send: ${JSON.stringify(msg)}`)
@@ -26,30 +28,32 @@ export function sendCommand(msg) {
 }
 
 export function init_udp(host, port) {
-	if (this.udp) {
-		this.udp.destroy()
-		delete this.udp
+	if (this.socket) {
+		this.socket.destroy()
+		delete this.socket
 	}
 
 	this.updateStatus(InstanceStatus.Connecting)
 
 	if (host && port) {
-		this.udp = new UDPHelper(host, port)
+		this.socket = new UDPHelper(host, port)
 		this.updateStatus(InstanceStatus.Ok)
-		this.udp.on('error', (err) => {
+		this.socket.on('error', (err) => {
 			this.updateStatus(InstanceStatus.ConnectionFailure, err.message)
 			this.log('error', 'Network error: ' + err.message)
 		})
 
-		this.udp.on('listening', () => {
+		this.socket.on('listening', () => {
 			this.updateStatus(InstanceStatus.Ok)
 		})
 
-		this.udp.on('data', (msg) => {
-			console.log(msg.toString())
+		this.socket.on('data', (msg) => {
+			if (this.config.verbose) {
+				this.log('debug', `Recieved message: ${msg.toString()}`)
+			}
 		})
 
-		this.udp.on('status_change', (status, message) => {
+		this.socket.on('status_change', (status, message) => {
 			this.updateStatus(status, message)
 		})
 	} else {

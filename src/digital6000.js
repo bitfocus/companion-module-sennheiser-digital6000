@@ -1,4 +1,5 @@
 import { choices } from './consts.js'
+import { bank } from './bank.js'
 export function initDigital6000(device) {
 	//initalise the memory structure of the device
 	if (this.this) {
@@ -18,18 +19,18 @@ export function initDigital6000(device) {
 			rx1: {
 				audio_mute: null,
 				freq: {
-					b1: [],
-					b2: [],
-					b3: [],
-					b4: [],
-					b5: [],
-					b6: [],
-					u1: [],
-					u2: [],
-					u3: [],
-					u4: [],
-					u5: [],
-					u6: [],
+					b1: bank,
+					b2: bank,
+					b3: bank,
+					b4: bank,
+					b5: bank,
+					b6: bank,
+					u1: bank,
+					u2: bank,
+					u3: bank,
+					u4: bank,
+					u5: bank,
+					u6: bank,
 				},
 				active_bank_channel: null,
 				carrier: null,
@@ -75,18 +76,18 @@ export function initDigital6000(device) {
 			rx2: {
 				audio_mute: null,
 				freq: {
-					b1: [],
-					b2: [],
-					b3: [],
-					b4: [],
-					b5: [],
-					b6: [],
-					u1: [],
-					u2: [],
-					u3: [],
-					u4: [],
-					u5: [],
-					u6: [],
+					b1: bank,
+					b2: bank,
+					b3: bank,
+					b4: bank,
+					b5: bank,
+					b6: bank,
+					u1: bank,
+					u2: bank,
+					u3: bank,
+					u4: bank,
+					u5: bank,
+					u6: bank,
 				},
 				active_bank_channel: null,
 				carrier: null,
@@ -168,7 +169,7 @@ export function initDigital6000(device) {
 				identity: {
 					version: null,
 					vendor: null,
-					product: null,
+					product: this.config.device,
 				},
 				network: {
 					ether: {
@@ -282,7 +283,7 @@ export function initDigital6000(device) {
 				identity: {
 					version: null,
 					vendor: null,
-					product: null,
+					product: this.config.device,
 				},
 				network: {
 					ether: {

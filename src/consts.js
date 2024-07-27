@@ -5,14 +5,15 @@ export const query = null
 export const subscriptions = {
 	min: 50,
 	max: 10000,
-	lifetime: 30,
+	lifetime: 10,
 	count: 1000,
 }
 
 export const choices = {
 	devices: [
-		{ id: 'em6000', label: 'EM 6000' },
-		{ id: 'l6000', label: 'L 6000' },
+		{ id: 'EM6000', label: 'EM 6000' },
+		{ id: 'EM6000-Dante', label: 'EM 6000 Dante' },
+		{ id: 'L6000', label: 'L 6000' },
 	],
 	// EM 6000 Choices
 	banks: [

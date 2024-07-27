@@ -7,9 +7,9 @@ export function getConfigFields() {
 		{
 			type: 'textinput',
 			id: 'host',
-			label: 'IP',
+			label: 'Host',
 			width: 8,
-			regex: Regex.IP,
+			regex: Regex.HOSTNAME,
 		},
 		{
 			type: 'textinput',
@@ -34,7 +34,7 @@ export function getConfigFields() {
 			width: 6,
 			default: 250,
 			min: 50,
-			max: 1000,
+			max: 5000,
 			step: 50,
 			range: true,
 		},
