@@ -30,7 +30,7 @@ export function getConfigFields() {
 		{
 			type: 'number',
 			id: 'interval',
-			label: 'Metering Interval',
+			label: 'Metering Interval (ms)',
 			width: 6,
 			default: 250,
 			min: 50,

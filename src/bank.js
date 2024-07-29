@@ -100,3 +100,17 @@ export const bank = {
 	98: null,
 	99: null,
 }
+
+export const battery_parameter = {
+	temperature: null,
+	voltage: null,
+	capacity: null,
+	current: null,
+	energy: null,
+	operating_time: null,
+	state_of_charge: null,
+	cycle_count: null,
+	state_of_health: null,
+	time_to_full_h: null,
+	time_to_full_m: null,
+}

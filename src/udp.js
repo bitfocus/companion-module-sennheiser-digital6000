@@ -19,10 +19,10 @@ export async function sendCommand(msg) {
 					this.updateStatus(InstanceStatus.ConnectionFailure, error.code)
 				})
 		} else {
-			this.log('warn', `Not connected, tried to send: ${JSON.stringify(msg)}`)
+			this.log('warn', `No socket, tried to send: ${JSON.stringify(msg)}`)
 		}
 	} else {
-		this.log('warn', 'sendCommand: Invalid Command')
+		this.log('warn', `sendCommand: Invalid Command, expected object recieved: ${msg}`)
 	}
 	return undefined
 }
@@ -36,7 +36,7 @@ export function init_udp(host, port) {
 	this.updateStatus(InstanceStatus.Connecting)
 
 	if (host && port) {
-		this.socket = new UDPHelper(host, port, { bind_port: port })
+		this.socket = new UDPHelper(host, port) //, { bind_port: port }
 		this.updateStatus(InstanceStatus.Ok)
 		this.socket.on('error', (err) => {
 			this.updateStatus(InstanceStatus.ConnectionFailure, err.message)
@@ -44,9 +44,9 @@ export function init_udp(host, port) {
 		})
 
 		this.socket.on('listening', () => {
-			this.updateStatus(InstanceStatus.Ok)
+			this.updateStatus(InstanceStatus.Connecting, 'Listening')
 			if (this.config.verbose) {
-				this.log('debug', `UDP Socket listening on port :${port}`)
+				this.log('debug', `UDP Socket listening`)
 			}
 		})
 

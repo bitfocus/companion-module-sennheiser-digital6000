@@ -1,5 +1,5 @@
 import { choices } from './consts.js'
-import { bank } from './bank.js'
+import { bank, battery_parameter } from './bank.js'
 export function initDigital6000(device) {
 	//initalise the memory structure of the device
 	if (this.this) {
@@ -223,13 +223,13 @@ export function initDigital6000(device) {
 				subslot1: {
 					led: null,
 					identify: null,
-					accu_parameter: null,
+					accu_parameter: battery_parameter,
 					accu_detection: null,
 				},
 				subslot2: {
 					led: null,
 					identify: null,
-					accu_parameter: null,
+					accu_parameter: battery_parameter,
 					accu_detection: null,
 				},
 				type: null,
@@ -238,13 +238,13 @@ export function initDigital6000(device) {
 				subslot1: {
 					led: null,
 					identify: null,
-					accu_parameter: null,
+					accu_parameter: battery_parameter,
 					accu_detection: null,
 				},
 				subslot2: {
 					led: null,
 					identify: null,
-					accu_parameter: null,
+					accu_parameter: battery_parameter,
 					accu_detection: null,
 				},
 				type: null,
@@ -253,13 +253,13 @@ export function initDigital6000(device) {
 				subslot1: {
 					led: null,
 					identify: null,
-					accu_parameter: null,
+					accu_parameter: battery_parameter,
 					accu_detection: null,
 				},
 				subslot2: {
 					led: null,
 					identify: null,
-					accu_parameter: null,
+					accu_parameter: battery_parameter,
 					accu_detection: null,
 				},
 				type: null,
@@ -268,13 +268,13 @@ export function initDigital6000(device) {
 				subslot1: {
 					led: null,
 					identify: null,
-					accu_parameter: null,
+					accu_parameter: battery_parameter,
 					accu_detection: null,
 				},
 				subslot2: {
 					led: null,
 					identify: null,
-					accu_parameter: null,
+					accu_parameter: battery_parameter,
 					accu_detection: null,
 				},
 				type: null,

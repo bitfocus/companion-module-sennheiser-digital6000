@@ -7,6 +7,7 @@ import UpdateVariableDefinitions from './variables.js'
 import * as config from './config.js'
 import * as device from './device.js'
 import * as digital6000 from './digital6000.js'
+import * as parseResponse from './parseResponse.js'
 import * as queue from './queue.js'
 import * as subscriptions from './subscriptions.js'
 import * as udp from './udp.js'
@@ -14,7 +15,7 @@ import * as udp from './udp.js'
 class Digital6000 extends InstanceBase {
 	constructor(internal) {
 		super(internal)
-		Object.assign(this, { ...config, ...device, ...digital6000, ...queue, ...subscriptions, ...udp })
+		Object.assign(this, { ...config, ...device, ...digital6000, ...parseResponse, ...queue, ...subscriptions, ...udp })
 	}
 
 	async init(config) {
