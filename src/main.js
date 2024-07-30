@@ -4,6 +4,7 @@ import UpdateActions from './actions.js'
 import UpdateFeedbacks from './feedbacks.js'
 import UpdatePresets from './presets.js'
 import UpdateVariableDefinitions from './variables.js'
+import UpdateVariableValues from './updatevariables.js'
 import * as config from './config.js'
 import * as device from './device.js'
 import * as digital6000 from './digital6000.js'
@@ -34,6 +35,8 @@ class Digital6000 extends InstanceBase {
 
 	async configUpdated(config) {
 		this.config = config
+		this.config.host = config.bonjour_host?.split(':')[0] || config.host
+		this.config.port = config.bonjour_host?.split(':')[1] || config.port
 		await this.cancelSubscriptions(this.config.device)
 		this.updateStatus(InstanceStatus.Connecting)
 		this.initDigital6000(this.config.device)
@@ -63,6 +66,9 @@ class Digital6000 extends InstanceBase {
 
 	updateVariableDefinitions() {
 		UpdateVariableDefinitions(this)
+	}
+	updateVariableValues() {
+		UpdateVariableValues(this)
 	}
 }
 

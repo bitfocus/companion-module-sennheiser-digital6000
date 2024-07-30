@@ -8,10 +8,10 @@ export function parseResponse(msg) {
 			if (this.config.verbose) {
 				this.log('debug', `Returned message XID match`)
 			}
-		} else {
+		} else if (data.osc.xid !== undefined) {
 			this.log(
 				'warn',
-				`Message recieved with unexpected xid. Expected ${this.id} Recieved ${data.osc.xid}/nFrom ${msg.toString()}`
+				`Message recieved with unexpected xid. Expected ${this.id} Recieved ${data.osc.xid}\nFrom ${msg.toString()}`
 			)
 			return
 		}
@@ -44,36 +44,49 @@ export function parseResponse(msg) {
 		this.updateStatus(InstanceStatus.UnknownError, `Unrecognised device`)
 		return
 	}
+	this.updateVariableValues()
 }
 
 export function handleEM6000_data(data) {
 	try {
 		this.d6000.audio = { ...this.d6000.audio, ...data.audio }
+		this.updateStatus(InstanceStatus.Ok)
 	} catch {
 		/* do nothing */
 	}
 	try {
 		this.d6000.rx1 = { ...this.d6000.rx1, ...data.rx1 }
+		this.updateStatus(InstanceStatus.Ok)
 	} catch {
 		/* do nothing */
 	}
 	try {
 		this.d6000.rx2 = { ...this.d6000.rx2, ...data.rx2 }
+		this.updateStatus(InstanceStatus.Ok)
 	} catch {
 		/* do nothing */
 	}
 	try {
 		this.d6000.sys = { ...this.d6000.sys, ...data.sys }
+		this.updateStatus(InstanceStatus.Ok)
 	} catch {
 		/* do nothing */
 	}
 	try {
-		this.d6000.device = { ...this.d6000.device, ...data.device }
+		this.d6000.device.identity = { ...this.d6000.device, ...data.device }
+		this.updateStatus(InstanceStatus.Ok)
 	} catch {
 		/* do nothing */
 	}
+ 	try {
+		this.d6000.device.identity = { ...this.d6000.device.identity, ...data.device.identity }
+		this.updateStatus(InstanceStatus.Ok)
+	} catch { 
+		/* do nothing */
+ 	} 
 	try {
 		this.d6000.osc = { ...this.d6000.osc, ...data.osc }
+		this.updateStatus(InstanceStatus.Ok)
 	} catch {
 		/* do nothing */
 	}

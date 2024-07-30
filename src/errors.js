@@ -26,8 +26,37 @@ export const errors = [
 	{ id: 501, label: 'Not implemented' },
 	{ id: 503, label: 'Service unavailable' },
 ]
+
+export const warningsEM6000 = [
+	{ id: 'RFPeak', label: 'RF Peak' },
+	{ id: 'AFPeak', label: 'AF Peak' },
+	{ id: 'LowSignal', label: 'Low Signal' },
+	{ id: 'NoLink', label: 'NoLink' },
+	{ id: 'LowBattery', label: 'Low Battery' },
+	{ id: 'BadClock', label: 'Bad Clock' },
+	{ id: 'NoClock', label: 'No Clock' },
+	{ id: 'Aes256Error', label: 'AES 256 Error' },
+	{ id: 'AnTxYBNCShorted}.', label: 'Antenna BNC Shorted' },
+]
+
+export const activeStatusEM6000 = [
+	{ id: 'SyncOK', label: 'Sync OK' },
+	{ id: 'SyncFail', label: 'Sync Fail' },
+	{ id: 'Identified', label: 'Identified' },
+	{ id: 'SwUpdatePass,', label: 'Software Update Pass' },
+	{ id: 'SwUpdateFail', label: 'Software Update Fail' },
+]
+export const activeStatusSubStateEM6000 = [
+	{ id: 'SyncResultACK', label: 'Sync Result ACK' },
+	{ id: 'SyncResultAdapted', label: 'Sync Result Adapted' },
+	{ id: 'SyncResultNACK', label: 'Sync Result NACK' },
+	{ id: 'SyncResultFreqRejected', label: 'Sync Result Freq Rejected' },
+	{ id: 'SyncResultIncompatibleTx', label: 'Sync Result Incompatible Tx' },
+	{ id: 'SyncResultCancelled', label: 'Sync Result Cancelled' },
+	{ id: 'SyncResultTimeout', label: 'Sync Result Timeout' },
+]
 //L 6000 Warnings
-export const warnings = [
+export const warningsL6000 = [
 	{ id: 0, label: 'Battery too hot slot/subslot 1/1', slot: 1, subslot: 1 },
 	{ id: 1, label: 'Battery too hot slot/subslot 1/2', slot: 1, subslot: 2 },
 	{ id: 2, label: 'Battery too hot slot/subslot 2/1', slot: 2, subslot: 1 },

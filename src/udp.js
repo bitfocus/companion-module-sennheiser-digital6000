@@ -4,8 +4,8 @@ export async function sendCommand(msg) {
 	if (msg !== undefined && msg instanceof Object) {
 		if (msg.osc === undefined) {
 			msg.osc = {}
+			msg.osc.xid = this.id
 		}
-		msg.osc.xid = this.id
 		if (this.socket !== undefined && !this.socket.isDestoryed) {
 			await this.socket
 				.send(JSON.stringify(msg))
@@ -54,6 +54,7 @@ export function init_udp(host, port) {
 			if (this.config.verbose) {
 				this.log('debug', `Recieved message: ${msg.toString()}`)
 			}
+			this.parseResponse(msg)
 		})
 
 		this.socket.on('status_change', (status, message) => {

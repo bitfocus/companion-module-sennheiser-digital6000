@@ -5,7 +5,7 @@ export function initDigital6000(device) {
 	if (this.this) {
 		delete self.d6000
 	}
-	if (device === choices.devices[0].id) {
+	if (device === choices.devices[0].id || device === choices.devices[1].id) {
 		//define EM6000 object
 		this.d6000 = {
 			audio: {
@@ -32,7 +32,7 @@ export function initDigital6000(device) {
 					u5: bank,
 					u6: bank,
 				},
-				active_bank_channel: null,
+				active_bank_channel: { bank: null, channel: null },
 				carrier: null,
 				scan: {
 					config: null,
@@ -46,7 +46,7 @@ export function initDigital6000(device) {
 					display: null,
 					capsule: null,
 					cable_emulation: null,
-					battery: null,
+					battery: { percent: null, time: null },
 					autolock: null,
 				},
 				sync_settings: {
@@ -89,7 +89,7 @@ export function initDigital6000(device) {
 					u5: bank,
 					u6: bank,
 				},
-				active_bank_channel: null,
+				active_bank_channel: { bank: null, channel: null },
 				carrier: null,
 				scan: {
 					config: null,
@@ -103,7 +103,7 @@ export function initDigital6000(device) {
 					display: null,
 					capsule: null,
 					cable_emulation: null,
-					battery: null,
+					battery: { percent: null, time: null },
 					autolock: null,
 				},
 				sync_settings: {
@@ -216,7 +216,7 @@ export function initDigital6000(device) {
 				error: null,
 			},
 		}
-	} else if (device === choices.devices[1].id) {
+	} else if (device === choices.devices[2].id) {
 		//define L6000 object
 		this.d6000 = {
 			slot1: {

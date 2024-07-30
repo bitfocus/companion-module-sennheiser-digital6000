@@ -5,11 +5,27 @@ import { choices, default_port } from './consts.js'
 export function getConfigFields() {
 	return [
 		{
+			type: 'bonjour-device',
+			id: 'bonjour_host',
+			label: 'Bonjour Host',
+			width: 8,
+			regex: Regex.HOSTNAME,
+		},
+		{
 			type: 'textinput',
 			id: 'host',
 			label: 'Host',
 			width: 8,
 			regex: Regex.HOSTNAME,
+			isVisible: (options) => !options['bonjour_host'],
+		},
+		{
+			type: 'static-text',
+			id: 'host-filler',
+			width: 6,
+			label: '',
+			isVisible: (options) => !!options['bonjour_host'],
+			value: '',
 		},
 		{
 			type: 'textinput',
@@ -18,6 +34,15 @@ export function getConfigFields() {
 			width: 4,
 			regex: Regex.PORT,
 			default: default_port,
+			isVisible: (options) => !options['bonjour_host'],
+		},
+		{
+			type: 'static-text',
+			id: 'port-filler',
+			width: 4,
+			label: '',
+			isVisible: (options) => !!options['bonjour_host'],
+			value: '',
 		},
 		{
 			type: 'dropdown',
