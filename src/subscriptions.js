@@ -1,29 +1,17 @@
 import { choices, query, subscriptions } from './consts.js'
 
-const subSlotSubFields = { led: query, identify: query, accu_detection: query }
+const subSlotSubFields = { led: query, accu_detection: query }
 const SlotFields = {
 	subslot1: subSlotSubFields,
 	subslot2: subSlotSubFields,
 }
-const accuParamSubFields = {
-	temperature: query,
-	voltage: query,
-	capacity: query,
-	current: query,
-	energy: query,
-	operating_time: query,
-	state_of_charge: query,
-	cycle_count: query,
-	state_of_health: query,
-	time_to_full_h: query,
-	time_to_full_m: query,
-}
+
 const slotAccuParamFields = {
 	subslot1: {
-		accu_parameter: accuParamSubFields,
+		accu_parameter: query,
 	},
 	subslot2: {
-		accu_parameter: accuParamSubFields,
+		accu_parameter: query,
 	},
 }
 

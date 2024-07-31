@@ -242,9 +242,53 @@ export function handleL6000_data(data) {
 	}
 	if (responseKeys.includes('slot1')) {
 		this.updateStatus(InstanceStatus.Ok)
-		this.d6000.slot1.subslot1.accu_parameter = {
-			...this.d6000.slot1.subslot1.accu_parameter,
-			...data.slot1?.subslot1?.accu_parameter,
+		if (data.slot1?.subslot1?.accu_parameter !== undefined) {
+			this.d6000.slot1.subslot1.accu_parameter.temperature =
+				data.slot1?.subslot1?.accu_parameter[0] ?? this.d6000.slot1.subslot1.accu_parameter.temperature
+			this.d6000.slot1.subslot1.accu_parameter.voltage =
+				data.slot1?.subslot1?.accu_parameter[1] ?? this.d6000.slot1.subslot1.accu_parameter.voltage
+			this.d6000.slot1.subslot1.accu_parameter.capacity =
+				data.slot1?.subslot1?.accu_parameter[2] ?? this.d6000.slot1.subslot1.accu_parameter.capacity
+			this.d6000.slot1.subslot1.accu_parameter.current =
+				data.slot1?.subslot1?.accu_parameter[3] ?? this.d6000.slot1.subslot1.accu_parameter.current
+			this.d6000.slot1.subslot1.accu_parameter.energy =
+				data.slot1?.subslot1?.accu_parameter[4] ?? this.d6000.slot1.subslot1.accu_parameter.energy
+			this.d6000.slot1.subslot1.accu_parameter.operating_time =
+				data.slot1?.subslot1?.accu_parameter[5] ?? this.d6000.slot1.subslot1.accu_parameter.operating_time
+			this.d6000.slot1.subslot1.accu_parameter.state_of_charge =
+				data.slot1?.subslot1?.accu_parameter[6] ?? this.d6000.slot1.subslot1.accu_parameter.state_of_charge
+			this.d6000.slot1.subslot1.accu_parameter.cycle_count =
+				data.slot1?.subslot1?.accu_parameter[7] ?? this.d6000.slot1.subslot1.accu_parameter.cycle_count
+			this.d6000.slot1.subslot1.accu_parameter.state_of_health =
+				data.slot1?.subslot1?.accu_parameter[8] ?? this.d6000.slot1.subslot1.accu_parameter.state_of_health
+			this.d6000.slot1.subslot1.accu_parameter.time_to_full_h =
+				data.slot1?.subslot1?.accu_parameter[9] ?? this.d6000.slot1.subslot1.accu_parameter.time_to_full_h
+			this.d6000.slot1.subslot1.accu_parameter.time_to_full_m =
+				data.slot1?.subslot1?.accu_parameter[10] ?? this.d6000.slot1.subslot1.accu_parameter.time_to_full_m
+		}
+		if (data.slot1?.subslot2?.accu_parameter !== undefined) {
+			this.d6000.slot1.subslot2.accu_parameter.temperature =
+				data.slot1?.subslot2?.accu_parameter[0] ?? this.d6000.slot1.subslot2.accu_parameter.temperature
+			this.d6000.slot1.subslot2.accu_parameter.voltage =
+				data.slot1?.subslot2?.accu_parameter[1] ?? this.d6000.slot1.subslot2.accu_parameter.voltage
+			this.d6000.slot1.subslot2.accu_parameter.capacity =
+				data.slot1?.subslot2?.accu_parameter[2] ?? this.d6000.slot1.subslot2.accu_parameter.capacity
+			this.d6000.slot1.subslot2.accu_parameter.current =
+				data.slot1?.subslot2?.accu_parameter[3] ?? this.d6000.slot1.subslot2.accu_parameter.current
+			this.d6000.slot1.subslot2.accu_parameter.energy =
+				data.slot1?.subslot2?.accu_parameter[4] ?? this.d6000.slot1.subslot2.accu_parameter.energy
+			this.d6000.slot1.subslot2.accu_parameter.operating_time =
+				data.slot1?.subslot2?.accu_parameter[5] ?? this.d6000.slot1.subslot2.accu_parameter.operating_time
+			this.d6000.slot1.subslot2.accu_parameter.state_of_charge =
+				data.slot1?.subslot2?.accu_parameter[6] ?? this.d6000.slot1.subslot2.accu_parameter.state_of_charge
+			this.d6000.slot1.subslot2.accu_parameter.cycle_count =
+				data.slot1?.subslot2?.accu_parameter[7] ?? this.d6000.slot1.subslot2.accu_parameter.cycle_count
+			this.d6000.slot1.subslot2.accu_parameter.state_of_health =
+				data.slot1?.subslot2?.accu_parameter[8] ?? this.d6000.slot1.subslot2.accu_parameter.state_of_health
+			this.d6000.slot1.subslot2.accu_parameter.time_to_full_h =
+				data.slot1?.subslot2?.accu_parameter[9] ?? this.d6000.slot1.subslot2.accu_parameter.time_to_full_h
+			this.d6000.slot1.subslot2.accu_parameter.time_to_full_m =
+				data.slot1?.subslot2?.accu_parameter[10] ?? this.d6000.slot1.subslot2.accu_parameter.time_to_full_m
 		}
 		this.d6000.slot1.subslot2.accu_parameter = {
 			...this.d6000.slot1.subslot2.accu_parameter,
@@ -265,13 +309,53 @@ export function handleL6000_data(data) {
 	}
 	if (responseKeys.includes('slot2')) {
 		this.updateStatus(InstanceStatus.Ok)
-		this.d6000.slot2.subslot1.accu_parameter = {
-			...this.d6000.slot2.subslot1.accu_parameter,
-			...data.slot2?.subslot1?.accu_parameter,
+		if (data.slot1?.subslot1?.accu_parameter !== undefined) {
+			this.d6000.slot2.subslot1.accu_parameter.temperature =
+				data.slot2?.subslot1?.accu_parameter[0] ?? this.d6000.slot2.subslot1.accu_parameter.temperature
+			this.d6000.slot2.subslot1.accu_parameter.voltage =
+				data.slot2?.subslot1?.accu_parameter[1] ?? this.d6000.slot2.subslot1.accu_parameter.voltage
+			this.d6000.slot2.subslot1.accu_parameter.capacity =
+				data.slot2?.subslot1?.accu_parameter[2] ?? this.d6000.slot2.subslot1.accu_parameter.capacity
+			this.d6000.slot2.subslot1.accu_parameter.current =
+				data.slot2?.subslot1?.accu_parameter[3] ?? this.d6000.slot2.subslot1.accu_parameter.current
+			this.d6000.slot2.subslot1.accu_parameter.energy =
+				data.slot2?.subslot1?.accu_parameter[4] ?? this.d6000.slot2.subslot1.accu_parameter.energy
+			this.d6000.slot2.subslot1.accu_parameter.operating_time =
+				data.slot2?.subslot1?.accu_parameter[5] ?? this.d6000.slot2.subslot1.accu_parameter.operating_time
+			this.d6000.slot2.subslot1.accu_parameter.state_of_charge =
+				data.slot2?.subslot1?.accu_parameter[6] ?? this.d6000.slot2.subslot1.accu_parameter.state_of_charge
+			this.d6000.slot2.subslot1.accu_parameter.cycle_count =
+				data.slot2?.subslot1?.accu_parameter[7] ?? this.d6000.slot2.subslot1.accu_parameter.cycle_count
+			this.d6000.slot2.subslot1.accu_parameter.state_of_health =
+				data.slot2?.subslot1?.accu_parameter[8] ?? this.d6000.slot2.subslot1.accu_parameter.state_of_health
+			this.d6000.slot2.subslot1.accu_parameter.time_to_full_h =
+				data.slot2?.subslot1?.accu_parameter[9] ?? this.d6000.slot2.subslot1.accu_parameter.time_to_full_h
+			this.d6000.slot2.subslot1.accu_parameter.time_to_full_m =
+				data.slot2?.subslot1?.accu_parameter[10] ?? this.d6000.slot2.subslot1.accu_parameter.time_to_full_m
 		}
-		this.d6000.slot2.subslot2.accu_parameter = {
-			...this.d6000.slot2.subslot2.accu_parameter,
-			...data.slot2?.subslot2?.accu_parameter,
+		if (data.slot1?.subslot2?.accu_parameter !== undefined) {
+			this.d6000.slot2.subslot2.accu_parameter.temperature =
+				data.slot2?.subslot2?.accu_parameter[0] ?? this.d6000.slot2.subslot2.accu_parameter.temperature
+			this.d6000.slot2.subslot2.accu_parameter.voltage =
+				data.slot2?.subslot2?.accu_parameter[1] ?? this.d6000.slot2.subslot2.accu_parameter.voltage
+			this.d6000.slot2.subslot2.accu_parameter.capacity =
+				data.slot2?.subslot2?.accu_parameter[2] ?? this.d6000.slot2.subslot2.accu_parameter.capacity
+			this.d6000.slot2.subslot2.accu_parameter.current =
+				data.slot2?.subslot2?.accu_parameter[3] ?? this.d6000.slot2.subslot2.accu_parameter.current
+			this.d6000.slot2.subslot2.accu_parameter.energy =
+				data.slot2?.subslot2?.accu_parameter[4] ?? this.d6000.slot2.subslot2.accu_parameter.energy
+			this.d6000.slot2.subslot2.accu_parameter.operating_time =
+				data.slot2?.subslot2?.accu_parameter[5] ?? this.d6000.slot2.subslot2.accu_parameter.operating_time
+			this.d6000.slot2.subslot2.accu_parameter.state_of_charge =
+				data.slot2?.subslot2?.accu_parameter[6] ?? this.d6000.slot2.subslot2.accu_parameter.state_of_charge
+			this.d6000.slot2.subslot2.accu_parameter.cycle_count =
+				data.slot2?.subslot2?.accu_parameter[7] ?? this.d6000.slot2.subslot2.accu_parameter.cycle_count
+			this.d6000.slot2.subslot2.accu_parameter.state_of_health =
+				data.slot2?.subslot2?.accu_parameter[8] ?? this.d6000.slot2.subslot2.accu_parameter.state_of_health
+			this.d6000.slot2.subslot2.accu_parameter.time_to_full_h =
+				data.slot2?.subslot2?.accu_parameter[9] ?? this.d6000.slot2.subslot2.accu_parameter.time_to_full_h
+			this.d6000.slot2.subslot2.accu_parameter.time_to_full_m =
+				data.slot2?.subslot2?.accu_parameter[10] ?? this.d6000.slot2.subslot2.accu_parameter.time_to_full_m
 		}
 
 		this.d6000.slot2.subslot1.led = data.slot2?.subslot1?.led ?? this.d6000.slot2.subslot1.led
@@ -288,13 +372,53 @@ export function handleL6000_data(data) {
 	}
 	if (responseKeys.includes('slot3')) {
 		this.updateStatus(InstanceStatus.Ok)
-		this.d6000.slot3.subslot1.accu_parameter = {
-			...this.d6000.slot3.subslot1.accu_parameter,
-			...data.slot3?.subslot1?.accu_parameter,
+		if (data.slot3?.subslot1?.accu_parameter !== undefined) {
+			this.d6000.slot3.subslot1.accu_parameter.temperature =
+				data.slot3?.subslot1?.accu_parameter[0] ?? this.d6000.slot2.subslot1.accu_parameter.temperature
+			this.d6000.slot3.subslot1.accu_parameter.voltage =
+				data.slot3?.subslot1?.accu_parameter[1] ?? this.d6000.slot2.subslot1.accu_parameter.voltage
+			this.d6000.slot3.subslot1.accu_parameter.capacity =
+				data.slot3?.subslot1?.accu_parameter[2] ?? this.d6000.slot2.subslot1.accu_parameter.capacity
+			this.d6000.slot3.subslot1.accu_parameter.current =
+				data.slot3?.subslot1?.accu_parameter[3] ?? this.d6000.slot2.subslot1.accu_parameter.current
+			this.d6000.slot3.subslot1.accu_parameter.energy =
+				data.slot3?.subslot1?.accu_parameter[4] ?? this.d6000.slot2.subslot1.accu_parameter.energy
+			this.d6000.slot3.subslot1.accu_parameter.operating_time =
+				data.slot3?.subslot1?.accu_parameter[5] ?? this.d6000.slot2.subslot1.accu_parameter.operating_time
+			this.d6000.slot3.subslot1.accu_parameter.state_of_charge =
+				data.slot3?.subslot1?.accu_parameter[6] ?? this.d6000.slot2.subslot1.accu_parameter.state_of_charge
+			this.d6000.slot3.subslot1.accu_parameter.cycle_count =
+				data.slot3?.subslot1?.accu_parameter[7] ?? this.d6000.slot2.subslot1.accu_parameter.cycle_count
+			this.d6000.slot3.subslot1.accu_parameter.state_of_health =
+				data.slot3?.subslot1?.accu_parameter[8] ?? this.d6000.slot2.subslot1.accu_parameter.state_of_health
+			this.d6000.slot3.subslot1.accu_parameter.time_to_full_h =
+				data.slot3?.subslot1?.accu_parameter[9] ?? this.d6000.slot2.subslot1.accu_parameter.time_to_full_h
+			this.d6000.slot3.subslot1.accu_parameter.time_to_full_m =
+				data.slot3?.subslot1?.accu_parameter[10] ?? this.d6000.slot2.subslot1.accu_parameter.time_to_full_m
 		}
-		this.d6000.slot3.subslot2.accu_parameter = {
-			...this.d6000.slot3.subslot2.accu_parameter,
-			...data.slot3?.subslot2.accu_parameter,
+		if (data.slot3?.subslot2?.accu_parameter !== undefined) {
+			this.d6000.slot3.subslot2.accu_parameter.temperature =
+				data.slot3?.subslot2?.accu_parameter[0] ?? this.d6000.slot3.subslot2.accu_parameter.temperature
+			this.d6000.slot3.subslot2.accu_parameter.voltage =
+				data.slot3?.subslot2?.accu_parameter[1] ?? this.d6000.slot3.subslot2.accu_parameter.voltage
+			this.d6000.slot3.subslot2.accu_parameter.capacity =
+				data.slot3?.subslot2?.accu_parameter[2] ?? this.d6000.slot3.subslot2.accu_parameter.capacity
+			this.d6000.slot3.subslot2.accu_parameter.current =
+				data.slot3?.subslot2?.accu_parameter[3] ?? this.d6000.slot3.subslot2.accu_parameter.current
+			this.d6000.slot3.subslot2.accu_parameter.energy =
+				data.slot3?.subslot2?.accu_parameter[4] ?? this.d6000.slot3.subslot2.accu_parameter.energy
+			this.d6000.slot3.subslot2.accu_parameter.operating_time =
+				data.slot3?.subslot2?.accu_parameter[5] ?? this.d6000.slot3.subslot2.accu_parameter.operating_time
+			this.d6000.slot3.subslot2.accu_parameter.state_of_charge =
+				data.slot3?.subslot2?.accu_parameter[6] ?? this.d6000.slot3.subslot2.accu_parameter.state_of_charge
+			this.d6000.slot3.subslot2.accu_parameter.cycle_count =
+				data.slot3?.subslot2?.accu_parameter[7] ?? this.d6000.slot3.subslot2.accu_parameter.cycle_count
+			this.d6000.slot3.subslot2.accu_parameter.state_of_health =
+				data.slot3?.subslot2?.accu_parameter[8] ?? this.d6000.slot3.subslot2.accu_parameter.state_of_health
+			this.d6000.slot3.subslot2.accu_parameter.time_to_full_h =
+				data.slot3?.subslot2?.accu_parameter[9] ?? this.d6000.slot3.subslot2.accu_parameter.time_to_full_h
+			this.d6000.slot3.subslot2.accu_parameter.time_to_full_m =
+				data.slot3?.subslot2?.accu_parameter[10] ?? this.d6000.slot3.subslot2.accu_parameter.time_to_full_m
 		}
 
 		this.d6000.slot3.subslot1.led = data.slot3?.subslot1?.led ?? this.d6000.slot3.subslot1.led
@@ -311,13 +435,53 @@ export function handleL6000_data(data) {
 	}
 	if (responseKeys.includes('slot4')) {
 		this.updateStatus(InstanceStatus.Ok)
-		this.d6000.slot4.subslot1.accu_parameter = {
-			...this.d6000.slot4.subslot1.accu_parameter,
-			...data.slot4?.subslot1?.accu_parameter,
+		if (data.slot4?.subslot1?.accu_parameter !== undefined) {
+			this.d6000.slot4.subslot1.accu_parameter.temperature =
+				data.slot4?.subslot1?.accu_parameter[0] ?? this.d6000.slot4.subslot1.accu_parameter.temperature
+			this.d6000.slot4.subslot1.accu_parameter.voltage =
+				data.slot4?.subslot1?.accu_parameter[1] ?? this.d6000.slot4.subslot1.accu_parameter.voltage
+			this.d6000.slot4.subslot1.accu_parameter.capacity =
+				data.slot4?.subslot1?.accu_parameter[2] ?? this.d6000.slot4.subslot1.accu_parameter.capacity
+			this.d6000.slot4.subslot1.accu_parameter.current =
+				data.slot4?.subslot1?.accu_parameter[3] ?? this.d6000.slot4.subslot1.accu_parameter.current
+			this.d6000.slot4.subslot1.accu_parameter.energy =
+				data.slot4?.subslot1?.accu_parameter[4] ?? this.d6000.slot4.subslot1.accu_parameter.energy
+			this.d6000.slot4.subslot1.accu_parameter.operating_time =
+				data.slot4?.subslot1?.accu_parameter[5] ?? this.d6000.slot4.subslot1.accu_parameter.operating_time
+			this.d6000.slot4.subslot1.accu_parameter.state_of_charge =
+				data.slot4?.subslot1?.accu_parameter[6] ?? this.d6000.slot4.subslot1.accu_parameter.state_of_charge
+			this.d6000.slot4.subslot1.accu_parameter.cycle_count =
+				data.slot4?.subslot1?.accu_parameter[7] ?? this.d6000.slot4.subslot1.accu_parameter.cycle_count
+			this.d6000.slot4.subslot1.accu_parameter.state_of_health =
+				data.slot4?.subslot1?.accu_parameter[8] ?? this.d6000.slot4.subslot1.accu_parameter.state_of_health
+			this.d6000.slot4.subslot1.accu_parameter.time_to_full_h =
+				data.slot4?.subslot1?.accu_parameter[9] ?? this.d6000.slot4.subslot1.accu_parameter.time_to_full_h
+			this.d6000.slot4.subslot1.accu_parameter.time_to_full_m =
+				data.slot4?.subslot1?.accu_parameter[10] ?? this.d6000.slot4.subslot1.accu_parameter.time_to_full_m
 		}
-		this.d6000.slot4.subslot2.accu_parameter = {
-			...this.d6000.slot4.subslot2.accu_parameter,
-			...data.slot4?.subslot2?.accu_parameter,
+		if (data.slot4?.subslot2?.accu_parameter !== undefined) {
+			this.d6000.slot4.subslot2.accu_parameter.temperature =
+				data.slot4?.subslot2?.accu_parameter[0] ?? this.d6000.slot4.subslot2.accu_parameter.temperature
+			this.d6000.slot4.subslot2.accu_parameter.voltage =
+				data.slot4?.subslot2?.accu_parameter[1] ?? this.d6000.slot4.subslot2.accu_parameter.voltage
+			this.d6000.slot4.subslot2.accu_parameter.capacity =
+				data.slot4?.subslot2?.accu_parameter[2] ?? this.d6000.slot4.subslot2.accu_parameter.capacity
+			this.d6000.slot4.subslot2.accu_parameter.current =
+				data.slot4?.subslot2?.accu_parameter[3] ?? this.d6000.slot4.subslot2.accu_parameter.current
+			this.d6000.slot4.subslot2.accu_parameter.energy =
+				data.slot4?.subslot2?.accu_parameter[4] ?? this.d6000.slot4.subslot2.accu_parameter.energy
+			this.d6000.slot4.subslot2.accu_parameter.operating_time =
+				data.slot4?.subslot2?.accu_parameter[5] ?? this.d6000.slot4.subslot2.accu_parameter.operating_time
+			this.d6000.slot4.subslot2.accu_parameter.state_of_charge =
+				data.slot4?.subslot2?.accu_parameter[6] ?? this.d6000.slot4.subslot2.accu_parameter.state_of_charge
+			this.d6000.slot4.subslot2.accu_parameter.cycle_count =
+				data.slot4?.subslot2?.accu_parameter[7] ?? this.d6000.slot4.subslot2.accu_parameter.cycle_count
+			this.d6000.slot4.subslot2.accu_parameter.state_of_health =
+				data.slot4?.subslot2?.accu_parameter[8] ?? this.d6000.slot4.subslot2.accu_parameter.state_of_health
+			this.d6000.slot4.subslot2.accu_parameter.time_to_full_h =
+				data.slot4?.subslot2?.accu_parameter[9] ?? this.d6000.slot4.subslot2.accu_parameter.time_to_full_h
+			this.d6000.slot4.subslot2.accu_parameter.time_to_full_m =
+				data.slot4?.subslot2?.accu_parameter[10] ?? this.d6000.slot4.subslot2.accu_parameter.time_to_full_m
 		}
 
 		this.d6000.slot4.subslot1.led = data.slot4?.subslot1?.led ?? this.d6000.slot4.subslot1.led
