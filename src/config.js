@@ -59,7 +59,7 @@ export function getConfigFields() {
 			width: 6,
 			default: 250,
 			min: 50,
-			max: 5000,
+			max: 10000,
 			step: 50,
 			range: true,
 		},
