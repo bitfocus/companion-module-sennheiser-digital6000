@@ -3,8 +3,7 @@ import { InstanceStatus, UDPHelper } from '@companion-module/base'
 export async function sendCommand(msg) {
 	if (msg !== undefined && msg instanceof Object) {
 		if (msg.osc === undefined) {
-			msg.osc = {}
-			msg.osc.xid = this.id
+			msg.osc = { xid: this.id }
 		}
 		if (this.socket !== undefined && !this.socket.isDestoryed) {
 			await this.socket
