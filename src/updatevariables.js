@@ -4,136 +4,51 @@ export default async function (self) {
 	let variableValues = []
 	if (self.config.device === choices.devices[0].id || self.config.device === choices.devices[1].id) {
 		//set EM6000 variables
-		variableValues['out1_level'] = self.d6000.audio.out1.level_db
-		variableValues['out2_level'] = self.d6000.audio.out2.level_db
-		variableValues['rx1_active_bank'] = self.d6000.rx1.active_bank_channel.bank
-		variableValues['rx2_active_bank'] = self.d6000.rx2.active_bank_channel.bank
-		variableValues['rx1_active_channel'] = self.d6000.rx1.active_bank_channel.channel
-		variableValues['rx2_active_channel'] = self.d6000.rx2.active_bank_channel.channel
-		variableValues['rx1_carrier'] = self.d6000.rx1.carrier
-		variableValues['rx2_carrier'] = self.d6000.rx2.carrier
-		variableValues['rx1_name'] = self.d6000.rx1.name
-		variableValues['rx2_name'] = self.d6000.rx2.name
-		variableValues['skx1_name'] = self.d6000.rx1.skx.name
-		variableValues['skx2_name'] = self.d6000.rx2.skx.name
-		variableValues['skx1_lowcut'] = self.d6000.rx1.skx.lowcut
-		variableValues['skx2_lowcut'] = self.d6000.rx2.skx.lowcut
-		variableValues['skx1_gain'] = self.d6000.rx1.skx.gain
-		variableValues['skx2_gain'] = self.d6000.rx2.skx.gain
-		variableValues['skx1_capsule'] = self.d6000.rx1.skx.capsule
-		variableValues['skx2_capsule'] = self.d6000.rx2.skx.capsule
-		variableValues['skx1_battery_percent'] = self.d6000.rx1.skx.battery.percent
-		variableValues['skx2_battery_percent'] = self.d6000.rx2.skx.battery.percent
-		variableValues['skx1_battery_time'] = self.d6000.rx1.skx.battery.time
-		variableValues['skx2_battery_time'] = self.d6000.rx2.skx.battery.time
-		variableValues['rx1_rf1'] = self.d6000.mm.ch1.RF1
-		variableValues['rx1_rf2'] = self.d6000.mm.ch1.RF2
-		variableValues['rx1_lqi'] = self.d6000.mm.ch1.LQI
-		variableValues['rx1_af'] = self.d6000.mm.ch1.AF
-		variableValues['rx2_rf1'] = self.d6000.mm.ch2.RF1
-		variableValues['rx2_rf2'] = self.d6000.mm.ch2.RF2
-		variableValues['rx2_lqi'] = self.d6000.mm.ch2.LQI
-		variableValues['rx2_af'] = self.d6000.mm.ch2.AF
+		for (let i = 1; i <= 2; i++) {
+			variableValues[`out${i}_level`] = self.d6000.audio[`out${i}`].level_db
+			variableValues[`rx${i}_active_bank`] = self.d6000[`rx${i}`].active_bank_channel.bank
+			variableValues[`rx${i}_active_channel`] = self.d6000[`rx${i}`].active_bank_channel.channel
+			variableValues[`rx${i}_carrier`] = self.d6000[`rx${i}`].carrier
+			variableValues[`rx${i}_name`] = self.d6000[`rx${i}`].name
+			variableValues[`rx${i}_rf1`] = self.d6000.mm[`ch${i}`].RF1
+			variableValues[`rx${i}_rf2`] = self.d6000.mm[`ch${i}`].RF2
+			variableValues[`rx${i}_lqi`] = self.d6000.mm[`ch${i}`].LQI
+			variableValues[`rx${i}_af`] = self.d6000.mm[`ch${i}`].AF
+			variableValues[`skx${i}_name`] = self.d6000[`rx${i}`].skx.name
+			variableValues[`skx${i}_lowcut`] = self.d6000[`rx${i}`].skx.lowcut
+			variableValues[`skx${i}_gain`] = self.d6000[`rx${i}`].skx.gain
+			variableValues[`skx${i}_capsule`] = self.d6000[`rx${i}`].skx.capsule
+			variableValues[`skx${i}_battery_percent`] = self.d6000[`rx${i}`].skx.battery.percent
+			variableValues[`skx${i}_battery_time`] = self.d6000[`rx${i}`].skx.battery.time
+		}
 		variableValues['device_version'] = self.d6000.device.identity.version
 		variableValues['device_name'] = self.d6000.device.name
 	} else if (self.config.device === choices.devices[2].id) {
 		//set L6000 variables
-		variableValues['slot1_1_led'] = self.d6000.slot1.subslot1.led
-		variableValues['slot1_1_battery_temp'] = self.d6000.slot1.subslot1.accu_parameter.temperature
-		variableValues['slot1_1_battery_voltage'] = self.d6000.slot1.subslot1.accu_parameter.voltage
-		variableValues['slot1_1_battery_capacity'] = self.d6000.slot1.subslot1.accu_parameter.capacity
-		variableValues['slot1_1_battery_current'] = self.d6000.slot1.subslot1.accu_parameter.current
-		variableValues['slot1_1_battery_energy'] = self.d6000.slot1.subslot1.accu_parameter.energy
-		variableValues['slot1_1_battery_operating_time_h'] = self.d6000.slot1.subslot1.accu_parameter.operating_time
-		variableValues['slot1_1_battery_operating_time_min'] = self.d6000.slot1.subslot1.accu_parameter.state_of_charge
-		variableValues['slot1_1_battery_cycle_count'] = self.d6000.slot1.subslot1.accu_parameter.cycle_count
-		variableValues['slot1_1_battery_state_of_health'] = self.d6000.slot1.subslot1.accu_parameter.state_of_health
-		variableValues['slot1_1_battery_time_to_full_h'] = self.d6000.slot1.subslot1.accu_parameter.time_to_full_h
-		variableValues['slot1_1_battery_time_to_full_min'] = self.d6000.slot1.subslot1.accu_parameter.time_to_full_m
-		variableValues['slot1_2_led'] = self.d6000.slot1.subslot2.led
-		variableValues['slot1_2_battery_temp'] = self.d6000.slot1.subslot2.accu_parameter.temperature
-		variableValues['slot1_2_battery_voltage'] = self.d6000.slot1.subslot2.accu_parameter.voltage
-		variableValues['slot1_2_battery_capacity'] = self.d6000.slot1.subslot2.accu_parameter.capacity
-		variableValues['slot1_2_battery_current'] = self.d6000.slot1.subslot2.accu_parameter.current
-		variableValues['slot1_2_battery_energy'] = self.d6000.slot1.subslot2.accu_parameter.energy
-		variableValues['slot1_2_battery_operating_time_h'] = self.d6000.slot2.subslot1.accu_parameter.operating_time
-		variableValues['slot1_2_battery_operating_time_min'] = self.d6000.slot2.subslot1.accu_parameter.state_of_charge
-		variableValues['slot1_2_battery_cycle_count'] = self.d6000.slot1.subslot2.accu_parameter.cycle_count
-		variableValues['slot1_2_battery_state_of_health'] = self.d6000.slot1.subslot2.accu_parameter.state_of_health
-		variableValues['slot1_2_battery_time_to_full_h'] = self.d6000.slot1.subslot2.accu_parameter.time_to_full_h
-		variableValues['slot1_2_battery_time_to_full_min'] = self.d6000.slot1.subslot2.accu_parameter.time_to_full_m
-		variableValues['slot2_1_led'] = self.d6000.slot2.subslot1.led
-		variableValues['slot2_1_battery_temp'] = self.d6000.slot2.subslot1.accu_parameter.temperature
-		variableValues['slot2_1_battery_voltage'] = self.d6000.slot2.subslot1.accu_parameter.voltage
-		variableValues['slot2_1_battery_capacity'] = self.d6000.slot2.subslot1.accu_parameter.capacity
-		variableValues['slot2_1_battery_current'] = self.d6000.slot2.subslot1.accu_parameter.current
-		variableValues['slot2_1_battery_energy'] = self.d6000.slot2.subslot1.accu_parameter.energy
-		variableValues['slot2_1_battery_operating_time_h'] = self.d6000.slot2.subslot1.accu_parameter.operating_time
-		variableValues['slot2_1_battery_operating_time_min'] = self.d6000.slot2.subslot1.accu_parameter.state_of_charge
-		variableValues['slot2_1_battery_cycle_count'] = self.d6000.slot2.subslot1.accu_parameter.cycle_count
-		variableValues['slot2_1_battery_state_of_health'] = self.d6000.slot2.subslot1.accu_parameter.state_of_health
-		variableValues['slot2_1_battery_time_to_full_h'] = self.d6000.slot2.subslot1.accu_parameter.time_to_full_h
-		variableValues['slot2_1_battery_time_to_full_min'] = self.d6000.slot2.subslot1.accu_parameter.time_to_full_m
-		variableValues['slot2_2_led'] = self.d6000.slot2.subslot2.led
-		variableValues['slot2_2_battery_temp'] = self.d6000.slot2.subslot2.accu_parameter.temperature
-		variableValues['slot2_2_battery_voltage'] = self.d6000.slot2.subslot2.accu_parameter.voltage
-		variableValues['slot2_2_battery_capacity'] = self.d6000.slot2.subslot2.accu_parameter.capacity
-		variableValues['slot2_2_battery_current'] = self.d6000.slot2.subslot2.accu_parameter.current
-		variableValues['slot2_2_battery_energy'] = self.d6000.slot2.subslot2.accu_parameter.energy
-		variableValues['slot2_2_battery_operating_time_h'] = self.d6000.slot2.subslot1.accu_parameter.operating_time
-		variableValues['slot2_2_battery_operating_time_min'] = self.d6000.slot2.subslot1.accu_parameter.state_of_charge
-		variableValues['slot2_2_battery_cycle_count'] = self.d6000.slot2.subslot2.accu_parameter.cycle_count
-		variableValues['slot2_2_battery_state_of_health'] = self.d6000.slot2.subslot2.accu_parameter.state_of_health
-		variableValues['slot2_2_battery_time_to_full_h'] = self.d6000.slot2.subslot2.accu_parameter.time_to_full_h
-		variableValues['slot2_2_battery_time_to_full_min'] = self.d6000.slot2.subslot2.accu_parameter.time_to_full_m
-		variableValues['slot3_1_led'] = self.d6000.slot3.subslot1.led
-		variableValues['slot3_1_battery_temp'] = self.d6000.slot3.subslot1.accu_parameter.temperature
-		variableValues['slot3_1_battery_voltage'] = self.d6000.slot3.subslot1.accu_parameter.voltage
-		variableValues['slot3_1_battery_capacity'] = self.d6000.slot3.subslot1.accu_parameter.capacity
-		variableValues['slot3_1_battery_current'] = self.d6000.slot3.subslot1.accu_parameter.current
-		variableValues['slot3_1_battery_energy'] = self.d6000.slot3.subslot1.accu_parameter.energy
-		variableValues['slot3_1_battery_operating_time_h'] = self.d6000.slot3.subslot1.accu_parameter.operating_time
-		variableValues['slot3_1_battery_operating_time_min'] = self.d6000.slot3.subslot1.accu_parameter.state_of_charge
-		variableValues['slot3_1_battery_cycle_count'] = self.d6000.slot3.subslot1.accu_parameter.cycle_count
-		variableValues['slot3_1_battery_state_of_health'] = self.d6000.slot3.subslot1.accu_parameter.state_of_health
-		variableValues['slot3_1_battery_time_to_full_h'] = self.d6000.slot3.subslot1.accu_parameter.time_to_full_h
-		variableValues['slot3_1_battery_time_to_full_min'] = self.d6000.slot3.subslot1.accu_parameter.time_to_full_m
-		variableValues['slot3_2_led'] = self.d6000.slot3.subslot2.led
-		variableValues['slot3_2_battery_temp'] = self.d6000.slot3.subslot2.accu_parameter.temperature
-		variableValues['slot3_2_battery_voltage'] = self.d6000.slot3.subslot2.accu_parameter.voltage
-		variableValues['slot3_2_battery_capacity'] = self.d6000.slot3.subslot2.accu_parameter.capacity
-		variableValues['slot3_2_battery_current'] = self.d6000.slot3.subslot2.accu_parameter.current
-		variableValues['slot3_2_battery_energy'] = self.d6000.slot3.subslot2.accu_parameter.energy
-		variableValues['slot3_2_battery_operating_time_h'] = self.d6000.slot3.subslot1.accu_parameter.operating_time
-		variableValues['slot3_2_battery_operating_time_min'] = self.d6000.slot3.subslot1.accu_parameter.state_of_charge
-		variableValues['slot3_2_battery_cycle_count'] = self.d6000.slot3.subslot2.accu_parameter.cycle_count
-		variableValues['slot3_2_battery_state_of_health'] = self.d6000.slot3.subslot2.accu_parameter.state_of_health
-		variableValues['slot3_2_battery_time_to_full_h'] = self.d6000.slot3.subslot2.accu_parameter.time_to_full_h
-		variableValues['slot3_2_battery_time_to_full_min'] = self.d6000.slot3.subslot2.accu_parameter.time_to_full_m
-		variableValues['slot4_1_led'] = self.d6000.slot4.subslot1.led
-		variableValues['slot4_1_battery_temp'] = self.d6000.slot4.subslot1.accu_parameter.temperature
-		variableValues['slot4_1_battery_voltage'] = self.d6000.slot4.subslot1.accu_parameter.voltage
-		variableValues['slot4_1_battery_capacity'] = self.d6000.slot4.subslot1.accu_parameter.capacity
-		variableValues['slot4_1_battery_current'] = self.d6000.slot4.subslot1.accu_parameter.current
-		variableValues['slot4_1_battery_energy'] = self.d6000.slot4.subslot1.accu_parameter.energy
-		variableValues['slot4_1_battery_operating_time_h'] = self.d6000.slot4.subslot1.accu_parameter.operating_time
-		variableValues['slot4_1_battery_operating_time_min'] = self.d6000.slot4.subslot1.accu_parameter.state_of_charge
-		variableValues['slot4_1_battery_cycle_count'] = self.d6000.slot4.subslot1.accu_parameter.cycle_count
-		variableValues['slot4_1_battery_state_of_health'] = self.d6000.slot4.subslot1.accu_parameter.state_of_health
-		variableValues['slot4_1_battery_time_to_full_h'] = self.d6000.slot4.subslot1.accu_parameter.time_to_full_h
-		variableValues['slot4_1_battery_time_to_full_min'] = self.d6000.slot4.subslot1.accu_parameter.time_to_full_m
-		variableValues['slot4_2_led'] = self.d6000.slot4.subslot2.led
-		variableValues['slot4_2_battery_temp'] = self.d6000.slot4.subslot2.accu_parameter.temperature
-		variableValues['slot4_2_battery_voltage'] = self.d6000.slot4.subslot2.accu_parameter.voltage
-		variableValues['slot4_2_battery_capacity'] = self.d6000.slot4.subslot2.accu_parameter.capacity
-		variableValues['slot4_2_battery_current'] = self.d6000.slot4.subslot2.accu_parameter.current
-		variableValues['slot4_2_battery_energy'] = self.d6000.slot4.subslot2.accu_parameter.energy
-		variableValues['slot4_2_battery_operating_time_h'] = self.d6000.slot4.subslot1.accu_parameter.operating_time
-		variableValues['slot4_2_battery_operating_time_min'] = self.d6000.slot4.subslot1.accu_parameter.state_of_charge
-		variableValues['slot4_2_battery_cycle_count'] = self.d6000.slot4.subslot2.accu_parameter.cycle_count
-		variableValues['slot4_2_battery_state_of_health'] = self.d6000.slot4.subslot2.accu_parameter.state_of_health
-		variableValues['slot4_2_battery_time_to_full_h'] = self.d6000.slot4.subslot2.accu_parameter.time_to_full_h
-		variableValues['slot4_2_battery_time_to_full_min'] = self.d6000.slot4.subslot2.accu_parameter.time_to_full_m
+		for (let i = 1; i <= 4; i++) {
+			for (let j = 1; j <= 2; j++) {
+				variableValues[`slot${i}_${j}_led`] = self.d6000[`slot${i}`][`subslot${j}`].led
+				variableValues[`slot${i}_${j}_battery_temp`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.temperature
+				variableValues[`slot${i}_${j}_battery_voltage`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.voltage
+				variableValues[`slot${i}_${j}_battery_capacity`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.capacity
+				variableValues[`slot${i}_${j}_battery_current`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.current
+				variableValues[`slot${i}_${j}_battery_energy`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.energy
+				variableValues[`slot${i}_${j}_battery_operating_time_h`] =
+					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_h
+				variableValues[`slot${i}_${j}_battery_operating_time_min`] =
+					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_m
+				variableValues[`slot${i}_${j}_battery_state_of_charge`] =
+					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_charge
+				variableValues[`slot${i}_${j}_battery_cycle_count`] =
+					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.cycle_count
+				variableValues[`slot${i}_${j}_battery_state_of_health`] =
+					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_health
+				variableValues[`slot${i}_${j}_battery_time_to_full_h`] =
+					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_h
+				variableValues[`slot${i}_${j}_battery_time_to_full_min`] =
+					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_m
+			}
+		}
 		variableValues['device_version'] = self.d6000.device.identity.version
 		variableValues['device_name'] = self.d6000.device.name
 	}
