@@ -32,12 +32,8 @@ export function init_udp(host, port) {
 		this.socket.destroy()
 		delete this.socket
 	}
-
-	this.updateStatus(InstanceStatus.Connecting)
-
 	if (host && port) {
-		this.socket = new UDPHelper(host, port) //, { bind_port: port }
-		this.updateStatus(InstanceStatus.Ok)
+		this.socket = new UDPHelper(host, port)
 		this.socket.on('error', (err) => {
 			this.updateStatus(InstanceStatus.ConnectionFailure, err.message)
 			this.log('error', 'Network error: ' + err.message)
