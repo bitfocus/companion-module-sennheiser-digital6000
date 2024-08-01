@@ -178,6 +178,7 @@ export function handleL6000_data(data) {
 					this.updateStatus(InstanceStatus.UnknownWarning, warning.label)
 				}
 			}
+			this.checkFeedbacks('slotWarning', 'fanWarning', 'deviceHot')
 		}
 	}
 	if (responseKeys.includes('osc')) {

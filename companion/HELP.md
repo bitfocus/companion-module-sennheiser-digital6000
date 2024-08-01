@@ -16,6 +16,14 @@ None
 
 #### L 6000
 
+- **Advanced Feedbacks**
+
+Battery Status
+
+- **Boolean Feedbacks**
+
+Device Hot, Fan Warning, Slot Warning
+
 ### Variables
 
 #### EM 6000
