@@ -43,6 +43,7 @@ export function init_udp(host, port) {
 			if (this.config.verbose) {
 				this.log('debug', `UDP Socket listening`)
 			}
+			this.startListeningTimer()
 		})
 
 		this.socket.on('data', (msg) => {

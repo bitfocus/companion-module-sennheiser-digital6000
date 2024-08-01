@@ -54,10 +54,8 @@ export function listening() {
 	if (this.listenTimer) {
 		clearTimeout(this.listenTimer)
 	}
-	this.updateStatus(InstanceStatus.Connecting, 'Listening')
-	if (this.config.verbose) {
-		this.log('warn', `UDP Socket listening. No data recieved for at least ${4 * this.config.interval} ms`)
-	}
+	this.updateStatus(InstanceStatus.ConnectionFailure, `No data for over ${4 * this.config.interval} ms`)
+	this.log('warn', `UDP Socket listening. No data recieved for at least ${4 * this.config.interval} ms`)
 }
 
 export function stopListeningTimer() {
