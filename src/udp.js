@@ -50,6 +50,7 @@ export function init_udp(host, port) {
 				this.log('debug', `Recieved message: ${msg.toString()}`)
 			}
 			this.parseResponse(msg)
+			this.startListeningTimer()
 		})
 
 		this.socket.on('status_change', (status, message) => {

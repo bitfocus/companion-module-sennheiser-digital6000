@@ -42,8 +42,8 @@ const sync_settingsFields = {
 
 export function setupInitialSubscriptions(device, interval) {
 	const generalSubParams = {
-		min: (subscriptions.lifetime * 1000) / 2,
-		max: subscriptions.lifetime * 1000,
+		min: interval,
+		max: subscriptions.lifetime * 500,
 		lifetime: subscriptions.lifetime,
 		count: subscriptions.count,
 	}
@@ -174,7 +174,7 @@ export function setupInitialSubscriptions(device, interval) {
 	this.addCmdtoQueue(sub)
 	this.subscriptionTimer = setTimeout(() => {
 		this.setupInitialSubscriptions(device, interval)
-	}, subscriptions.lifetime * 1000)
+	}, (subscriptions.lifetime - 1) * 1000)
 }
 
 export async function cancelSubscriptions(device) {

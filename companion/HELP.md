@@ -8,7 +8,7 @@ Control and monitor the EM 6000, EM 6000 Dante and L 6000 via Sennheiser Sound C
 
 #### L 6000
 
-None
+Identify
 
 ### Feedbacks
 

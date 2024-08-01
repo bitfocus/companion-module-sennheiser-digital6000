@@ -26,6 +26,7 @@ class Digital6000 extends InstanceBase {
 	async destroy() {
 		this.log('debug', `destroy ${this.id}`)
 		this.stopCmdQueue()
+		this.stopListeningTimer()
 		await this.cancelSubscriptions(this.config.device)
 		if (this.socket) {
 			this.socket.destroy()
@@ -35,6 +36,7 @@ class Digital6000 extends InstanceBase {
 
 	async configUpdated(config) {
 		this.config = config
+		this.stopListeningTimer()
 		this.config.host = config.bonjour_host?.split(':')[0] || config.host
 		this.config.port = config.bonjour_host?.split(':')[1] || config.port
 		await this.cancelSubscriptions(this.config.device)

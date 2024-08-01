@@ -1,4 +1,5 @@
-import { choices } from './consts.js'
+import { choices, query } from './consts.js'
+import { actionOptions } from './actionOptions.js'
 
 export default function (self) {
 	let ActionDefinitions = []
@@ -6,22 +7,20 @@ export default function (self) {
 		//set EM6000 actions
 	} else if (self.config.device === choices.devices[2].id) {
 		//set L6000 actions
-	}
-	ActionDefinitions['sample'] = {
-		name: 'My First Action',
-		options: [
-			{
-				id: 'num',
-				type: 'number',
-				label: 'Test',
-				default: 5,
-				min: 0,
-				max: 100,
+		ActionDefinitions['battIdentify'] = {
+			name: 'Identify',
+			options: [actionOptions.slot, actionOptions.subslot],
+			callback: async ({ options }) => {
+				const msg = {
+					[`slot${options.slot}`]: {
+						[`subslot${options.subslot}`]: {
+							identify: query,
+						},
+					},
+				}
+				self.addCmdtoQueue(msg)
 			},
-		],
-		callback: async (event) => {
-			console.log('Hello world!', event.options.num)
-		},
+		}
 	}
 	self.setActionDefinitions(ActionDefinitions)
 }

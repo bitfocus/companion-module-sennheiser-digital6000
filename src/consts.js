@@ -5,7 +5,7 @@ export const query = null
 export const subscriptions = {
 	min: 50,
 	max: 10000,
-	lifetime: 30,
+	lifetime: 20,
 	count: 1000,
 }
 

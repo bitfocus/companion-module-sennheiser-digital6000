@@ -194,45 +194,48 @@ export function handleL6000_data(data) {
 	for (let i = 1; i <= 4; i++) {
 		if (responseKeys.includes(`slot${i}`)) {
 			this.updateStatus(InstanceStatus.Ok)
-			this.d6000[`slot${i}`].type = data[`slot${i}`]?.type ?? this.d6000[`slot${i}`].type
+			this.d6000[`slot${i}`].type = data[`slot${i}`].type ?? this.d6000[`slot${i}`].type
 			for (let j = 1; j <= 2; j++) {
 				if (Array.isArray(data[`slot${i}`][`subslot${j}`]?.accu_parameter)) {
-					this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.temperature =
-						data[`slot${i}`][`subslot${j}`].accu_parameter[0] ??
-						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.temperature
-					this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.voltage =
-						data[`slot${i}`][`subslot${j}`].accu_parameter[1] ??
-						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.voltage
-					this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.capacity =
-						data[`slot${i}`][`subslot${j}`].accu_parameter[2] ??
-						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.capacity
-					this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.current =
-						data[`slot${i}`][`subslot${j}`].accu_parameter[3] ??
-						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.current
-					this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.energy =
-						data[`slot${i}`][`subslot${j}`].accu_parameter[4] ??
-						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.energy
-					this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_h =
-						data[`slot${i}`][`subslot${j}`].accu_parameter[5] ??
-						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_h
-					this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_m =
-						data[`slot${i}`][`subslot${j}`].accu_parameter[6] ??
-						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_m
-					this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_charge =
-						data[`slot${i}`][`subslot${j}`].accu_parameter[7] ??
-						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_charge
-					this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.cycle_count =
-						data[`slot${i}`][`subslot${j}`].accu_parameter[8] ??
-						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.cycle_count
-					this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_health =
-						data[`slot${i}`][`subslot${j}`].accu_parameter[9] ??
-						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_health
-					this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_h =
-						data[`slot${i}`][`subslot${j}`].accu_parameter[10] ??
-						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_h
-					this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_m =
-						data[`slot${i}`][`subslot${j}`].accu_parameter[11] ??
-						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_m
+					try {
+						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.temperature =
+							data[`slot${i}`][`subslot${j}`].accu_parameter[0]
+
+						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.voltage =
+							data[`slot${i}`][`subslot${j}`].accu_parameter[1]
+
+						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.capacity =
+							data[`slot${i}`][`subslot${j}`].accu_parameter[2]
+
+						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.current =
+							data[`slot${i}`][`subslot${j}`].accu_parameter[3]
+
+						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.energy =
+							data[`slot${i}`][`subslot${j}`].accu_parameter[4]
+
+						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_h =
+							data[`slot${i}`][`subslot${j}`].accu_parameter[5]
+
+						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_m =
+							data[`slot${i}`][`subslot${j}`].accu_parameter[6]
+
+						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_charge =
+							data[`slot${i}`][`subslot${j}`].accu_parameter[7]
+
+						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.cycle_count =
+							data[`slot${i}`][`subslot${j}`].accu_parameter[8]
+
+						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_health =
+							data[`slot${i}`][`subslot${j}`].accu_parameter[9]
+
+						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_h =
+							data[`slot${i}`][`subslot${j}`].accu_parameter[10]
+
+						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_m =
+							data[`slot${i}`][`subslot${j}`].accu_parameter[11]
+					} catch {
+						this.updateStatus(InstanceStatus.UnknownWarning)
+					}
 				}
 				this.d6000[`slot${i}`][`subslot${j}`].led =
 					data[`slot${i}`][`subslot${j}`]?.led ?? this.d6000[`slot${i}`][`subslot${j}`].led

@@ -34,25 +34,42 @@ export default async function (self) {
 						break
 					}
 				}
-				variableValues[`slot${i}_${j}_battery_temp`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.temperature
-				variableValues[`slot${i}_${j}_battery_voltage`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.voltage
-				variableValues[`slot${i}_${j}_battery_capacity`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.capacity
-				variableValues[`slot${i}_${j}_battery_current`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.current
-				variableValues[`slot${i}_${j}_battery_energy`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.energy
-				variableValues[`slot${i}_${j}_battery_operating_time_h`] =
-					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_h
-				variableValues[`slot${i}_${j}_battery_operating_time_min`] =
-					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_m
-				variableValues[`slot${i}_${j}_battery_state_of_charge`] =
-					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_charge
-				variableValues[`slot${i}_${j}_battery_cycle_count`] =
-					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.cycle_count
-				variableValues[`slot${i}_${j}_battery_state_of_health`] =
-					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_health
-				variableValues[`slot${i}_${j}_battery_time_to_full_h`] =
-					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_h
-				variableValues[`slot${i}_${j}_battery_time_to_full_min`] =
-					self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_m
+				if (self.d6000[`slot${i}`][`subslot${j}`].led === 'OFF') {
+					variableValues[`slot${i}_${j}_battery_temp`] = 0
+					variableValues[`slot${i}_${j}_battery_voltage`] = 0
+					variableValues[`slot${i}_${j}_battery_capacity`] = 0
+					variableValues[`slot${i}_${j}_battery_current`] = 0
+					variableValues[`slot${i}_${j}_battery_energy`] = 0
+					variableValues[`slot${i}_${j}_battery_operating_time_h`] = 0
+					variableValues[`slot${i}_${j}_battery_operating_time_min`] = 0
+					variableValues[`slot${i}_${j}_battery_state_of_charge`] = 0
+					variableValues[`slot${i}_${j}_battery_cycle_count`] = 0
+					variableValues[`slot${i}_${j}_battery_state_of_health`] = 0
+					variableValues[`slot${i}_${j}_battery_time_to_full_h`] = 0
+					variableValues[`slot${i}_${j}_battery_time_to_full_min`] = 0
+				} else {
+					variableValues[`slot${i}_${j}_battery_temp`] =
+						self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.temperature
+					variableValues[`slot${i}_${j}_battery_voltage`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.voltage
+					variableValues[`slot${i}_${j}_battery_capacity`] =
+						self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.capacity
+					variableValues[`slot${i}_${j}_battery_current`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.current
+					variableValues[`slot${i}_${j}_battery_energy`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.energy
+					variableValues[`slot${i}_${j}_battery_operating_time_h`] =
+						self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_h
+					variableValues[`slot${i}_${j}_battery_operating_time_min`] =
+						self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_m
+					variableValues[`slot${i}_${j}_battery_state_of_charge`] =
+						self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_charge
+					variableValues[`slot${i}_${j}_battery_cycle_count`] =
+						self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.cycle_count
+					variableValues[`slot${i}_${j}_battery_state_of_health`] =
+						self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_health
+					variableValues[`slot${i}_${j}_battery_time_to_full_h`] =
+						self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_h
+					variableValues[`slot${i}_${j}_battery_time_to_full_min`] =
+						self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_m
+				}
 			}
 		}
 		variableValues['device_version'] = self.d6000.device.identity.version
