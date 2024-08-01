@@ -28,6 +28,12 @@ export default async function (self) {
 		for (let i = 1; i <= 4; i++) {
 			for (let j = 1; j <= 2; j++) {
 				variableValues[`slot${i}_${j}_led`] = self.d6000[`slot${i}`][`subslot${j}`].led
+				for (const led of choices.led) {
+					if (led.id === self.d6000[`slot${i}`][`subslot${j}`].led) {
+						variableValues[`slot${i}_${j}_led_meaning`] = led.label
+						break
+					}
+				}
 				variableValues[`slot${i}_${j}_battery_temp`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.temperature
 				variableValues[`slot${i}_${j}_battery_voltage`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.voltage
 				variableValues[`slot${i}_${j}_battery_capacity`] = self.d6000[`slot${i}`][`subslot${j}`].accu_parameter.capacity

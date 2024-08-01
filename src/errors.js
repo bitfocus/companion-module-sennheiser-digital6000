@@ -31,7 +31,7 @@ export const warningsEM6000 = [
 	{ id: 'RFPeak', label: 'RF Peak' },
 	{ id: 'AFPeak', label: 'AF Peak' },
 	{ id: 'LowSignal', label: 'Low Signal' },
-	{ id: 'NoLink', label: 'NoLink' },
+	{ id: 'NoLink', label: 'No Link' },
 	{ id: 'LowBattery', label: 'Low Battery' },
 	{ id: 'BadClock', label: 'Bad Clock' },
 	{ id: 'NoClock', label: 'No Clock' },

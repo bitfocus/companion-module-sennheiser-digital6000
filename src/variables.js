@@ -33,6 +33,7 @@ export default async function (self) {
 			for (let j = 1; j <= 2; j++) {
 				variableDefinitions.push(
 					{ variableId: `slot${i}_${j}_led`, name: `Slot ${i}/${j} LED` },
+					{ variableId: `slot${i}_${j}_led_meaning`, name: `Slot ${i}/${j} LED - Meaning` },
 					{ variableId: `slot${i}_${j}_battery_temp`, name: `Slot ${i}/${j} Battery Temperature (C)` },
 					{ variableId: `slot${i}_${j}_battery_voltage`, name: `Slot ${i}/${j} Battery Voltage (mV)` },
 					{ variableId: `slot${i}_${j}_battery_capacity`, name: `Slot ${i}/${j} Battery Capacity (mAh)` },

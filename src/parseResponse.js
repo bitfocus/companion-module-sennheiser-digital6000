@@ -1,5 +1,6 @@
 import { InstanceStatus } from '@companion-module/base'
 import { choices } from './consts.js'
+import { warningsL6000 } from './errors.js'
 import { convert_RF_to_dBm, convert_AF_to_dBFS, convert_LQI_to_percent } from './utils.js'
 
 export function parseResponse(msg) {
@@ -83,138 +84,78 @@ export function handleEM6000_data(data) {
 		this.d6000.audio.out1 = { ...this.d6000.audio.out1, ...data.audio?.out1 }
 		this.d6000.audio.out2 = { ...this.d6000.audio.out2, ...data.audio?.out2 }
 	}
-	if (responseKeys.includes('rx1')) {
-		this.updateStatus(InstanceStatus.Ok)
-		this.d6000.rx1.scan = { ...this.d6000.rx1.scan, ...data.rx1?.scan }
+	for (let i = 1; i <= 2; i++) {
+		if (responseKeys.includes(`rx${i}`)) {
+			this.updateStatus(InstanceStatus.Ok)
+			this.d6000[`rx${i}`].scan = { ...this.d6000[`rx${i}`].scan, ...data[`rx${i}`]?.scan }
 
-		this.d6000.rx1.walktest = { ...this.d6000.rx1.walktest, ...data.rx1?.walktest }
-		this.d6000.rx1.sync_settings = { ...this.d6000.rx1.sync_settings, ...data.rx1?.sync_settings }
-		try {
-			this.d6000.rx1.skx.type.type = data.rx1?.skx?.type[0] ?? this.d6000.rx1.skx.type.type
-			this.d6000.rx1.skx.type.low = data.rx1?.skx?.type[1] ?? this.d6000.rx1.skx.type.low
-			this.d6000.rx1.skx.type.high = data.rx1?.skx?.type[2] ?? this.d6000.rx1.skx.type.high
-		} catch {
-			/* do nothing */
-		}
-		this.d6000.rx1.skx.name = data.rx1?.skx?.name ?? this.d6000.rx1.skx.name
-		this.d6000.rx1.skx.lowcut = data.rx1?.skx?.lowcut ?? this.d6000.rx1.skx.lowcut
-		this.d6000.rx1.skx.gain = data.rx1?.skx?.gain ?? this.d6000.rx1.skx.gain
-		this.d6000.rx1.skx.display = data.rx1?.skx?.display ?? this.d6000.rx1.skx.display
-		this.d6000.rx1.skx.capsule = data.rx1?.skx?.capsule ?? this.d6000.rx1.skx.capsule
-		this.d6000.rx1.skx.cable_emulation = data.rx1?.skx?.cable_emulation ?? this.d6000.rx1.skx.cable_emulation
-		this.d6000.rx1.skx.autolock = data.rx1?.skx?.autolock ?? this.d6000.rx1.skx.autolock
-		if (data.rx1?.skx?.battery !== undefined) {
-			this.d6000.rx1.skx.battery.percent = data.rx1?.skx?.battery[0] ?? this.d6000.rx1.skx.battery.percent
-			this.d6000.rx1.skx.battery.time = data.rx1?.skx?.battery[1] ?? this.d6000.rx1.skx.battery.time
-		}
-		this.d6000.rx1.freq.b1 = { ...this.d6000.rx1.freq.b1, ...data.rx1?.freq?.b1 }
-		this.d6000.rx1.freq.b2 = { ...this.d6000.rx1.freq.b2, ...data.rx1?.freq?.b2 }
-		this.d6000.rx1.freq.b3 = { ...this.d6000.rx1.freq.b3, ...data.rx1?.freq?.b3 }
-		this.d6000.rx1.freq.b4 = { ...this.d6000.rx1.freq.b4, ...data.rx1?.freq?.b4 }
-		this.d6000.rx1.freq.b5 = { ...this.d6000.rx1.freq.b5, ...data.rx1?.freq?.b5 }
-		this.d6000.rx1.freq.b6 = { ...this.d6000.rx1.freq.b6, ...data.rx1?.freq?.b6 }
-		this.d6000.rx1.freq.u1 = { ...this.d6000.rx1.freq.u1, ...data.rx1?.freq?.u1 }
-		this.d6000.rx1.freq.u2 = { ...this.d6000.rx1.freq.u2, ...data.rx1?.freq?.u2 }
-		this.d6000.rx1.freq.u3 = { ...this.d6000.rx1.freq.u3, ...data.rx1?.freq?.u3 }
-		this.d6000.rx1.freq.u4 = { ...this.d6000.rx1.freq.u4, ...data.rx1?.freq?.u4 }
-		this.d6000.rx1.freq.u5 = { ...this.d6000.rx1.freq.u5, ...data.rx1?.freq?.u5 }
-		this.d6000.rx1.freq.u6 = { ...this.d6000.rx1.freq.u6, ...data.rx1?.freq?.u6 }
-		if (data.rx1?.active_bank_channel !== undefined) {
-			this.d6000.rx1.active_bank_channel.bank =
-				data.rx1?.active_bank_channel[0] ?? this.d6000.rx1.active_bank_channel.bank
-			this.d6000.rx1.active_bank_channel.channel =
-				data.rx1?.active_bank_channel[1] ?? this.d6000.rx1.active_bank_channel.channel
-		}
-		this.d6000.rx1.audio_mute = data.rx1?.audio_mute ?? this.d6000.rx1.audio_mute
-		this.d6000.rx1.carrier = data.rx1?.carrier ?? this.d6000.rx1.carrier
-		this.d6000.rx1.identify = data.rx1?.identify ?? this.d6000.rx1.identify
-		this.d6000.rx1.wsm_master_cnt = data.rx1?.wsm_master_cnt ?? this.d6000.rx1.wsm_master_cnt
-		this.d6000.rx1.testtone = data.rx1?.testtone ?? this.d6000.rx1.testtone
-		this.d6000.rx1.name = data.rx1?.name ?? this.d6000.rx1.name
-		this.d6000.rx1.encryption = data.rx1?.encryption ?? this.d6000.rx1.encryption
-		this.d6000.rx1.active_warnings = data.rx1?.active_warnings ?? this.d6000.rx1.active_warnings
-		this.d6000.rx1.active_status = data.rx1?.active_status ?? this.d6000.rx1.active_status
-	}
-	if (responseKeys.includes('rx2')) {
-		this.updateStatus(InstanceStatus.Ok)
-		this.d6000.rx2.scan = { ...this.d6000.rx2.scan, ...data.rx2?.scan }
-		this.d6000.rx2.sync_settings = { ...this.d6000.rx2.sync_settings, ...data.rx2?.sync_settings }
-		this.d6000.rx2.walktest = { ...this.d6000.rx2.walktest, ...data.rx2?.walktest }
-		try {
-			this.d6000.rx2.skx.type.type = data.rx2?.skx?.type[0] ?? this.d6000.rx2.skx.type.type
-			this.d6000.rx2.skx.type.low = data.rx2?.skx?.type[1] ?? this.d6000.rx2.skx.type.low
-			this.d6000.rx2.skx.type.high = data.rx2?.skx?.type[2] ?? this.d6000.rx2.skx.type.high
-		} catch {
-			/* do nothing */
-		}
-		this.d6000.rx2.skx.name = data.rx2?.skx?.name ?? this.d6000.rx2.skx.name
-		this.d6000.rx2.skx.lowcut = data.rx2?.skx?.lowcut ?? this.d6000.rx2.skx.lowcut
-		this.d6000.rx2.skx.gain = data.rx2?.skx?.gain ?? this.d6000.rx2.skx.gain
-		this.d6000.rx2.skx.display = data.rx2?.skx?.display ?? this.d6000.rx2.skx.display
-		this.d6000.rx2.skx.capsule = data.rx2?.skx?.capsule ?? this.d6000.rx2.skx.capsule
-		this.d6000.rx2.skx.cable_emulation = data.rx2?.skx?.cable_emulation ?? this.d6000.rx2.skx.cable_emulation
-		this.d6000.rx2.skx.autolock = data.rx2?.skx?.autolock ?? this.d6000.rx2.skx.autolock
-		if (data.rx2?.skx?.battery !== undefined) {
-			this.d6000.rx2.skx.battery.percent = data.rx2?.skx?.battery[0] ?? this.d6000.rx2.skx.battery.percent
-			this.d6000.rx2.skx.battery.time = data.rx2?.skx?.battery[1] ?? this.d6000.rx2.skx.battery.time
-		}
+			this.d6000[`rx${i}`].walktest = { ...this.d6000[`rx${i}`].walktest, ...data[`rx${i}`].walktest }
+			this.d6000[`rx${i}`].sync_settings = { ...this.d6000[`rx${i}`].sync_settings, ...data[`rx${i}`].sync_settings }
+			try {
+				this.d6000[`rx${i}`].skx.type.type = data[`rx${i}`].skx?.type[0] ?? this.d6000[`rx${i}`].skx.type.type
+				this.d6000[`rx${i}`].skx.type.low = data[`rx${i}`].skx?.type[1] ?? this.d6000[`rx${i}`].skx.type.low
+				this.d6000[`rx${i}`].skx.type.high = data[`rx${i}`].skx?.type[2] ?? this.d6000[`rx${i}`].skx.type.high
+			} catch {
+				/* do nothing */
+			}
+			this.d6000[`rx${i}`].skx.name = data[`rx${i}`].skx?.name ?? this.d6000[`rx${i}`].skx.name
+			this.d6000[`rx${i}`].skx.lowcut = data[`rx${i}`].skx?.lowcut ?? this.d6000[`rx${i}`].skx.lowcut
+			this.d6000[`rx${i}`].skx.gain = data[`rx${i}`].skx?.gain ?? this.d6000[`rx${i}`].skx.gain
+			this.d6000[`rx${i}`].skx.display = data[`rx${i}`].skx?.display ?? this.d6000[`rx${i}`].skx.display
+			this.d6000[`rx${i}`].skx.capsule = data[`rx${i}`].skx?.capsule ?? this.d6000[`rx${i}`].skx.capsule
+			this.d6000[`rx${i}`].skx.cable_emulation =
+				data[`rx${i}`].skx?.cable_emulation ?? this.d6000[`rx${i}`].skx.cable_emulation
+			this.d6000[`rx${i}`].skx.autolock = data[`rx${i}`].skx?.autolock ?? this.d6000[`rx${i}`].skx.autolock
+			if (data[`rx${i}`].skx?.battery !== undefined) {
+				this.d6000[`rx${i}`].skx.battery.percent =
+					data[`rx${i}`].skx?.battery[0] ?? this.d6000[`rx${i}`].skx.battery.percent
+				this.d6000[`rx${i}`].skx.battery.time = data[`rx${i}`].skx?.battery[1] ?? this.d6000[`rx${i}`].skx.battery.time
+			}
+			for (let j = 1; j <= 6; j++) {
+				this.d6000[`rx${i}`].freq[`b${j}`] = { ...this.d6000[`rx${i}`].freq[`b${j}`], ...data.rx1?.freq?.[`b${j}`] }
+				this.d6000[`rx${i}`].freq[`u${j}`] = { ...this.d6000[`rx${i}`].freq[`u${j}`], ...data.rx1?.freq?.[`u${j}`] }
+			}
 
-		this.d6000.rx2.freq.b1 = { ...this.d6000.rx2.freq.b1, ...data.rx2?.freq?.b1 }
-		this.d6000.rx2.freq.b2 = { ...this.d6000.rx2.freq.b2, ...data.rx2?.freq?.b2 }
-		this.d6000.rx2.freq.b3 = { ...this.d6000.rx2.freq.b3, ...data.rx2?.freq?.b3 }
-		this.d6000.rx2.freq.b4 = { ...this.d6000.rx2.freq.b4, ...data.rx2?.freq?.b4 }
-		this.d6000.rx2.freq.b5 = { ...this.d6000.rx2.freq.b5, ...data.rx2?.freq?.b5 }
-		this.d6000.rx2.freq.b6 = { ...this.d6000.rx2.freq.b6, ...data.rx2?.freq?.b6 }
-		this.d6000.rx2.freq.u1 = { ...this.d6000.rx2.freq.u1, ...data.rx2?.freq?.u1 }
-		this.d6000.rx2.freq.u2 = { ...this.d6000.rx2.freq.u2, ...data.rx2?.freq?.u2 }
-		this.d6000.rx2.freq.u3 = { ...this.d6000.rx2.freq.u3, ...data.rx2?.freq?.u3 }
-		this.d6000.rx2.freq.u4 = { ...this.d6000.rx2.freq.u4, ...data.rx2?.freq?.u4 }
-		this.d6000.rx2.freq.u5 = { ...this.d6000.rx2.freq.u5, ...data.rx2?.freq?.u5 }
-		this.d6000.rx2.freq.u6 = { ...this.d6000.rx2.freq.u6, ...data.rx2?.freq?.u6 }
-		if (data.rx2?.active_bank_channel !== undefined) {
-			this.d6000.rx2.active_bank_channel.bank =
-				data.rx2?.active_bank_channel[0] ?? this.d6000.rx2.active_bank_channel.bank
-			this.d6000.rx2.active_bank_channel.channel =
-				data.rx2?.active_bank_channel[1] ?? this.d6000.rx2.active_bank_channel.channel
+			if (data[`rx${i}`].active_bank_channel !== undefined) {
+				this.d6000[`rx${i}`].active_bank_channel.bank =
+					data[`rx${i}`].active_bank_channel[0] ?? this.d6000[`rx${i}`].active_bank_channel.bank
+				this.d6000[`rx${i}`].active_bank_channel.channel =
+					data[`rx${i}`].active_bank_channel[1] ?? this.d6000[`rx${i}`].active_bank_channel.channel
+			}
+			this.d6000[`rx${i}`].audio_mute = data[`rx${i}`].audio_mute ?? this.d6000[`rx${i}`].audio_mute
+			this.d6000[`rx${i}`].carrier = data[`rx${i}`].carrier ?? this.d6000[`rx${i}`].carrier
+			this.d6000[`rx${i}`].identify = data[`rx${i}`].identify ?? this.d6000[`rx${i}`].identify
+			this.d6000[`rx${i}`].wsm_master_cnt = data[`rx${i}`].wsm_master_cnt ?? this.d6000[`rx${i}`].wsm_master_cnt
+			this.d6000[`rx${i}`].testtone = data[`rx${i}`].testtone ?? this.d6000[`rx${i}`].testtone
+			this.d6000[`rx${i}`].name = data[`rx${i}`].name ?? this.d6000[`rx${i}`].name
+			this.d6000[`rx${i}`].encryption = data[`rx${i}`].encryption ?? this.d6000[`rx${i}`].encryption
+			this.d6000[`rx${i}`].active_warnings = data[`rx${i}`].active_warnings ?? this.d6000[`rx${i}`].active_warnings
+			this.d6000[`rx${i}`].active_status = data[`rx${i}`].active_status ?? this.d6000[`rx${i}`].active_status
 		}
-		this.d6000.rx2.audio_mute = data.rx2?.audio_mute ?? this.d6000.rx2.audio_mute
-		this.d6000.rx2.carrier = data.rx2?.carrier ?? this.d6000.rx2.carrier
-		this.d6000.rx2.identify = data.rx2?.identify ?? this.d6000.rx2.identify
-		this.d6000.rx2.wsm_master_cnt = data.rx2?.wsm_master_cnt ?? this.d6000.rx2.wsm_master_cnt
-		this.d6000.rx2.testtone = data.rx2?.testtone ?? this.d6000.rx2.testtone
-		this.d6000.rx2.name = data.rx2?.name ?? this.d6000.rx2.name
-		this.d6000.rx2.encryption = data.rx2?.encryption ?? this.d6000.rx2.encryption
-		this.d6000.rx2.active_warnings = data.rx2?.active_warnings ?? this.d6000.rx2.active_warnings
-		this.d6000.rx2.active_status = data.rx2?.active_status ?? this.d6000.rx2.active_status
-	}
-	if (responseKeys.includes('mm')) {
-		this.updateStatus(InstanceStatus.Ok)
-		this.d6000.mm.ch1.RF1 =
-			convert_RF_to_dBm(data.mm[0][0]) !== null ? convert_RF_to_dBm(data.mm[0][0]) : this.d6000.mm.ch1.RF1
-		this.d6000.mm.ch1.RF1_PEAK = !!data.mm[0][1]
-		this.d6000.mm.ch1.RF2 =
-			convert_RF_to_dBm(data.mm[0][2]) !== null ? convert_RF_to_dBm(data.mm[0][2]) : this.d6000.mm.ch1.RF2
-		this.d6000.mm.ch1.RF2_PEAK = !!data.mm[0][3]
-		this.d6000.mm.ch1.DIV1 = !!data.mm[0][4]
-		this.d6000.mm.ch1.DIV2 = !!data.mm[0][5]
-		this.d6000.mm.ch1.LQI =
-			convert_LQI_to_percent(data.mm[0][6]) !== null ? convert_LQI_to_percent(data.mm[0][6]) : this.d6000.mm.ch1.LQI
-		this.d6000.mm.ch1.AF =
-			convert_AF_to_dBFS(data.mm[0][7]) !== null ? convert_AF_to_dBFS(data.mm[0][7]) : this.d6000.mm.ch1.AF
-		this.d6000.mm.ch1.PEAK = !!data.mm[0][8]
-		this.d6000.mm.ch2.RF1 =
-			convert_RF_to_dBm(data.mm[1][0]) !== null ? convert_RF_to_dBm(data.mm[1][0]) : this.d6000.mm.ch2.RF1
-		this.d6000.mm.ch2.RF1_PEAK = !!data.mm[1][1]
-		this.d6000.mm.ch2.RF2 =
-			convert_RF_to_dBm(data.mm[1][2]) !== null ? convert_RF_to_dBm(data.mm[1][2]) : this.d6000.mm.ch2.RF2
-		this.d6000.mm.ch2.RF2_PEAK = !!data.mm[1][3]
-		this.d6000.mm.ch2.DIV1 = !!data.mm[1][4]
-		this.d6000.mm.ch2.DIV2 = !!data.mm[1][5]
-		this.d6000.mm.ch2.LQI =
-			convert_LQI_to_percent(data.mm[1][6]) !== null ? convert_LQI_to_percent(data.mm[1][6]) : this.d6000.mm.ch2.LQI
-		this.d6000.mm.ch2.AF =
-			convert_AF_to_dBFS(data.mm[1][7]) !== null ? convert_AF_to_dBFS(data.mm[1][7]) : this.d6000.mm.ch2.AF
-		this.d6000.mm.ch2.PEAK = !!data.mm[1][8]
+		if (responseKeys.includes('mm')) {
+			this.updateStatus(InstanceStatus.Ok)
+			this.d6000.mm[`ch${i}`].RF1 =
+				convert_RF_to_dBm(data.mm[i - 1][0]) !== null
+					? convert_RF_to_dBm(data.mm[i - 1][0])
+					: this.d6000.mm[`ch${i}`].RF1
+			this.d6000.mm[`ch${i}`].RF1_PEAK = !!data.mm[i - 1][1]
+			this.d6000.mm[`ch${i}`].RF2 =
+				convert_RF_to_dBm(data.mm[i - 1][2]) !== null
+					? convert_RF_to_dBm(data.mm[i - 1][2])
+					: this.d6000.mm[`ch${i}`].RF2
+			this.d6000.mm[`ch${i}`].RF2_PEAK = !!data.mm[i - 1][3]
+			this.d6000.mm[`ch${i}`].DIV1 = !!data.mm[i - 1][4]
+			this.d6000.mm[`ch${i}`].DIV2 = !!data.mm[i - 1][5]
+			this.d6000.mm[`ch${i}`].LQI =
+				convert_LQI_to_percent(data.mm[i - 1][6]) !== null
+					? convert_LQI_to_percent(data.mm[i - 1][6])
+					: this.d6000.mm[`ch${i}`].LQI
+			this.d6000.mm[`ch${i}`].AF =
+				convert_AF_to_dBFS(data.mm[i - 1][7]) !== null
+					? convert_AF_to_dBFS(data.mm[i - 1][7])
+					: this.d6000.mm[`ch${i}`].AF
+			this.d6000.mm[`ch${i}`].PEAK = !!data.mm[i - 1][8]
+		}
 	}
 }
 
@@ -224,11 +165,20 @@ export function handleL6000_data(data) {
 		this.updateStatus(InstanceStatus.Ok)
 		this.d6000.device.name = data.device?.name ?? this.d6000.device.name
 		this.d6000.device.language = data.device?.language ?? this.d6000.device.language
-		this.d6000.device.warnings = data.device?.warnings ?? this.d6000.device.warnings
+
 		this.d6000.device.storage_mode = data.device?.storage_mode ?? this.d6000.device.storage_mode
 		this.d6000.device.identity = { ...this.d6000.device.identity, ...data.device?.identity }
 		this.d6000.device.network.ether = { ...this.d6000.device.network.ether, ...data.device?.network?.ether }
 		this.d6000.device.network.ipv4 = { ...this.d6000.device.network.ipv4, ...data.device?.network?.ipv4 }
+		if (data.device?.warnings !== undefined) {
+			this.d6000.device.warnings = data.device.warnings ?? this.d6000.device.warnings
+			for (const warning of warningsL6000) {
+				if (this.d6000.device.warnings.includes(warning.id)) {
+					this.log('warn', warning.label)
+					this.updateStatus(InstanceStatus.UnknownWarning, warning.label)
+				}
+			}
+		}
 	}
 	if (responseKeys.includes('osc')) {
 		this.updateStatus(InstanceStatus.Ok)

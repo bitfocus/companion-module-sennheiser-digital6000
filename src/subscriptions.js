@@ -159,6 +159,19 @@ export function setupInitialSubscriptions(device, interval) {
 			this.addCmdtoQueue(sub)
 		}
 	}
+	let sub = {
+		osc: {
+			state: {
+				subscribe: [
+					{
+						'#': generalSubParams,
+						device: { warnings: query },
+					},
+				],
+			},
+		},
+	}
+	this.addCmdtoQueue(sub)
 	this.subscriptionTimer = setTimeout(() => {
 		this.setupInitialSubscriptions(device, interval)
 	}, subscriptions.lifetime * 1000)
