@@ -2,7 +2,7 @@ import { choices } from './consts.js'
 import { bank, battery_parameter } from './bank.js'
 export function initDigital6000(device) {
 	//initalise the memory structure of the device
-	if (this.this) {
+	if (this.d6000) {
 		delete self.d6000
 	}
 	if (device === choices.devices[0].id || device === choices.devices[1].id) {
@@ -19,18 +19,18 @@ export function initDigital6000(device) {
 			rx1: {
 				audio_mute: null,
 				freq: {
-					b1: bank,
-					b2: bank,
-					b3: bank,
-					b4: bank,
-					b5: bank,
-					b6: bank,
-					u1: bank,
-					u2: bank,
-					u3: bank,
-					u4: bank,
-					u5: bank,
-					u6: bank,
+					b1: JSON.parse(JSON.stringify(bank)),
+					b2: JSON.parse(JSON.stringify(bank)),
+					b3: JSON.parse(JSON.stringify(bank)),
+					b4: JSON.parse(JSON.stringify(bank)),
+					b5: JSON.parse(JSON.stringify(bank)),
+					b6: JSON.parse(JSON.stringify(bank)),
+					u1: JSON.parse(JSON.stringify(bank)),
+					u2: JSON.parse(JSON.stringify(bank)),
+					u3: JSON.parse(JSON.stringify(bank)),
+					u4: JSON.parse(JSON.stringify(bank)),
+					u5: JSON.parse(JSON.stringify(bank)),
+					u6: JSON.parse(JSON.stringify(bank)),
 				},
 				active_bank_channel: { bank: null, channel: null },
 				carrier: null,
@@ -76,18 +76,18 @@ export function initDigital6000(device) {
 			rx2: {
 				audio_mute: null,
 				freq: {
-					b1: bank,
-					b2: bank,
-					b3: bank,
-					b4: bank,
-					b5: bank,
-					b6: bank,
-					u1: bank,
-					u2: bank,
-					u3: bank,
-					u4: bank,
-					u5: bank,
-					u6: bank,
+					b1: JSON.parse(JSON.stringify(bank)),
+					b2: JSON.parse(JSON.stringify(bank)),
+					b3: JSON.parse(JSON.stringify(bank)),
+					b4: JSON.parse(JSON.stringify(bank)),
+					b5: JSON.parse(JSON.stringify(bank)),
+					b6: JSON.parse(JSON.stringify(bank)),
+					u1: JSON.parse(JSON.stringify(bank)),
+					u2: JSON.parse(JSON.stringify(bank)),
+					u3: JSON.parse(JSON.stringify(bank)),
+					u4: JSON.parse(JSON.stringify(bank)),
+					u5: JSON.parse(JSON.stringify(bank)),
+					u6: JSON.parse(JSON.stringify(bank)),
 				},
 				active_bank_channel: { bank: null, channel: null },
 				carrier: null,
@@ -223,13 +223,13 @@ export function initDigital6000(device) {
 				subslot1: {
 					led: null,
 					identify: null,
-					accu_parameter: battery_parameter,
+					accu_parameter: JSON.parse(JSON.stringify(battery_parameter)),
 					accu_detection: null,
 				},
 				subslot2: {
 					led: null,
 					identify: null,
-					accu_parameter: battery_parameter,
+					accu_parameter: JSON.parse(JSON.stringify(battery_parameter)),
 					accu_detection: null,
 				},
 				type: null,
@@ -238,13 +238,13 @@ export function initDigital6000(device) {
 				subslot1: {
 					led: null,
 					identify: null,
-					accu_parameter: battery_parameter,
+					accu_parameter: JSON.parse(JSON.stringify(battery_parameter)),
 					accu_detection: null,
 				},
 				subslot2: {
 					led: null,
 					identify: null,
-					accu_parameter: battery_parameter,
+					accu_parameter: JSON.parse(JSON.stringify(battery_parameter)),
 					accu_detection: null,
 				},
 				type: null,
@@ -253,13 +253,13 @@ export function initDigital6000(device) {
 				subslot1: {
 					led: null,
 					identify: null,
-					accu_parameter: battery_parameter,
+					accu_parameter: JSON.parse(JSON.stringify(battery_parameter)),
 					accu_detection: null,
 				},
 				subslot2: {
 					led: null,
 					identify: null,
-					accu_parameter: battery_parameter,
+					accu_parameter: JSON.parse(JSON.stringify(battery_parameter)),
 					accu_detection: null,
 				},
 				type: null,
@@ -268,13 +268,13 @@ export function initDigital6000(device) {
 				subslot1: {
 					led: null,
 					identify: null,
-					accu_parameter: battery_parameter,
+					accu_parameter: JSON.parse(JSON.stringify(battery_parameter)),
 					accu_detection: null,
 				},
 				subslot2: {
 					led: null,
 					identify: null,
-					accu_parameter: battery_parameter,
+					accu_parameter: JSON.parse(JSON.stringify(battery_parameter)),
 					accu_detection: null,
 				},
 				type: null,
