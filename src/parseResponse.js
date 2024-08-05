@@ -178,7 +178,7 @@ export function handleL6000_data(data) {
 					this.updateStatus(InstanceStatus.UnknownWarning, warning.label)
 				}
 			}
-			this.checkFeedbacks('slotWarning', 'fanWarning', 'deviceHot')
+			this.checkFeedbacks('slotWarning', 'fanWarning', 'deviceHot', 'batteryStatus')
 		}
 	}
 	if (responseKeys.includes('osc')) {
@@ -194,7 +194,13 @@ export function handleL6000_data(data) {
 	for (let i = 1; i <= 4; i++) {
 		if (responseKeys.includes(`slot${i}`)) {
 			this.updateStatus(InstanceStatus.Ok)
-			this.d6000[`slot${i}`].type = data[`slot${i}`].type ?? this.d6000[`slot${i}`].type
+			if (data[`slot${i}`].type !== undefined) {
+				for (const type of choices.type) {
+					if (data[`slot${i}`].type === type.id) {
+						this.d6000[`slot${i}`].type = type.label
+					}
+				}
+			}
 			for (let j = 1; j <= 2; j++) {
 				if (Array.isArray(data[`slot${i}`][`subslot${j}`]?.accu_parameter)) {
 					try {

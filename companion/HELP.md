@@ -52,7 +52,7 @@ Name, Version
 
 - **Battery Slot**
 
-LED, LED Meaning
+LED, LED Meaning, Type
 
 - **Battery**
 

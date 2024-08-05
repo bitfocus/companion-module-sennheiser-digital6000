@@ -25,7 +25,7 @@ export function startFrame() {
 	if (this.frameTimer) {
 		clearTimeout(this.frameTimer)
 	}
-	this.frame = this.frame === undefined || this.frame === 4 ? 0 : this.frame + 1
+	this.frame = this.frame === undefined || this.frame >= 4 ? 0 : this.frame + 1
 	this.checkFeedbacks('batteryStatus')
 	this.frameTimer = setTimeout(() => {
 		this.startFrame()

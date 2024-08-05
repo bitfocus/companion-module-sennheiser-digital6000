@@ -30,6 +30,7 @@ export default async function (self) {
 	} else if (self.config.device === choices.devices[2].id) {
 		//set L6000 variables
 		for (let i = 1; i <= 4; i++) {
+			variableDefinitions.push({ variableId: `slot${i}_type`, name: `Slot ${i} Type` })
 			for (let j = 1; j <= 2; j++) {
 				variableDefinitions.push(
 					{ variableId: `slot${i}_${j}_led`, name: `Slot ${i}/${j} LED` },

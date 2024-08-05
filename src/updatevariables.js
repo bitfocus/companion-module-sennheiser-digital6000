@@ -26,6 +26,8 @@ export default async function (self) {
 	} else if (self.config.device === choices.devices[2].id) {
 		//set L6000 variables
 		for (let i = 1; i <= 4; i++) {
+			variableValues[`slot${i}_type`] = self.d6000[`slot${i}`].type
+
 			for (let j = 1; j <= 2; j++) {
 				variableValues[`slot${i}_${j}_led`] = self.d6000[`slot${i}`][`subslot${j}`].led
 				for (const led of choices.led) {

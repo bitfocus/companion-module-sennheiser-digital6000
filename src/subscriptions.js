@@ -157,6 +157,8 @@ export function setupInitialSubscriptions(device, interval) {
 				},
 			}
 			this.addCmdtoQueue(sub)
+			sub = { [`slot${i}`]: { type: query } }
+			this.addCmdtoQueue(sub)
 		}
 	}
 	let sub = {

@@ -115,10 +115,38 @@ export default async function (self) {
 					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nIdle\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
 				} else if (battSlot.led === 'GREEN_FLASHING' || battSlot.led === 'YELLOW') {
 					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nCharging\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
+				} else if (battSlot.led === 'DEV_IDENTIFY') {
+					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nIdentify\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
 				} else if (battSlot.led === 'OFF') {
-					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\n\\n\\nEmpty`
+					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\n${
+						self.d6000[`slot${feedback.options.slot}`].type
+					}\\n\\nEmpty`
 					out.png64 = iconsL6000.led.FLASHING
 					return out
+				} else if (battSlot.led === 'RED') {
+					out.png64 = iconsL6000.defect
+					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nDefect\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
+					return out
+				} else if (battSlot.led === 'YELLOW_FLASHING') {
+					out.png64 = iconsL6000.regen[self.frame]
+					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nRegen\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
+					return out
+				} else if (battSlot.led === 'RED_FLASHING') {
+					if (battSlot.accu_parameter.temperature > 10) {
+						out.png64 = iconsL6000.hot
+						out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nOverheat\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
+						return out
+					} else {
+						out.png64 = iconsL6000.cold
+						out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nToo Cold\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
+						return out
+					}
+				} else if (battSlot.led === 'GREEN_RED_FLASHING') {
+					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nNo Batt\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
+				} else if (battSlot.led === 'YELLOW_RED_FLASHING') {
+					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nOut of Cap\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
+				} else if (battSlot.led === 'YELLOW_GREEN_FLASHING') {
+					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nCap 69%-71%\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
 				}
 
 				if (battSlot.accu_parameter.state_of_charge >= 97) {
