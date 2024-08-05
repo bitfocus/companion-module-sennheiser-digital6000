@@ -205,19 +205,29 @@ export function handleL6000_data(data) {
 				if (Array.isArray(data[`slot${i}`][`subslot${j}`]?.accu_parameter)) {
 					try {
 						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.temperature =
-							data[`slot${i}`][`subslot${j}`].accu_parameter[0]
+							data[`slot${i}`][`subslot${j}`].accu_parameter[0] < -50
+								? '--'
+								: data[`slot${i}`][`subslot${j}`].accu_parameter[0]
 
 						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.voltage =
-							data[`slot${i}`][`subslot${j}`].accu_parameter[1]
+							data[`slot${i}`][`subslot${j}`].accu_parameter[1] === 65280
+								? 0
+								: data[`slot${i}`][`subslot${j}`].accu_parameter[1]
 
 						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.capacity =
-							data[`slot${i}`][`subslot${j}`].accu_parameter[2]
+							data[`slot${i}`][`subslot${j}`].accu_parameter[2] === 65280
+								? 0
+								: data[`slot${i}`][`subslot${j}`].accu_parameter[2]
 
 						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.current =
-							data[`slot${i}`][`subslot${j}`].accu_parameter[3]
+							data[`slot${i}`][`subslot${j}`].accu_parameter[3] < 0
+								? 0
+								: data[`slot${i}`][`subslot${j}`].accu_parameter[3]
 
 						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.energy =
-							data[`slot${i}`][`subslot${j}`].accu_parameter[4]
+							data[`slot${i}`][`subslot${j}`].accu_parameter[4] === 65280
+								? 0
+								: data[`slot${i}`][`subslot${j}`].accu_parameter[4]
 
 						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.operating_time_h =
 							data[`slot${i}`][`subslot${j}`].accu_parameter[5]
@@ -226,10 +236,14 @@ export function handleL6000_data(data) {
 							data[`slot${i}`][`subslot${j}`].accu_parameter[6]
 
 						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_charge =
-							data[`slot${i}`][`subslot${j}`].accu_parameter[7]
+							data[`slot${i}`][`subslot${j}`].accu_parameter[7] === 65280
+								? 0
+								: data[`slot${i}`][`subslot${j}`].accu_parameter[7]
 
 						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.cycle_count =
-							data[`slot${i}`][`subslot${j}`].accu_parameter[8]
+							data[`slot${i}`][`subslot${j}`].accu_parameter[8] === 65280
+								? 0
+								: data[`slot${i}`][`subslot${j}`].accu_parameter[8]
 
 						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.state_of_health =
 							data[`slot${i}`][`subslot${j}`].accu_parameter[9]
