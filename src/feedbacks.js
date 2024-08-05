@@ -1,5 +1,5 @@
 import { choices } from './consts.js'
-import { feedbackOptions, styles } from './feedbackOptions.js'
+import { colours, feedbackOptions, styles } from './feedbackOptions.js'
 import { warningsL6000 } from './errors.js'
 import { iconsL6000 } from './icons-l6000.js'
 
@@ -63,7 +63,7 @@ export default async function (self) {
 			label: 'Battery Status',
 			defaultStyle: styles.red,
 			options: [feedbackOptions.slot, feedbackOptions.subslot],
-			callback: ( feedback ) => {
+			callback: (feedback) => {
 				const battSlot = self.d6000[`slot${feedback.options.slot}`][`subslot${feedback.options.subslot}`]
 				let out = {
 					png64: null,
@@ -71,29 +71,30 @@ export default async function (self) {
 					alignment: 'center:center',
 					text: `Slot ${feedback.options.slot}/${feedback.options.subslot}\\n\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`,
 					textExpression: false,
-					color: 16777215,
-					bgcolor: 0,
+					color: colours.white,
+					bgcolor: colours.black,
 					size: 14,
+					show_topbar: 'default',
 				}
+				out.png64 = iconsL6000.regen[self.frame]
+				out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nRegen\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
+				return out
 				for (const warning of warningsL6000) {
 					if (self.d6000.device.warnings.includes(warning.id)) {
-						if (
-							warning.slot === feedback.options.slot &&
-							warning.subslot === feedback.options.subslot
-						) {
-							if ( warning.warn === 'hot') {
+						if (warning.slot === feedback.options.slot && warning.subslot === feedback.options.subslot) {
+							if (warning.warn === 'hot') {
 								out.png64 = iconsL6000.hot
 								out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nOverheat\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
 								return out
-							} else if ( warning.warn === 'cold') {
+							} else if (warning.warn === 'cold') {
 								out.png64 = iconsL6000.cold
 								out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nToo Cold\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
 								return out
-							} else if ( warning.warn === 'regen') {
+							} else if (warning.warn === 'regen') {
 								out.png64 = iconsL6000.regen[self.frame]
-								out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nRegenerating\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
+								out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nRegen\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
 								return out
-							} else if ( warning.warn === 'defect') { 
+							} else if (warning.warn === 'defect') {
 								out.png64 = iconsL6000.defect
 								out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nDefect\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
 								return out
@@ -101,7 +102,31 @@ export default async function (self) {
 						}
 					}
 				}
+				if (battSlot.led === 'GREEN') {
+					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nIdle\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
+				} else if (battSlot.led === 'GREEN_FLASHING' || battSlot.led === 'YELLOW') {
+					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nCharging\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
+				} else if (battSlot.led === 'OFF') {
+					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\n\\n\\nEmpty`
+					out.png64 = iconsL6000.led.FLASHING
+					return out
+				}
 
+				if (battSlot.accu_parameter.state_of_charge >= 97) {
+					out.png64 = iconsL6000.level.over97
+				} else if (battSlot.accu_parameter.state_of_charge < 97 && battSlot.accu_parameter.state_of_charge >= 76) {
+					out.png64 = self.blink ? iconsL6000.led.FLASHING : iconsL6000.level.lessthen96
+				} else if (battSlot.accu_parameter.state_of_charge < 76 && battSlot.accu_parameter.state_of_charge >= 51) {
+					out.png64 = self.blink ? iconsL6000.led.FLASHING : iconsL6000.level.lessthan76
+				} else if (battSlot.accu_parameter.state_of_charge < 51 && battSlot.accu_parameter.state_of_charge >= 26) {
+					out.png64 = self.blink ? iconsL6000.led.FLASHING : iconsL6000.level.lessthan51
+				} else if (battSlot.accu_parameter.state_of_charge < 26 && battSlot.accu_parameter.state_of_charge >= 11) {
+					out.png64 = self.blink ? iconsL6000.led.FLASHING : iconsL6000.level.lessthan26
+				} else if (battSlot.accu_parameter.state_of_charge < 11) {
+					out.png64 = self.blink ? iconsL6000.led.FLASHING : iconsL6000.level.lessthan11
+				} else {
+					out.png64 = iconsL6000.led.FLASHING
+				}
 				return out
 			},
 		}

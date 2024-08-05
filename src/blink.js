@@ -5,7 +5,7 @@ export function startBlink() {
 		clearTimeout(this.blinkTimer)
 	}
 	this.blink = !this.blink
-    this.checkFeedbacks('batteryStatus')
+	this.checkFeedbacks('batteryStatus')
 	this.blinkTimer = setTimeout(() => {
 		this.startBlink()
 	}, blink_rate)
@@ -21,13 +21,13 @@ export function stopBlink() {
 	}
 }
 
-export function startFrame(){
-    if (this.frameTimer) {
-        clearTimeout(this.frameTimer)
-    }
-    this.frame = this.frame === undefined || this.frame === 4  ? 0 : this.frame + 1
-    this.checkFeedbacks('batteryStatus')
-    this.frameTimer = setTimeout(() => {
+export function startFrame() {
+	if (this.frameTimer) {
+		clearTimeout(this.frameTimer)
+	}
+	this.frame = this.frame === undefined || this.frame === 4 ? 0 : this.frame + 1
+	this.checkFeedbacks('batteryStatus')
+	this.frameTimer = setTimeout(() => {
 		this.startFrame()
 	}, frame_rate)
 }

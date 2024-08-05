@@ -1,9 +1,16 @@
 import { combineRgb } from '@companion-module/base'
 
+export const colours = {
+	black: combineRgb(0, 0, 0),
+	white: combineRgb(255, 255, 255),
+	red: combineRgb(255, 0, 0),
+	green: combineRgb(0, 204, 0),
+}
+
 export const styles = {
 	red: {
-		bgcolor: combineRgb(255, 0, 0),
-		color: combineRgb(0, 0, 0),
+		bgcolor: colours.black,
+		color: colours.red,
 	},
 }
 

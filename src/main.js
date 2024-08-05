@@ -17,7 +17,17 @@ import * as udp from './udp.js'
 class Digital6000 extends InstanceBase {
 	constructor(internal) {
 		super(internal)
-		Object.assign(this, { ...blink, ...config, ...device, ...digital6000, ...parseResponse, ...queue, ...subscriptions, ...udp })
+		Object.assign(this, {
+			...blink,
+			...config,
+			...device,
+			...digital6000,
+			...parseResponse,
+			...queue,
+			...subscriptions,
+			...udp,
+		})
+		this.frame = 0
 	}
 
 	async init(config) {
