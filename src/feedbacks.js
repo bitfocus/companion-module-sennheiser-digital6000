@@ -34,7 +34,13 @@ export default async function (self) {
 			name: 'Fan Defect',
 			type: 'boolean',
 			label: 'Fan Defect',
-			defaultStyle: styles.red,
+			defaultStyle: {
+				png64: iconsL6000.fanWarning,
+				pngalignment: 'center:center',
+				alignment: 'center:top',
+				text: `Fan Defect`,
+				size: 14,
+			},
 			options: [feedbackOptions.fan],
 			callback: ({ options }) => {
 				for (const warning of warningsL6000) {
@@ -51,7 +57,13 @@ export default async function (self) {
 			name: 'Device Hot',
 			type: 'boolean',
 			label: 'Device Hot',
-			defaultStyle: styles.red,
+			defaultStyle: {
+				png64: iconsL6000.deviceHot,
+				pngalignment: 'center:center',
+				alignment: 'center:top',
+				text: `Device Hot`,
+				size: 14,
+			},
 			options: [],
 			callback: () => {
 				return self.d6000.device.warnings.includes(25)
