@@ -76,9 +76,6 @@ export default async function (self) {
 					size: 14,
 					show_topbar: 'default',
 				}
-				out.png64 = iconsL6000.regen[self.frame]
-				out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nRegen\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
-				return out
 				for (const warning of warningsL6000) {
 					if (self.d6000.device.warnings.includes(warning.id)) {
 						if (warning.slot === feedback.options.slot && warning.subslot === feedback.options.subslot) {
