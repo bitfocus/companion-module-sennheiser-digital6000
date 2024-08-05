@@ -5,6 +5,7 @@ import UpdateFeedbacks from './feedbacks.js'
 import UpdatePresets from './presets.js'
 import UpdateVariableDefinitions from './variables.js'
 import UpdateVariableValues from './updatevariables.js'
+import * as blink from './blink.js'
 import * as config from './config.js'
 import * as device from './device.js'
 import * as digital6000 from './digital6000.js'
@@ -16,7 +17,7 @@ import * as udp from './udp.js'
 class Digital6000 extends InstanceBase {
 	constructor(internal) {
 		super(internal)
-		Object.assign(this, { ...config, ...device, ...digital6000, ...parseResponse, ...queue, ...subscriptions, ...udp })
+		Object.assign(this, { ...blink, ...config, ...device, ...digital6000, ...parseResponse, ...queue, ...subscriptions, ...udp })
 	}
 
 	async init(config) {
@@ -27,6 +28,8 @@ class Digital6000 extends InstanceBase {
 		this.log('debug', `destroy ${this.id}`)
 		this.stopCmdQueue()
 		this.stopListeningTimer()
+		this.stopBlink()
+		this.stopFrame()
 		await this.cancelSubscriptions(this.config.device)
 		if (this.socket) {
 			this.socket.destroy()

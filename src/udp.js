@@ -44,6 +44,8 @@ export function init_udp(host, port) {
 				this.log('debug', `UDP Socket listening`)
 			}
 			this.startListeningTimer()
+			this.startBlink()
+			this.startFrame()
 		})
 
 		this.socket.on('data', (msg) => {

@@ -246,4 +246,5 @@ export function handleL6000_data(data) {
 			}
 		}
 	}
+	this.checkFeedbacks('batteryStatus')
 }
