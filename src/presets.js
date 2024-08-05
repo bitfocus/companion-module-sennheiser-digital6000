@@ -58,6 +58,88 @@ export default async function (self) {
 				text: '',
 			}
 		}
+		presetsDefinitions[`deviceStatus`] = {
+			type: 'button',
+			category: 'Device Status',
+			name: `Device Status`,
+			style: {
+				png64: iconsL6000.ok,
+				pngalignment: 'center:center',
+				alignment: 'center:top',
+				text: `L 6000\\nOK`,
+				textExpression: false,
+				color: colours.white,
+				bgcolor: colours.black,
+				size: 14,
+				show_topbar: false,
+			},
+			steps: [],
+			feedbacks: [
+				{
+					feedbackId: 'fanWarning',
+					options: {
+						fan: 1,
+					},
+					style: {
+						png64: iconsL6000.fanWarning,
+						pngalignment: 'center:center',
+						alignment: 'center:top',
+						text: `Fan 1 Defect`,
+						size: 14,
+					},
+				},
+				{
+					feedbackId: 'fanWarning',
+					options: {
+						fan: 2,
+					},
+					style: {
+						png64: iconsL6000.fanWarning,
+						pngalignment: 'center:center',
+						alignment: 'center:top',
+						text: `Fan 2 Defect`,
+						size: 14,
+					},
+				},
+				{
+					feedbackId: 'fanWarning',
+					options: {
+						fan: 3,
+					},
+					style: {
+						png64: iconsL6000.fanWarning,
+						pngalignment: 'center:center',
+						alignment: 'center:top',
+						text: `Fan 3 Defect`,
+						size: 14,
+					},
+				},
+				{
+					feedbackId: 'fanWarning',
+					options: {
+						fan: 4,
+					},
+					style: {
+						png64: iconsL6000.fanWarning,
+						pngalignment: 'center:center',
+						alignment: 'center:top',
+						text: `Fan 4 Defect`,
+						size: 14,
+					},
+				},
+				{
+					feedbackId: 'deviceHot',
+					options: {},
+					style: {
+						png64: iconsL6000.deviceHot,
+						pngalignment: 'center:center',
+						alignment: 'center:top',
+						text: `Device Hot`,
+						size: 14,
+					},
+				},
+			],
+		}
 	}
 	self.setPresetDefinitions(presetsDefinitions)
 }

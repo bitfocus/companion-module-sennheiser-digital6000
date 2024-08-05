@@ -64,6 +64,8 @@ Capacity, Current, Cycle Count, Energy, Operating Time (H), Operating Time (Min)
 
 #### L 6000
 
+Battery Status
+
 ### Release History
 
 #### 1.0.0
