@@ -5,6 +5,7 @@ export const colours = {
 	white: combineRgb(255, 255, 255),
 	red: combineRgb(255, 0, 0),
 	green: combineRgb(0, 204, 0),
+	darkblue: combineRgb(0, 0, 102),
 }
 
 export const styles = {
@@ -15,6 +16,14 @@ export const styles = {
 }
 
 const feedbackChoices = {
+	out: [
+		{ id: 1, label: 'Output 1' },
+		{ id: 2, label: 'Output 2' },
+	],
+	channel: [
+		{ id: 1, label: 'Rx Channel 1' },
+		{ id: 2, label: 'Rx Channel 2' },
+	],
 	slot: [
 		{ id: 1, label: 'Slot 1' },
 		{ id: 2, label: 'Slot 2' },
@@ -40,6 +49,20 @@ const feedbackChoices = {
 }
 
 export const feedbackOptions = {
+	output: {
+		id: 'out',
+		type: 'dropdown',
+		label: 'Slot',
+		default: feedbackChoices.out[0].id,
+		choices: feedbackChoices.out,
+	},
+	channel: {
+		id: 'out',
+		type: 'dropdown',
+		label: 'Slot',
+		default: feedbackChoices.channel[0].id,
+		choices: feedbackChoices.channel,
+	},
 	slot: {
 		id: 'slot',
 		type: 'dropdown',

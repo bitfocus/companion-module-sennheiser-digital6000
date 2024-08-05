@@ -117,6 +117,7 @@ export default async function (self) {
 					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nCharging\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
 				} else if (battSlot.led === 'DEV_IDENTIFY') {
 					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\nIdentify\\n\\n${battSlot.accu_parameter.state_of_charge}% ${battSlot.accu_parameter.temperature}C`
+					out.bgcolor = colours.darkblue
 				} else if (battSlot.led === 'OFF') {
 					out.text = `Slot ${feedback.options.slot}/${feedback.options.subslot}\\n${
 						self.d6000[`slot${feedback.options.slot}`].type
