@@ -159,7 +159,7 @@ export default async function (self) {
 					out.png64 = self.blink ? iconsL6000.led.FLASHING : iconsL6000.level.lessthan51
 				} else if (battSlot.accu_parameter.state_of_charge < 26 && battSlot.accu_parameter.state_of_charge >= 11) {
 					out.png64 = self.blink ? iconsL6000.led.FLASHING : iconsL6000.level.lessthan26
-				} else if (battSlot.accu_parameter.state_of_charge < 11) {
+				} else if (battSlot.accu_parameter.state_of_charge < 11 && battSlot.accu_parameter.state_of_charge > 0) {
 					out.png64 = self.blink ? iconsL6000.led.FLASHING : iconsL6000.level.lessthan11
 				} else {
 					out.png64 = iconsL6000.led.FLASHING
