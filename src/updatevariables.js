@@ -23,6 +23,9 @@ export default async function (self) {
 		}
 		variableValues['device_version'] = self.d6000.device.identity.version
 		variableValues['device_name'] = self.d6000.device.name
+		variableValues['sys_brightness'] = self.d6000.sys.brightness
+		variableValues['sys_clock'] = self.d6000.sys.clock
+		variableValues['sys_clock_frequency'] = self.d6000.sys.clock_frequency_measured
 	} else if (self.config.device === choices.devices[2].id) {
 		//set L6000 variables
 		for (let i = 1; i <= 4; i++) {

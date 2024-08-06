@@ -6,6 +6,8 @@ Control and monitor the EM 6000, EM 6000 Dante and L 6000 via Sennheiser Sound C
 
 #### EM 6000
 
+Antenna Booster, Audio Output Level, Display Brightness, Identify, Reciever Bank & Channel, Reciever Carrier Frequency, Reciever Encryption, Reciever Mute, Reciever Name
+
 #### L 6000
 
 Identify
@@ -51,6 +53,10 @@ Active Bank, Active Channel, Carrier Frequency, Name, RF 1 Level, RF 2 Level, AF
 - **SKX Transmitter**
 
 Battery - Percent, Battery - Time, Capsule, Gain, Lowcut, Name
+
+- **System**
+
+Brightness, Clock, Clock Frequency
 
 #### L 6000
 

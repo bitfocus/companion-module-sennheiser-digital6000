@@ -64,8 +64,15 @@ export function handleEM6000_data(data) {
 		this.d6000.sys.dante = { ...this.d6000.sys.dante, ...data.sys?.dante }
 		this.d6000.sys.wsm_master_cnt = data.sys?.wsm_master_cnt ?? this.d6000.sys.wsm_master_cnt
 		this.d6000.sys.clock_frequency_measured =
-			data.sys?.clock_frequency_measured ?? this.d6000.sys.clock_frequency_measured
-		this.d6000.sys.clock = data.sys?.clock ?? this.d6000.sys.clock
+			data.sys.clock_frequency_measured ?? this.d6000.sys.clock_frequency_measured
+		if (data.sys.clock !== undefined) {
+			for (const clock of choices.clock) {
+				if (clock.id === data.sys.clock) {
+					this.d6000.sys.clock = clock.label
+					break
+				}
+			}
+		}
 		this.d6000.sys.brightness = data.sys?.brightness ?? this.d6000.sys.brightness
 		this.d6000.sys.booster = data.sys?.booster ?? this.d6000.sys.booster
 		this.checkFeedbacks('booster')

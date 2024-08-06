@@ -25,7 +25,10 @@ export default async function (self) {
 		}
 		variableDefinitions.push(
 			{ variableId: 'device_version', name: 'Device Version' },
-			{ variableId: 'device_name', name: 'Device Name' }
+			{ variableId: 'device_name', name: 'Device Name' },
+			{ variableId: 'sys_brightness', name: 'System Brightness' },
+			{ variableId: 'sys_clock', name: 'System Clock' },
+			{ variableId: 'sys_clock_frequency', name: 'System Clock Frequency' }
 		)
 	} else if (self.config.device === choices.devices[2].id) {
 		//set L6000 variables

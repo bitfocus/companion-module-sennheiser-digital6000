@@ -94,7 +94,7 @@ export const limits = {
 		max: 99,
 		min: 0,
 		step: 1,
-		units: '',
+		units: '#',
 	},
 	carrier: {
 		max: 713900,

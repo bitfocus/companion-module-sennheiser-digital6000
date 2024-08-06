@@ -12,8 +12,16 @@ export const colours = {
 
 export const styles = {
 	red: {
-		bgcolor: colours.black,
-		color: colours.red,
+		bgcolor: colours.red,
+		color: colours.black,
+	},
+	green: {
+		bgcolor: colours.green,
+		color: colours.black,
+	},
+	blue: {
+		bgcolor: colours.darkblue,
+		color: colours.white,
 	},
 }
 

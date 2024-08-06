@@ -21,7 +21,7 @@ export default async function (self) {
 			name: 'Booster',
 			type: 'boolean',
 			label: 'Booster',
-			defaultStyle: styles.red,
+			defaultStyle: styles.blue,
 			options: [],
 			callback: () => {
 				return self.d6000.sys.booster
@@ -31,7 +31,7 @@ export default async function (self) {
 			name: 'Clock Source',
 			type: 'boolean',
 			label: 'Clock Source',
-			defaultStyle: styles.red,
+			defaultStyle: styles.green,
 			options: [feedbackOptions.clock],
 			callback: ({ options }) => {
 				return self.d6000.sys.clock === options.clock
@@ -41,7 +41,7 @@ export default async function (self) {
 			name: 'Active Encryption',
 			type: 'boolean',
 			label: 'Active Encryption',
-			defaultStyle: styles.red,
+			defaultStyle: styles.blue,
 			options: [feedbackOptions.reciever],
 			callback: ({ options }) => {
 				return self.d6000[`rx${options.reciever}`].encryption
@@ -91,7 +91,7 @@ export default async function (self) {
 			name: 'RF Diversity',
 			type: 'boolean',
 			label: 'RF Diverity',
-			defaultStyle: styles.red,
+			defaultStyle: styles.green,
 			options: [feedbackOptions.reciever, feedbackOptions.rf],
 			callback: ({ options }) => {
 				return self.d6000.mm[`ch${options.reciever}`][`DIV${options.rf}`]
