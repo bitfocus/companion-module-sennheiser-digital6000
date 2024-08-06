@@ -1,12 +1,113 @@
 import { choices } from './consts.js'
 import { colours, feedbackOptions, styles } from './feedbackOptions.js'
-import { warningsL6000 } from './errors.js'
+import { warningsL6000, activeStatusEM6000 } from './errors.js'
 import { iconsL6000 } from './icons-l6000.js'
 
 export default async function (self) {
 	let feedbackDefinitions = []
 	if (self.config.device === choices.devices[0].id || self.config.device === choices.devices[1].id) {
 		//set EM6000 feedbacks
+		feedbackDefinitions['audioMute'] = {
+			name: 'Audio Mute',
+			type: 'boolean',
+			label: 'Audio Mute',
+			defaultStyle: styles.red,
+			options: [feedbackOptions.reciever],
+			callback: ({ options }) => {
+				return self.d6000[`rx${options.reciever}`].audio_mute
+			},
+		}
+		feedbackDefinitions['booster'] = {
+			name: 'Booster',
+			type: 'boolean',
+			label: 'Booster',
+			defaultStyle: styles.red,
+			options: [],
+			callback: () => {
+				return self.d6000.sys.booster
+			},
+		}
+		feedbackDefinitions['clock'] = {
+			name: 'Clock Source',
+			type: 'boolean',
+			label: 'Clock Source',
+			defaultStyle: styles.red,
+			options: [feedbackOptions.clock],
+			callback: ({ options }) => {
+				return self.d6000.sys.clock === options.clock
+			},
+		}
+		feedbackDefinitions['encryption'] = {
+			name: 'Active Encryption',
+			type: 'boolean',
+			label: 'Active Encryption',
+			defaultStyle: styles.red,
+			options: [feedbackOptions.reciever],
+			callback: ({ options }) => {
+				return self.d6000[`rx${options.reciever}`].encryption
+			},
+		}
+		feedbackDefinitions['activeWarning'] = {
+			name: 'Active Warning',
+			type: 'boolean',
+			label: 'Active Warning',
+			defaultStyle: styles.red,
+			options: [feedbackOptions.reciever, feedbackOptions.EMwarning],
+			callback: ({ options }) => {
+				return self.d6000[`rx${options.reciever}`].active_warnings.includes(options.warning)
+			},
+		}
+		feedbackDefinitions['activeStatus'] = {
+			name: 'Active Status',
+			type: 'boolean',
+			label: 'Active Status',
+			defaultStyle: styles.red,
+			options: [feedbackOptions.reciever, feedbackOptions.status],
+			callback: ({ options }) => {
+				return self.d6000[`rx${options.reciever}`].active_status.includes(options.status)
+			},
+		}
+		feedbackDefinitions['afPeak'] = {
+			name: 'Audio Peak',
+			type: 'boolean',
+			label: 'Audio Peak',
+			defaultStyle: styles.red,
+			options: [feedbackOptions.reciever],
+			callback: ({ options }) => {
+				return self.d6000.mm[`ch${options.reciever}`].PEAK
+			},
+		}
+		feedbackDefinitions['rfPeak'] = {
+			name: 'RF Peak',
+			type: 'boolean',
+			label: 'RF Peak',
+			defaultStyle: styles.red,
+			options: [feedbackOptions.reciever, feedbackOptions.rf],
+			callback: ({ options }) => {
+				return self.d6000.mm[`ch${options.reciever}`][`RF${options.rf}_PEAK`]
+			},
+		}
+		feedbackDefinitions['rfDiversity'] = {
+			name: 'RF Diversity',
+			type: 'boolean',
+			label: 'RF Diverity',
+			defaultStyle: styles.red,
+			options: [feedbackOptions.reciever, feedbackOptions.rf],
+			callback: ({ options }) => {
+				return self.d6000.mm[`ch${options.reciever}`][`DIV${options.rf}`]
+			},
+		}
+		feedbackDefinitions['recieverStatus'] = {
+			//placeholder
+			name: 'Reciever Status',
+			type: 'boolean',
+			label: 'Reciever Status',
+			defaultStyle: styles.red,
+			options: [feedbackOptions.reciever],
+			callback: ({ options }) => {
+				return self.d6000.mm[`ch${options.reciever}`][`DIV${options.rf}`]
+			},
+		}
 	} else if (self.config.device === choices.devices[2].id) {
 		//set L6000 feedbacks
 		feedbackDefinitions['slotWarning'] = {

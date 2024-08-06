@@ -1,4 +1,6 @@
 import { combineRgb } from '@companion-module/base'
+import { choices } from './consts.js'
+import { warningsEM6000, activeStatusEM6000 } from './errors.js'
 
 export const colours = {
 	black: combineRgb(0, 0, 0),
@@ -20,9 +22,13 @@ const feedbackChoices = {
 		{ id: 1, label: 'Output 1' },
 		{ id: 2, label: 'Output 2' },
 	],
-	channel: [
+	rxchannel: [
 		{ id: 1, label: 'Rx Channel 1' },
 		{ id: 2, label: 'Rx Channel 2' },
+	],
+	RF: [
+		{ id: 1, label: 'RF 1' },
+		{ id: 2, label: 'RF 2' },
 	],
 	slot: [
 		{ id: 1, label: 'Slot 1' },
@@ -56,12 +62,40 @@ export const feedbackOptions = {
 		default: feedbackChoices.out[0].id,
 		choices: feedbackChoices.out,
 	},
-	channel: {
-		id: 'out',
+	reciever: {
+		id: 'reciever',
 		type: 'dropdown',
-		label: 'Slot',
-		default: feedbackChoices.channel[0].id,
-		choices: feedbackChoices.channel,
+		label: 'Reciever',
+		default: feedbackChoices.rxchannel[0].id,
+		choices: feedbackChoices.rxchannel,
+	},
+	rf: {
+		id: 'rf',
+		type: 'dropdown',
+		label: 'RF',
+		default: feedbackChoices.RF[0].id,
+		choices: feedbackChoices.RF,
+	},
+	EMwarning: {
+		id: 'warning',
+		type: 'dropdown',
+		label: 'Warning',
+		default: warningsEM6000[0].id,
+		choices: warningsEM6000,
+	},
+	status: {
+		id: 'status',
+		type: 'dropdown',
+		label: 'Status',
+		default: activeStatusEM6000[0].id,
+		choices: activeStatusEM6000,
+	},
+	clock: {
+		id: 'clock',
+		type: 'dropdown',
+		label: 'Clock',
+		default: choices.clock[0].id,
+		choices: choices.clock,
 	},
 	slot: {
 		id: 'slot',

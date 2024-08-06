@@ -68,6 +68,7 @@ export function handleEM6000_data(data) {
 		this.d6000.sys.clock = data.sys?.clock ?? this.d6000.sys.clock
 		this.d6000.sys.brightness = data.sys?.brightness ?? this.d6000.sys.brightness
 		this.d6000.sys.booster = data.sys?.booster ?? this.d6000.sys.booster
+		this.checkFeedbacks('booster')
 	}
 	if (responseKeys.includes('osc')) {
 		this.updateStatus(InstanceStatus.Ok)
@@ -129,8 +130,13 @@ export function handleEM6000_data(data) {
 			this.d6000[`rx${i}`].testtone = data[`rx${i}`].testtone ?? this.d6000[`rx${i}`].testtone
 			this.d6000[`rx${i}`].name = data[`rx${i}`].name ?? this.d6000[`rx${i}`].name
 			this.d6000[`rx${i}`].encryption = data[`rx${i}`].encryption ?? this.d6000[`rx${i}`].encryption
-			this.d6000[`rx${i}`].active_warnings = data[`rx${i}`].active_warnings ?? this.d6000[`rx${i}`].active_warnings
-			this.d6000[`rx${i}`].active_status = data[`rx${i}`].active_status ?? this.d6000[`rx${i}`].active_status
+			this.d6000[`rx${i}`].active_warnings =
+				data[`rx${i}`].active_warnings === undefined
+					? this.d6000[`rx${i}`].active_warnings
+					: data[`rx${i}`].active_warnings
+			this.d6000[`rx${i}`].active_status =
+				data[`rx${i}`].active_status === undefined ? this.d6000[`rx${i}`].active_status : data[`rx${i}`].active_status
+			this.checkFeedbacks('audioMute', 'encryption', 'activeWarning', 'activeStatus', 'recieverStatus')
 		}
 		if (responseKeys.includes('mm')) {
 			this.updateStatus(InstanceStatus.Ok)
@@ -155,6 +161,7 @@ export function handleEM6000_data(data) {
 					? convert_AF_to_dBFS(data.mm[i - 1][7])
 					: this.d6000.mm[`ch${i}`].AF
 			this.d6000.mm[`ch${i}`].PEAK = !!data.mm[i - 1][8]
+			this.checkFeedbacks('afPeak', 'rfPeak', 'rfDiversity', 'recieverStatus')
 		}
 	}
 }

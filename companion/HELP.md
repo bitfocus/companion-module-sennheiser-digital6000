@@ -14,6 +14,14 @@ Identify
 
 #### EM 6000
 
+- **Advanced Feedbacks**
+
+Reciever Status
+
+- **Boolean Feedbacks**
+
+AF Peak, Audio Mute, Active Status, Active Warning, Booster, Clock Source, Diversity, Encryption, RF Peak
+
 #### L 6000
 
 - **Advanced Feedbacks**
