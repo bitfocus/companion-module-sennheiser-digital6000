@@ -1,7 +1,7 @@
 {
-	"id": "sennheiser-digital6000",
-	"name": "sennheiser-digital6000",
-	"shortname": "Digital 6000",
+	"id": "sennheiser-ssc",
+	"name": "sennheiser-ssc",
+	"shortname": "Sennheiser Sound Control Protocol",
 	"description": "Control the Digital 6000 Radio Microphone System",
 	"version": "0.0.0",
 	"license": "MIT",
@@ -21,7 +21,7 @@
 	},
 	"legacyIds": [],
 	"manufacturer": "Sennheiser",
-	"products": ["EM 6000", "EM 6000 Dante", "L6000"],
+	"products": ["EM 6000", "EM 6000 Dante", "L 6000"],
 	"keywords": ["RF", "Radio Microphone"],
 	"bonjourQueries": {
 		"bonjour_host": {

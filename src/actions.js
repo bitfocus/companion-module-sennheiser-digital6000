@@ -1,5 +1,5 @@
 import { choices, limits, query } from './consts.js'
-import { actionOptions } from './actionOptions.js'
+import { actionChoices, actionOptions } from './actionOptions.js'
 
 export default function (self) {
 	let ActionDefinitions = []
@@ -28,11 +28,18 @@ export default function (self) {
 				}
 				self.addCmdtoQueue(msg)
 			},
+			subscribe: ({ options }) => {
+				const msg = {
+					sys: {
+						booster: query,
+					},
+				}
+				self.addCmdtoQueue(msg)
+			},
 			learn: ({ options }) => {
-				const booster = self.d6000.sys.booster
 				return {
 					...options,
-					booster,
+					booster: self.d6000.sys.booster,
 				}
 			},
 		}
@@ -53,23 +60,31 @@ export default function (self) {
 				}
 				self.addCmdtoQueue(msg)
 			},
+			subscribe: ({ options }) => {
+				const msg = {
+					sys: {
+						brightness: query,
+					},
+				}
+				self.addCmdtoQueue(msg)
+			},
 			learn: ({ options }) => {
-				const brightness = self.d6000.sys.brightness
 				return {
 					...options,
-					brightness,
+					brightness: self.d6000.sys.brightness,
 				}
 			},
 		}
 		ActionDefinitions['audioOutLevel'] = {
 			name: 'Audio Output Level',
-			options: [actionOptions.output, actionOptions.level],
+			options: [actionOptions.output, actionOptions.level, actionOptions.relative],
 			callback: async ({ options }) => {
 				let level = parseInt(await self.parseVariablesInString(options.level))
 				if (isNaN(level)) {
 					self.log('warn', `audioOutLevel must be passed a numbed`)
 					return undefined
 				}
+				level = options.relative ? level + self.d6000.audio[`out${options.out}`].level_db : level
 				level = level < -10 ? -10 : level > 18 ? 18 : level
 				const msg = {
 					audio: {
@@ -80,11 +95,21 @@ export default function (self) {
 				}
 				self.addCmdtoQueue(msg)
 			},
+			subscribe: ({ options }) => {
+				const msg = {
+					audio: {
+						[`out${options.out}`]: {
+							level_db: query,
+						},
+					},
+				}
+				self.addCmdtoQueue(msg)
+			},
 			learn: ({ options }) => {
-				const level = self.d6000.audio[`out${options.out}`].level_db
 				return {
 					...options,
-					level,
+					relative: false,
+					level: self.d6000.audio[`out${options.out}`].level_db,
 				}
 			},
 		}
@@ -99,11 +124,18 @@ export default function (self) {
 				}
 				self.addCmdtoQueue(msg)
 			},
+			subscribe: ({ options }) => {
+				const msg = {
+					[`rx${options.reciever}`]: {
+						audio_mute: query,
+					},
+				}
+				self.addCmdtoQueue(msg)
+			},
 			learn: ({ options }) => {
-				const mute = self.d6000[`rx${options.reciever}`].audio_mute
 				return {
 					...options,
-					mute,
+					mute: self.d6000[`rx${options.reciever}`].audio_mute,
 				}
 			},
 		}
@@ -118,11 +150,18 @@ export default function (self) {
 				}
 				self.addCmdtoQueue(msg)
 			},
+			subscribe: ({ options }) => {
+				const msg = {
+					[`rx${options.reciever}`]: {
+						encryption: query,
+					},
+				}
+				self.addCmdtoQueue(msg)
+			},
 			learn: ({ options }) => {
-				const encrypt = self.d6000[`rx${options.reciever}`].encryption
 				return {
 					...options,
-					encrypt,
+					encrypt: self.d6000[`rx${options.reciever}`].encryption,
 				}
 			},
 		}
@@ -138,11 +177,18 @@ export default function (self) {
 				}
 				self.addCmdtoQueue(msg)
 			},
+			subscribe: ({ options }) => {
+				const msg = {
+					[`rx${options.reciever}`]: {
+						name: query,
+					},
+				}
+				self.addCmdtoQueue(msg)
+			},
 			learn: ({ options }) => {
-				const name = self.d6000[`rx${options.reciever}`].name
 				return {
 					...options,
-					name,
+					name: self.d6000[`rx${options.reciever}`].name,
 				}
 			},
 		}
@@ -167,11 +213,18 @@ export default function (self) {
 				}
 				self.addCmdtoQueue(msg)
 			},
+			subscribe: ({ options }) => {
+				const msg = {
+					[`rx${options.reciever}`]: {
+						carrier: query,
+					},
+				}
+				self.addCmdtoQueue(msg)
+			},
 			learn: ({ options }) => {
-				const carrier = self.d6000[`rx${options.reciever}`].carrier
 				return {
 					...options,
-					carrier,
+					carrier: self.d6000[`rx${options.reciever}`].carrier,
 				}
 			},
 		}
@@ -192,13 +245,114 @@ export default function (self) {
 				}
 				self.addCmdtoQueue(msg)
 			},
+			subscribe: ({ options }) => {
+				const msg = {
+					[`rx${options.reciever}`]: {
+						active_bank_channel: query,
+					},
+				}
+				self.addCmdtoQueue(msg)
+			},
 			learn: ({ options }) => {
-				const bank = self.d6000[`rx${options.reciever}`].active_bank_channel.bank
-				const channel = self.d6000[`rx${options.reciever}`].active_bank_channel.channel
 				return {
 					...options,
-					bank,
-					channel,
+					bank: self.d6000[`rx${options.reciever}`].active_bank_channel.bank,
+					channel: self.d6000[`rx${options.reciever}`].active_bank_channel.channel,
+				}
+			},
+		}
+		ActionDefinitions['txSyncSettings'] = {
+			name: 'Transmitter Sync Settings',
+			options: [
+				actionOptions.reciever,
+				actionOptions.syncSettings,
+				actionOptions.auto_lock,
+				actionOptions.auto_lock_ignore,
+				actionOptions.cable_emulation,
+				actionOptions.cable_emulation_ignore,
+				actionOptions.display,
+				actionOptions.display_ignore,
+				actionOptions.gain,
+				actionOptions.gain_ignore,
+				actionOptions.low_cut_frequency,
+				actionOptions.low_cut_frequency_ignore,
+			],
+			callback: async ({ options }) => {
+				let msg = {
+					[`rx${options.reciever}`]: {
+						sync_settings: {
+							auto_lock: query,
+							ignore_auto_lock: query,
+							cable_emulation: query,
+							ignore_cable_emulation: query,
+							display: query,
+							ignore_display: query,
+							gain: query,
+							ignore_gain: query,
+							low_cut_frequency: query,
+							ignore_low_cut_frequency: query,
+						},
+					},
+				}
+				if (options.syncSettings.includes(actionChoices.syncSettings[0].id)) {
+					msg[`rx${options.reciever}`].sync_settings.auto_lock = options.auto_lock
+					msg[`rx${options.reciever}`].sync_settings.ignore_auto_lock = options.auto_lock_ignore
+				}
+				if (options.syncSettings.includes(actionChoices.syncSettings[1].id)) {
+					msg[`rx${options.reciever}`].sync_settings.cable_emulation = options.cable_emulation
+					msg[`rx${options.reciever}`].sync_settings.ignore_cable_emulation = options.cable_emulation_ignore
+				}
+				if (options.syncSettings.includes(actionChoices.syncSettings[2].id)) {
+					msg[`rx${options.reciever}`].sync_settings.display = options.display
+					msg[`rx${options.reciever}`].sync_settings.ignore_display = options.display_ignore
+				}
+				if (options.syncSettings.includes(actionChoices.syncSettings[3].id)) {
+					const gain = parseInt(await self.parseVariablesInString(options.gain))
+					if (isNaN(gain) || gain > limits.gain.max || gain < limits.gain.min || gain % limits.gain.step !== 0) {
+						self.log('warm', `rxSyncSettings has been passed an invalid gain setting ${gain}`)
+						return undefined
+					}
+					msg[`rx${options.reciever}`].sync_settings.gain = gain
+					msg[`rx${options.reciever}`].sync_settings.ignore_gain = options.gain_ignore
+				}
+				if (options.syncSettings.includes(actionChoices.syncSettings[4].id)) {
+					msg[`rx${options.reciever}`].sync_settings.low_cut_frequency = options.low_cut_frequency
+					msg[`rx${options.reciever}`].sync_settings.ignore_low_cut_frequency = options.low_cut_frequency_ignore
+				}
+				self.addCmdtoQueue(msg)
+			},
+			subscribe: async ({ options }) => {
+				const msg = {
+					[`rx${options.reciever}`]: {
+						sync_settings: {
+							auto_lock: query,
+							ignore_auto_lock: query,
+							cable_emulation: query,
+							ignore_cable_emulation: query,
+							display: query,
+							ignore_display: query,
+							gain: query,
+							ignore_gain: query,
+							low_cut_frequency: query,
+							ignore_low_cut_frequency: query,
+						},
+					},
+				}
+				self.addCmdtoQueue(msg)
+			},
+			learn: ({ options }) => {
+				return {
+					...options,
+					auto_lock: self.d6000[`rx${options.reciever}`].sync_settings.auto_lock,
+					auto_lock_ignore: self.d6000[`rx${options.reciever}`].sync_settings.ignore_auto_lock,
+					cable_emulation: self.d6000[`rx${options.reciever}`].sync_settings.cable_emulation,
+					cable_emulation_ignore: self.d6000[`rx${options.reciever}`].sync_settings.ignore_cable_emulation,
+					display: self.d6000[`rx${options.reciever}`].sync_settings.display,
+					display_ignore: self.d6000[`rx${options.reciever}`].sync_settings.ignore_display,
+					gain: self.d6000[`rx${options.reciever}`].sync_settings.gain,
+					gain_ignore: self.d6000[`rx${options.reciever}`].sync_settings.ignore_gain,
+					low_cut_frequency: self.d6000[`rx${options.reciever}`].sync_settings.low_cut_frequency,
+					low_cut_frequency_ignore: self.d6000[`rx${options.reciever}`].sync_settings.ignore_low_cut_frequency,
 				}
 			},
 		}

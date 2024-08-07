@@ -1,12 +1,12 @@
-## Sennheiser Digital 6000
+## Sennheiser Sound Control Protocol
 
-Control and monitor the EM 6000, EM 6000 Dante and L 6000 via Sennheiser Sound Control Protocol.
+Control and monitor the EM 6000, EM 6000 Dante and L 6000 via Sennheiser Sound Control Protocol (UDP).
 
 ### Actions
 
 #### EM 6000
 
-Antenna Booster, Audio Output Level, Display Brightness, Identify, Reciever Bank & Channel, Reciever Carrier Frequency, Reciever Encryption, Reciever Mute, Reciever Name
+Antenna Booster, Audio Output Level, Display Brightness, Identify, Reciever Bank & Channel, Reciever Carrier Frequency, Reciever Encryption, Reciever Mute, Reciever Name, Transmitter Sync Settings
 
 #### L 6000
 
