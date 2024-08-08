@@ -91,6 +91,7 @@ export function handleEM6000_data(data) {
 		this.updateStatus(InstanceStatus.Ok)
 		this.d6000.audio.out1 = { ...this.d6000.audio.out1, ...data.audio?.out1 }
 		this.d6000.audio.out2 = { ...this.d6000.audio.out2, ...data.audio?.out2 }
+		this.checkFeedbacks('recieverStatus')
 	}
 	for (let i = 1; i <= 2; i++) {
 		if (responseKeys.includes(`rx${i}`)) {

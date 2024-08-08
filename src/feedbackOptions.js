@@ -25,7 +25,7 @@ export const styles = {
 	},
 }
 
-const feedbackChoices = {
+export const feedbackChoices = {
 	out: [
 		{ id: 1, label: 'Output 1' },
 		{ id: 2, label: 'Output 2' },
@@ -38,6 +38,30 @@ const feedbackChoices = {
 		{ id: 1, label: 'RF 1' },
 		{ id: 2, label: 'RF 2' },
 	],
+	labels: [
+		{ id: 'name', label: 'Reciever Name' },
+		{ id: 'bank', label: 'Bank & Channel' },
+		{ id: 'carrier', label: 'Carrier Frequency' },
+		{ id: 'outputLevel', label: 'Output Level' },
+		{ id: 'warning', label: 'Active Warnings' },
+		{ id: 'status', label: 'Active Status' },
+		{ id: 'txName', label: 'TX Name' },
+		{ id: 'txType', label: 'TX Type' },
+		{ id: 'txGain', label: 'TX Gain' },
+		{ id: 'txLowcut', label: 'TX Low Cut Frequency' },
+		{ id: 'batteryRuntime', label: 'Battery Runtime' },
+		{ id: 'batteryPercent', label: 'Battery Percent' },
+	],
+	labelDefault: ['name', 'bank', 'carrier', 'warning'],
+	icons: [
+		{ id: 'battery', label: 'Battery' },
+		{ id: 'auto lock', label: 'Auto Lock' },
+		{ id: 'rf', label: 'RF' },
+		{ id: 'lqi', label: 'LQI' },
+		{ id: 'audio', label: 'Audio Level' },
+		{ id: 'encryption', label: 'Encryption' },
+	],
+	iconDefault: ['battery', 'rf', 'audio', 'lqi'],
 	slot: [
 		{ id: 1, label: 'Slot 1' },
 		{ id: 2, label: 'Slot 2' },
@@ -104,6 +128,22 @@ export const feedbackOptions = {
 		label: 'Clock',
 		default: choices.clock[0].id,
 		choices: choices.clock,
+	},
+	recieverLabels: {
+		id: 'labels',
+		type: 'multidropdown',
+		label: `Labels`,
+		default: feedbackChoices.labelDefault,
+		choices: feedbackChoices.labels,
+		minSelection: 1,
+	},
+	recieverIcons: {
+		id: 'icons',
+		type: 'multidropdown',
+		label: `Icons`,
+		default: feedbackChoices.iconDefaultDefault,
+		choices: feedbackChoices.icons,
+		minSelection: 1,
 	},
 	slot: {
 		id: 'slot',

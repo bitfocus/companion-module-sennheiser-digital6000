@@ -76,9 +76,21 @@ Capacity, Current, Cycle Count, Energy, Operating Time (H), Operating Time (Min)
 
 #### EM 6000
 
+Reciever Status
+
 #### L 6000
 
 Battery Status, Device Status
+
+### Not Supported
+
+The following controls or feedbacks are not currently supported by the SSC API.
+
+#### EM 6000
+
+Transmission Mode (LR, LD). Command Mode. Tx Sync Settings (Power LED Mode, RF Power).
+
+#### L 6000
 
 ### Release History
 

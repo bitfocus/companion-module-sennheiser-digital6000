@@ -1,11 +1,53 @@
 import { choices } from './consts.js'
 import { iconsL6000 } from './icons-l6000.js'
-import { colours } from './feedbackOptions.js'
+import { colours, feedbackChoices } from './feedbackOptions.js'
 
 export default async function (self) {
 	let presetsDefinitions = {}
 	if (self.config.device === choices.devices[0].id || self.config.device === choices.devices[1].id) {
 		//set EM6000 presets
+		for (let i = 1; i <= 2; i++) {
+			presetsDefinitions[`Reciever_${i}_Status`] = {
+				type: 'button',
+				category: 'Reciever Status',
+				name: `Reciever ${i} Status`,
+				style: {
+					png64: null,
+					pngalignment: 'center:center',
+					alignment: 'left:top',
+					text: `Reciever  ${i} Status`,
+					textExpression: false,
+					color: colours.white,
+					bgcolor: colours.black,
+					size: '8',
+					show_topbar: false,
+				},
+				steps: [
+					{
+						down: [
+							{
+								actionId: 'rxIdentify',
+								options: {
+									reciever: i,
+								},
+								delay: 0,
+							},
+						],
+						up: [],
+					},
+				],
+				feedbacks: [
+					{
+						feedbackId: 'recieverStatus',
+						options: {
+							reciever: i,
+							labels: feedbackChoices.labelDefault,
+							icons: feedbackChoices.iconDefault,
+						},
+					},
+				],
+			}
+		}
 	} else if (self.config.device === choices.devices[2].id) {
 		//set L6000 presets
 		for (let j = 1; j <= 2; j++) {

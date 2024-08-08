@@ -127,8 +127,8 @@ export function initDigital6000(device) {
 				testtone: null,
 				name: null,
 				encryption: null,
-				active_warnings: null,
-				active_status: null,
+				active_warnings: [],
+				active_status: [],
 			},
 			sys: {
 				dante: {

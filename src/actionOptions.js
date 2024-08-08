@@ -135,6 +135,7 @@ export const actionOptions = {
 		label: 'Name',
 		default: '',
 		useVariables: true,
+		tooltip: 'Max Length: 8 Chars. Forbidden Characters: {}[]()~`!@$%^&_\\:\'".?',
 	},
 	carrier: {
 		id: 'carrier',

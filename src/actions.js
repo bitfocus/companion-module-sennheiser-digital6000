@@ -1,5 +1,6 @@
 import { choices, limits, query } from './consts.js'
 import { actionChoices, actionOptions } from './actionOptions.js'
+import { safeName } from './utils.js'
 
 export default function (self) {
 	let ActionDefinitions = []
@@ -169,7 +170,11 @@ export default function (self) {
 			name: 'Reciever Name',
 			options: [actionOptions.reciever, actionOptions.name],
 			callback: async ({ options }) => {
-				const name = await self.parseVariablesInString(options.name)
+				const name = safeName(await self.parseVariablesInString(options.name))
+				if (name === null) {
+					self.log('warn', `rxName has been passed an invalid name ${name}`)
+					return undefined
+				}
 				const msg = {
 					[`rx${options.reciever}`]: {
 						name: name,

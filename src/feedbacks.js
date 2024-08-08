@@ -1,6 +1,6 @@
 import { choices } from './consts.js'
 import { colours, feedbackOptions, styles } from './feedbackOptions.js'
-import { warningsL6000, activeStatusEM6000 } from './errors.js'
+import { warningsL6000, warningsEM6000, activeStatusEM6000 } from './errors.js'
 import { iconsL6000 } from './icons-l6000.js'
 
 export default async function (self) {
@@ -100,12 +100,84 @@ export default async function (self) {
 		feedbackDefinitions['recieverStatus'] = {
 			//placeholder
 			name: 'Reciever Status',
-			type: 'boolean',
+			type: 'advanced',
 			label: 'Reciever Status',
-			defaultStyle: styles.red,
-			options: [feedbackOptions.reciever],
-			callback: ({ options }) => {
-				return self.d6000.mm[`ch${options.reciever}`][`DIV${options.rf}`]
+			options: [feedbackOptions.reciever, feedbackOptions.recieverLabels, feedbackOptions.recieverIcons],
+			callback: (feedback) => {
+				let options = feedback.options
+				let metering = self.d6000.mm[`ch${options.reciever}`]
+				let reciever = self.d6000[`rx${options.reciever}`]
+				let output = self.d6000.audio[`out${options.reciever}`]
+				let out = {
+					alignment: 'left:top',
+					size: '8',
+					text: '',
+				}
+				options.labels.forEach((item) => {
+					switch (item) {
+						case 'name':
+							out.text += reciever.name !== null ? reciever.name + '\\n' : 'Unknown \\n'
+							break
+						case 'bank':
+							if (reciever.active_bank_channel.bank !== null) {
+								out.text += reciever.active_bank_channel.bank.toUpperCase()
+							}
+							if (reciever.active_bank_channel.channel !== null) {
+								out.text += ':' + reciever.active_bank_channel.channel
+							}
+							out.text += '\\n'
+							break
+						case 'carrier':
+							out.text += !isNaN(Number(reciever.carrier))
+								? Number(reciever.carrier) / 1000 + ' MHz\\n'
+								: '---.--- MHz\\n'
+							break
+						case 'outputLevel':
+							out.text +=
+								output.level_db !== null ? (output.level_db > 0 ? '+' : '') + output.level_db + ' dB\\n' : '-- dB\\n'
+							break
+						case 'txName':
+							out.text += reciever.skx.name !== null ? reciever.skx.name + '\\n' : '\\n'
+							break
+						case 'txType':
+							out.text += reciever.skx.type.type !== null ? reciever.skx.type.type + '\\n' : '\\n'
+							break
+						case 'txGain':
+							out.text +=
+								reciever.skx.gain !== null
+									? (Number(reciever.skx.gain) > 0 ? '+' : '') + reciever.skx.gain + '\\n'
+									: '-- dB\\n'
+							break
+						case 'txLowcut':
+							out.text += reciever.skx.lowcut !== null ? reciever.skx.lowcut + '\\n' : '-- Hz\\n'
+							break
+						case 'batteryRuntime':
+							out.text +=
+								reciever.skx.battery.time !== null ? 'Batt: ' + reciever.skx.battery.time + 'H\\n' : 'Batt: -:--H\\n'
+							break
+						case 'batteryPercent':
+							out.text +=
+								reciever.skx.battery.percent !== null ? 'Batt: ' + reciever.skx.battery.percent + '\\n' : 'Batt: --%\\n'
+							break
+						case 'warning':
+							warningsEM6000.forEach((warning) => {
+								if (reciever.active_warnings.includes(warning.id)) {
+									out.text += warning.label + ' '
+								}
+							})
+							out.text += '\\n'
+							break
+						case 'status':
+							activeStatusEM6000.forEach((status) => {
+								if (reciever.active_status.includes(status.id)) {
+									out.text += status.label + ' '
+								}
+							})
+							out.text += '\\n'
+							break
+					}
+				})
+				return out
 			},
 		}
 	} else if (self.config.device === choices.devices[2].id) {

@@ -1,3 +1,5 @@
+import { regexpName } from './consts.js'
+
 export function convert_RF_to_dBm(level) {
 	if (isNaN(level)) {
 		console.log(`convert_RF_to_dBm has been passed a NaN ${level}`)
@@ -19,4 +21,9 @@ export function convert_LQI_to_percent(lqi) {
 		return null
 	}
 	return Math.round(lqi / 255)
+}
+
+export function safeName(dirtyName) {
+	const regexpName = new RegExp(/[()[\]{}~`!@%&_\\\^:'".?]/g)
+	return dirtyName.trim().replaceAll(regexpName, '').slice(0, 8)
 }
