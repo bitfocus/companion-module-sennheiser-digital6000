@@ -160,20 +160,22 @@ export default async function (self) {
 								reciever.skx.battery.percent !== null ? 'Batt: ' + reciever.skx.battery.percent + '\\n' : 'Batt: --%\\n'
 							break
 						case 'warning':
+							var warnMsg = ''
 							warningsEM6000.forEach((warning) => {
 								if (reciever.active_warnings.includes(warning.id)) {
-									out.text += warning.label + ' '
+									warnMsg += warnMsg.length > 0 ? ', ' + warning.label : warning.label
 								}
 							})
-							out.text += '\\n'
+							out.text += warnMsg + '\\n'
 							break
 						case 'status':
+							var statusMsg = ''
 							activeStatusEM6000.forEach((status) => {
 								if (reciever.active_status.includes(status.id)) {
-									out.text += status.label + ' '
+									statusMsg += statusMsg.length > 0 ? ', ' + status.label : status.label
 								}
 							})
-							out.text += '\\n'
+							out.text += statusMsg + '\\n'
 							break
 					}
 				})
