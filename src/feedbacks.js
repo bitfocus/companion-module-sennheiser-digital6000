@@ -1,3 +1,5 @@
+import { combineRgb } from '@companion-module/base'
+import { graphics } from 'companion-module-utils'
 import { choices } from './consts.js'
 import { colours, feedbackOptions, styles } from './feedbackOptions.js'
 import { warningsL6000, warningsEM6000, activeStatusEM6000 } from './errors.js'
@@ -104,15 +106,34 @@ export default async function (self) {
 			label: 'Reciever Status',
 			options: [feedbackOptions.reciever, feedbackOptions.recieverLabels, feedbackOptions.recieverIcons],
 			callback: (feedback) => {
-				let options = feedback.options
-				let metering = self.d6000.mm[`ch${options.reciever}`]
-				let reciever = self.d6000[`rx${options.reciever}`]
-				let output = self.d6000.audio[`out${options.reciever}`]
+				const options = feedback.options
+				const metering = self.d6000.mm[`ch${options.reciever}`]
+				const reciever = self.d6000[`rx${options.reciever}`]
+				const output = self.d6000.audio[`out${options.reciever}`]
 				let out = {
 					alignment: 'left:top',
 					size: '8',
 					text: '',
+					show_topbar: false,
 				}
+				const lqiOptions = {
+					width: feedback.image.width,
+					height: feedback.image.height,
+					colors: [
+						{ size: 50, color: combineRgb(0, 255, 0), background: combineRgb(0, 255, 0), backgroundOpacity: 64 },
+						{ size: 25, color: combineRgb(255, 255, 0), background: combineRgb(255, 255, 0), backgroundOpacity: 64 },
+						{ size: 25, color: combineRgb(255, 0, 0), background: combineRgb(255, 0, 0), backgroundOpacity: 64 },
+					],
+					barLength: feedback.image.height - 12,
+					barWidth: 6,
+					value: metering.LQI === null ? 0 : metering.LQI,
+					type: 'vertical',
+					offsetX: 64,
+					offsetY: 5,
+					opacity: 255,
+					reverse: false,
+				}
+				out.imageBuffer = graphics.bar(lqiOptions)
 				options.labels.forEach((item) => {
 					switch (item) {
 						case 'name':
