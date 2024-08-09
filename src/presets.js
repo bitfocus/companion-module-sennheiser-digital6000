@@ -15,7 +15,7 @@ export default async function (self) {
 					png64: null,
 					pngalignment: 'center:center',
 					alignment: 'left:top',
-					text: `Reciever  ${i} Status`,
+					text: `Reciever ${i} Status`,
 					textExpression: false,
 					color: colours.white,
 					bgcolor: colours.black,
@@ -43,6 +43,18 @@ export default async function (self) {
 							reciever: i,
 							labels: feedbackChoices.labelDefault,
 							icons: feedbackChoices.iconDefault,
+							meters: feedbackChoices.metersDefault,
+							orientation: feedbackChoices.orientation[1].id,
+						},
+					},
+					{
+						feedbackId: 'activeStatus',
+						options: {
+							reciever: i,
+							status: 'Identified',
+						},
+						style: {
+							bgcolor: colours.darkblue,
 						},
 					},
 				],

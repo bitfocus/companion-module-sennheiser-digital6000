@@ -1,9 +1,10 @@
-import { combineRgb } from '@companion-module/base'
-import { graphics } from 'companion-module-utils'
+//import { combineRgb } from '@companion-module/base'
+//import { graphics } from 'companion-module-utils'
 import { choices } from './consts.js'
 import { colours, feedbackOptions, styles } from './feedbackOptions.js'
 import { warningsL6000, warningsEM6000, activeStatusEM6000 } from './errors.js'
 import { iconsL6000 } from './icons-l6000.js'
+import { buildEM6000icon } from './buildEM6000icon.js'
 
 export default async function (self) {
 	let feedbackDefinitions = []
@@ -104,40 +105,38 @@ export default async function (self) {
 			name: 'Reciever Status',
 			type: 'advanced',
 			label: 'Reciever Status',
-			options: [feedbackOptions.reciever, feedbackOptions.recieverLabels, feedbackOptions.recieverIcons],
+			options: [
+				feedbackOptions.reciever,
+				feedbackOptions.recieverLabels,
+				feedbackOptions.recieverMeters,
+				feedbackOptions.recieverIcons,
+				feedbackOptions.recieverOrientation,
+			],
 			callback: (feedback) => {
 				const options = feedback.options
 				const metering = self.d6000.mm[`ch${options.reciever}`]
 				const reciever = self.d6000[`rx${options.reciever}`]
 				const output = self.d6000.audio[`out${options.reciever}`]
 				let out = {
-					alignment: 'left:top',
-					size: '8',
 					text: '',
-					show_topbar: false,
 				}
-				const lqiOptions = {
-					width: feedback.image.width,
-					height: feedback.image.height,
-					colors: [
-						{ size: 50, color: combineRgb(0, 255, 0), background: combineRgb(0, 255, 0), backgroundOpacity: 64 },
-						{ size: 25, color: combineRgb(255, 255, 0), background: combineRgb(255, 255, 0), backgroundOpacity: 64 },
-						{ size: 25, color: combineRgb(255, 0, 0), background: combineRgb(255, 0, 0), backgroundOpacity: 64 },
-					],
-					barLength: feedback.image.height - 12,
-					barWidth: 6,
-					value: metering.LQI === null ? 0 : metering.LQI,
-					type: 'vertical',
-					offsetX: 64,
-					offsetY: 5,
-					opacity: 255,
-					reverse: false,
+				const iBuffer = buildEM6000icon(
+					reciever,
+					metering,
+					feedback.image,
+					options.meters,
+					options.icons,
+					options.orientation
+				)
+
+				if (iBuffer !== null) {
+					out.imageBuffer = iBuffer
 				}
-				out.imageBuffer = graphics.bar(lqiOptions)
+
 				options.labels.forEach((item) => {
 					switch (item) {
 						case 'name':
-							out.text += reciever.name !== null ? reciever.name + '\\n' : 'Unknown \\n'
+							out.text += reciever.name !== null ? reciever.name.trim() + '\\n' : 'Unknown\\n'
 							break
 						case 'bank':
 							if (reciever.active_bank_channel.bank !== null) {
@@ -149,8 +148,9 @@ export default async function (self) {
 							out.text += '\\n'
 							break
 						case 'carrier':
+							var carrier = (Number(reciever.carrier) / 1000).toString()
 							out.text += !isNaN(Number(reciever.carrier))
-								? Number(reciever.carrier) / 1000 + ' MHz\\n'
+								? carrier.padEnd(7,'0') + ' MHz\\n'
 								: '---.--- MHz\\n'
 							break
 						case 'outputLevel':
@@ -158,7 +158,7 @@ export default async function (self) {
 								output.level_db !== null ? (output.level_db > 0 ? '+' : '') + output.level_db + ' dB\\n' : '-- dB\\n'
 							break
 						case 'txName':
-							out.text += reciever.skx.name !== null ? reciever.skx.name + '\\n' : '\\n'
+							out.text += reciever.skx.name !== null ? reciever.skx.name.trim() + '\\n' : '\\n'
 							break
 						case 'txType':
 							out.text += reciever.skx.type.type !== null ? reciever.skx.type.type + '\\n' : '\\n'
@@ -174,7 +174,7 @@ export default async function (self) {
 							break
 						case 'batteryRuntime':
 							out.text +=
-								reciever.skx.battery.time !== null ? 'Batt: ' + reciever.skx.battery.time + 'H\\n' : 'Batt: -:--H\\n'
+								reciever.skx.battery.time !== null ? 'Batt: ' + reciever.skx.battery.time + '\\n' : 'Batt: -:--\\n'
 							break
 						case 'batteryPercent':
 							out.text +=

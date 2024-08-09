@@ -3,7 +3,7 @@ import { bank, battery_parameter } from './bank.js'
 export function initDigital6000(device) {
 	//initalise the memory structure of the device
 	if (this.d6000) {
-		delete self.d6000
+		delete this.d6000
 	}
 	if (device === choices.devices[0].id || device === choices.devices[1].id) {
 		//define EM6000 object

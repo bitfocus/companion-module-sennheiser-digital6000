@@ -1,7 +1,7 @@
 {
-	"id": "sennheiser-ssc",
-	"name": "sennheiser-ssc",
-	"shortname": "Sennheiser Sound Control Protocol",
+	"id": "sennheiser-digital6000",
+	"name": "sennheiser-digital6000",
+	"shortname": "Digital 6000",
 	"description": "Control the Digital 6000 Radio Microphone System",
 	"version": "0.0.0",
 	"license": "MIT",

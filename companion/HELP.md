@@ -1,4 +1,4 @@
-## Sennheiser Sound Control Protocol
+## Sennheiser Digital 6000 Radio Microphone System
 
 Control and monitor the EM 6000, EM 6000 Dante and L 6000 via Sennheiser Sound Control Protocol (UDP).
 
