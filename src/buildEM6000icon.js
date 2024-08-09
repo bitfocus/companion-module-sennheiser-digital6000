@@ -23,12 +23,12 @@ const diversityLED = graphics.circle({
 
 const meterColours = {
 	af: [
-		{ size: 52, color: combineRgb(0, 255, 0), background: combineRgb(0, 255, 0), backgroundOpacity: 64 },
-		{ size: 32, color: combineRgb(255, 255, 0), background: combineRgb(255, 255, 0), backgroundOpacity: 64 },
-		{ size: 16, color: combineRgb(255, 0, 0), background: combineRgb(255, 0, 0), backgroundOpacity: 64 },
+		{ size: 52, color: combineRgb(0, 255, 0), background: combineRgb(0, 255, 0), backgroundOpacity: 48 },
+		{ size: 32, color: combineRgb(255, 255, 0), background: combineRgb(255, 255, 0), backgroundOpacity: 48 },
+		{ size: 16, color: combineRgb(255, 0, 0), background: combineRgb(255, 0, 0), backgroundOpacity: 48 },
 	],
-	rf: [{ size: 100, color: combineRgb(255, 255, 0), background: combineRgb(255, 255, 0), backgroundOpacity: 64 }],
-	lqi: [{ size: 100, color: combineRgb(0, 0, 255), background: combineRgb(0, 0, 255), backgroundOpacity: 64 }],
+	rf: [{ size: 100, color: combineRgb(255, 255, 0), background: combineRgb(255, 255, 0), backgroundOpacity: 48 }],
+	lqi: [{ size: 100, color: combineRgb(0, 0, 255), background: combineRgb(0, 0, 255), backgroundOpacity: 0 }],
 }
 
 function returnLed(type, x, y, image) {
@@ -145,7 +145,7 @@ export function buildEM6000icon(channel, metering, image, meteringOptions, graph
 			value: 0,
 		}
 		if (orientation === 'top' || orientation === 'left') {
-			rf.value = metering.RF1 === null ? 0 : (metering.RF1 + 60) * 2 + 100
+			rf.value = metering.RF1 === null ? 0 : (metering.RF1 + 50) * 2 + 100
 			if (metering.RF1_PEAK) {
 				elements.push(returnLed('clip', offset.x.positionPeak, offset.y.positionPeak, image))
 			}
@@ -153,7 +153,7 @@ export function buildEM6000icon(channel, metering, image, meteringOptions, graph
 				elements.push(returnLed('diversity', offset.x.positionDiv, offset.y.positionDiv, image))
 			}
 		} else {
-			rf.value = metering.RF2 === null ? 0 : (metering.RF2 + 60) * 2 + 100
+			rf.value = metering.RF2 === null ? 0 : (metering.RF2 + 50) * 2 + 100
 			if (metering.RF2_PEAK) {
 				elements.push(returnLed('clip', offset.x.positionPeak, offset.y.positionPeak, image))
 			}
@@ -167,7 +167,7 @@ export function buildEM6000icon(channel, metering, image, meteringOptions, graph
 		rf.offsetX = offset.x.position
 		rf.offsetY = offset.y.position
 		if (orientation === 'top' || orientation === 'left') {
-			rf.value = metering.RF2 === null ? 0 : (metering.RF2 + 60) * 2 + 100
+			rf.value = metering.RF2 === null ? 0 : (metering.RF2 + 50) * 2 + 100
 			if (metering.RF2_PEAK) {
 				elements.push(returnLed('clip', offset.x.positionPeak, offset.y.positionPeak, image))
 			}
@@ -175,7 +175,7 @@ export function buildEM6000icon(channel, metering, image, meteringOptions, graph
 				elements.push(returnLed('diversity', offset.x.positionDiv, offset.y.positionDiv, image))
 			}
 		} else {
-			rf.value = metering.RF1 === null ? 0 : (metering.RF1 + 60) * 2 + 100
+			rf.value = metering.RF1 === null ? 0 : (metering.RF1 + 50) * 2 + 100
 			if (metering.RF1_PEAK) {
 				elements.push(returnLed('clip', offset.x.positionPeak, offset.y.positionPeak, image))
 			}
