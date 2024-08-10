@@ -75,7 +75,12 @@ export function handleEM6000_data(data) {
 		}
 		this.d6000.sys.brightness = data.sys?.brightness ?? this.d6000.sys.brightness
 		this.d6000.sys.booster = data.sys?.booster ?? this.d6000.sys.booster
-		this.checkFeedbacks('booster')
+		let feedbacks = ['booster']
+		for (const fback of feedbacks) {
+			if (!this.feedbacksToUpdate.includes(fback)) {
+				this.feedbacksToUpdate.push(fback)
+			}
+		}
 	}
 	if (responseKeys.includes('osc')) {
 		this.updateStatus(InstanceStatus.Ok)
@@ -91,7 +96,12 @@ export function handleEM6000_data(data) {
 		this.updateStatus(InstanceStatus.Ok)
 		this.d6000.audio.out1 = { ...this.d6000.audio.out1, ...data.audio?.out1 }
 		this.d6000.audio.out2 = { ...this.d6000.audio.out2, ...data.audio?.out2 }
-		this.checkFeedbacks('recieverStatus')
+		let feedbacks = ['recieverStatus']
+		for (const fback of feedbacks) {
+			if (!this.feedbacksToUpdate.includes(fback)) {
+				this.feedbacksToUpdate.push(fback)
+			}
+		}
 	}
 	for (let i = 1; i <= 2; i++) {
 		if (responseKeys.includes(`rx${i}`)) {
@@ -144,7 +154,12 @@ export function handleEM6000_data(data) {
 					: data[`rx${i}`].active_warnings
 			this.d6000[`rx${i}`].active_status =
 				data[`rx${i}`].active_status === undefined ? this.d6000[`rx${i}`].active_status : data[`rx${i}`].active_status
-			this.checkFeedbacks('audioMute', 'encryption', 'activeWarning', 'activeStatus', 'recieverStatus')
+			let feedbacks = ['audioMute', 'encryption', 'activeWarning', 'activeStatus', 'recieverStatus']
+			for (const fback of feedbacks) {
+				if (!this.feedbacksToUpdate.includes(fback)) {
+					this.feedbacksToUpdate.push(fback)
+				}
+			}
 		}
 		if (responseKeys.includes('mm')) {
 			this.updateStatus(InstanceStatus.Ok)
@@ -169,7 +184,12 @@ export function handleEM6000_data(data) {
 					? convert_AF_to_dBFS(data.mm[i - 1][7])
 					: this.d6000.mm[`ch${i}`].AF
 			this.d6000.mm[`ch${i}`].PEAK = !!data.mm[i - 1][8]
-			this.checkFeedbacks('afPeak', 'rfPeak', 'rfDiversity', 'recieverStatus')
+			let feedbacks = ['afPeak', 'rfPeak', 'rfDiversity', 'recieverStatus']
+			for (const fback of feedbacks) {
+				if (!this.feedbacksToUpdate.includes(fback)) {
+					this.feedbacksToUpdate.push(fback)
+				}
+			}
 		}
 	}
 }
@@ -193,7 +213,12 @@ export function handleL6000_data(data) {
 					this.updateStatus(InstanceStatus.UnknownWarning, warning.label)
 				}
 			}
-			this.checkFeedbacks('slotWarning', 'fanWarning', 'deviceHot', 'batteryStatus')
+			let feedbacks = ['slotWarning', 'fanWarning', 'deviceHot', 'batteryStatus']
+			for (const fback of feedbacks) {
+				if (!this.feedbacksToUpdate.includes(fback)) {
+					this.feedbacksToUpdate.push(fback)
+				}
+			}
 		}
 	}
 	if (responseKeys.includes('osc')) {
@@ -281,5 +306,10 @@ export function handleL6000_data(data) {
 			}
 		}
 	}
-	this.checkFeedbacks('batteryStatus')
+	let feedbacks = ['batteryStatus']
+	for (const fback of feedbacks) {
+		if (!this.feedbacksToUpdate.includes(fback)) {
+			this.feedbacksToUpdate.push(fback)
+		}
+	}
 }

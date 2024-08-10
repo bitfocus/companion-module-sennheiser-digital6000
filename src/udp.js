@@ -26,7 +26,7 @@ export async function sendCommand(msg) {
 	return undefined
 }
 
-export function init_udp(host, port) {
+export function init_udp(host, port, interval) {
 	if (this.socket) {
 		this.socket.destroy()
 		delete this.socket
@@ -46,6 +46,7 @@ export function init_udp(host, port) {
 			this.startListeningTimer()
 			this.startBlink()
 			this.startFrame()
+			this.startFeedbackChecks(interval)
 		})
 
 		this.socket.on('data', (msg) => {
