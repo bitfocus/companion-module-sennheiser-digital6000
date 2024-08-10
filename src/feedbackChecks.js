@@ -23,3 +23,15 @@ export function stopFeedbackChecks() {
 	}
 	delete this.feedbacksToUpdate
 }
+
+export function addFeedbacksToQueue(feedbacks) {
+	if (!Array.isArray(feedbacks)) {
+		this.log('warn', `addFeedbacksToQueue must be passed an array ${feedbacks}`)
+		return
+	}
+	for (const fback of feedbacks) {
+		if (!this.feedbacksToUpdate.includes(fback)) {
+			this.feedbacksToUpdate.push(fback)
+		}
+	}
+}
