@@ -5,11 +5,11 @@ export function startFeedbackChecks(interval) {
 	}
 	if (this.feedbacksToUpdate === undefined) {
 		this.feedbacksToUpdate = []
+		this.variablesToUpdate = false
 	} else if (this.feedbacksToUpdate.length > 0) {
 		this.checkFeedbacks(...this.feedbacksToUpdate)
+		this.updateVariableValues()
 		this.feedbacksToUpdate = []
-	} else 
-	if (this.variablesToUpdate === undefined) {
 		this.variablesToUpdate = false
 	} else if (this.variablesToUpdate === true) {
 		this.variablesToUpdate = false

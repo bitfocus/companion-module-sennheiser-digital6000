@@ -23,7 +23,6 @@ export async function sendCommand(msg) {
 	} else {
 		this.log('warn', `sendCommand: Invalid Command, expected object recieved: ${msg}`)
 	}
-	return undefined
 }
 
 export function init_udp(host, port, interval) {
