@@ -3,11 +3,17 @@ export function startFeedbackChecks(interval) {
 	if (this.feedbackTimer) {
 		clearTimeout(this.feedbackTimer)
 	}
-	if (this.feedbacksToUpdate) {
+	if (this.feedbacksToUpdate === undefined) {
+		this.feedbacksToUpdate = []
+	} else if (this.feedbacksToUpdate.length > 0) {
 		this.checkFeedbacks(...this.feedbacksToUpdate)
 		this.feedbacksToUpdate = []
-	} else if (this.feedbacksToUpdate === undefined) {
-		this.feedbacksToUpdate = []
+	} else 
+	if (this.variablesToUpdate === undefined) {
+		this.variablesToUpdate = false
+	} else if (this.variablesToUpdate === true) {
+		this.variablesToUpdate = false
+		this.updateVariableValues()
 	}
 	if (interval > 0) {
 		this.feedbackTimer = setTimeout(() => {
@@ -22,6 +28,7 @@ export function stopFeedbackChecks() {
 		delete this.feedbackTimer
 	}
 	delete this.feedbacksToUpdate
+	delete this.variablesToUpdate
 }
 
 export function addFeedbacksToQueue(feedbacks) {

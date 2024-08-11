@@ -33,7 +33,7 @@ export function parseResponse(msg) {
 	} catch {
 		/* do nothing if not present */
 	}
-	if (this.d6000.device.identity.product == choices.devices[0].id || this.config.device == choices.devices[1].id) {
+	if (this.d6000.device.identity.product == choices.devices[0].id || this.d6000.device.identity.product == choices.devices[1].id) {
 		this.handleEM6000_data(data)
 	} else if (this.d6000.device.identity.product == choices.devices[2].id) {
 		this.handleL6000_data(data)
@@ -42,7 +42,6 @@ export function parseResponse(msg) {
 		this.updateStatus(InstanceStatus.UnknownError, `Unrecognised device`)
 		return
 	}
-	this.updateVariableValues()
 }
 
 export function handleEM6000_data(data) {
@@ -58,6 +57,7 @@ export function handleEM6000_data(data) {
 			...this.d6000.device.network.ipv4_dante,
 			...data.device?.network?.ipv4_dante,
 		}
+		this.variablesToUpdate = true
 	}
 	if (responseKeys.includes('sys')) {
 		this.updateStatus(InstanceStatus.Ok)
@@ -76,6 +76,7 @@ export function handleEM6000_data(data) {
 		this.d6000.sys.brightness = data.sys?.brightness ?? this.d6000.sys.brightness
 		this.d6000.sys.booster = data.sys?.booster ?? this.d6000.sys.booster
 		this.addFeedbacksToQueue(['booster'])
+		this.variablesToUpdate = true
 	}
 	if (responseKeys.includes('osc')) {
 		this.updateStatus(InstanceStatus.Ok)
@@ -92,6 +93,7 @@ export function handleEM6000_data(data) {
 		this.d6000.audio.out1 = { ...this.d6000.audio.out1, ...data.audio?.out1 }
 		this.d6000.audio.out2 = { ...this.d6000.audio.out2, ...data.audio?.out2 }
 		this.addFeedbacksToQueue(['recieverStatus'])
+		this.variablesToUpdate = true
 	}
 	for (let i = 1; i <= 2; i++) {
 		if (responseKeys.includes(`rx${i}`)) {
@@ -145,6 +147,7 @@ export function handleEM6000_data(data) {
 			this.d6000[`rx${i}`].active_status =
 				data[`rx${i}`].active_status === undefined ? this.d6000[`rx${i}`].active_status : data[`rx${i}`].active_status
 			this.addFeedbacksToQueue(['audioMute', 'encryption', 'activeWarning', 'activeStatus', 'recieverStatus'])
+			this.variablesToUpdate = true
 		}
 		if (responseKeys.includes('mm')) {
 			this.updateStatus(InstanceStatus.Ok)
@@ -170,6 +173,7 @@ export function handleEM6000_data(data) {
 					: this.d6000.mm[`ch${i}`].AF
 			this.d6000.mm[`ch${i}`].PEAK = !!data.mm[i - 1][8]
 			this.addFeedbacksToQueue(['afPeak', 'rfPeak', 'rfDiversity', 'recieverStatus'])
+			this.variablesToUpdate = true
 		}
 	}
 }
@@ -195,6 +199,7 @@ export function handleL6000_data(data) {
 			}
 			this.addFeedbacksToQueue(['slotWarning', 'fanWarning', 'deviceHot', 'batteryStatus'])
 		}
+		this.variablesToUpdate = true
 	}
 	if (responseKeys.includes('osc')) {
 		this.updateStatus(InstanceStatus.Ok)
@@ -279,7 +284,8 @@ export function handleL6000_data(data) {
 				this.d6000[`slot${i}`][`subslot${j}`].accu_detection =
 					data[`slot${i}`][`subslot${j}`]?.accu_detection ?? this.d6000[`slot${i}`][`subslot${j}`].accu_detection
 			}
+			this.addFeedbacksToQueue(['batteryStatus'])
+			this.variablesToUpdate = true
 		}
 	}
-	this.addFeedbacksToQueue(['batteryStatus'])
 }

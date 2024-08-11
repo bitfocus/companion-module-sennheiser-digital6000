@@ -58,9 +58,9 @@ export function getConfigFields() {
 			label: 'Metering Interval (ms)',
 			width: 6,
 			default: 250,
-			min: 50,
+			min: 30,
 			max: 10000,
-			step: 50,
+			step: 10,
 			range: true,
 		},
 		{
