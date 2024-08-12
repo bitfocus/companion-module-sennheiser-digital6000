@@ -65,13 +65,13 @@ function returnBorder(colour, image) {
 async function buildIcons(orientation, image, meters, iconOptions) {
 	const images = {
 		battery: {
-			full: await graphics.parseBase64(iconsEM6000.battery[100]),
-			seventy: await graphics.parseBase64(iconsEM6000.battery[70]),
-			thirty: await graphics.parseBase64(iconsEM6000.battery[30]),
-			low: await graphics.parseBase64(iconsEM6000.battery.low),
+			full: await graphics.parseBase64(iconsEM6000.battery[100], { alpha: true }),
+			seventy: await graphics.parseBase64(iconsEM6000.battery[70], { alpha: true }),
+			thirty: await graphics.parseBase64(iconsEM6000.battery[30], { alpha: true }),
+			low: await graphics.parseBase64(iconsEM6000.battery.low, { alpha: true }),
 		},
-		muted: await graphics.parseBase64(iconsEM6000.muted),
-		encrypt: await graphics.parseBase64(iconsEM6000.encrypt),
+		muted: await graphics.parseBase64(iconsEM6000.muted, { alpha: true }),
+		encrypt: await graphics.parseBase64(iconsEM6000.encrypt, { alpha: true }),
 	}
 	const mtrCount = meters.includes('rf') ? meters.length + 1 : meters.length
 	const xOffsetBat =
