@@ -18,6 +18,12 @@ const clipLED = graphics.circle({
 
 const diversityLED = graphics.circle({
 	radius: bar.width / 2,
+	color: combineRgb(255, 255, 0),
+	opacity: 255,
+})
+
+const presenceLED = graphics.circle({
+	radius: bar.width / 2,
 	color: combineRgb(0, 255, 0),
 	opacity: 255,
 })
@@ -36,7 +42,7 @@ function returnLed(type, x, y, image) {
 	return graphics.icon({
 		width: image.width,
 		height: image.height,
-		custom: type === 'clip' ? clipLED : diversityLED,
+		custom: type === 'clip' ? clipLED : type === 'diversity' ? diversityLED : presenceLED,
 		type: 'custom',
 		customHeight: bar.width,
 		customWidth: bar.width,
@@ -337,14 +343,14 @@ export async function buildEM6000icon(channel, metering, image, meteringOptions,
 		}
 		if (metering.AF > -100 && metering.AF !== null) {
 			//signal presence LED
-			elements.push(returnLed('diversity', offset.x.positionDiv, offset.y.positionDiv, image))
+			elements.push(returnLed('presence', offset.x.positionDiv, offset.y.positionDiv, image))
 		}
 		offset = offsetStep(offset)
 	}
-	if (graphicOptions.includes('mute') && (channel.audio_mute || true)) {
+	if (graphicOptions.includes('mute') && (channel.audio_mute)) {
 		elements.push(icons.muted)
 	}
-	if (graphicOptions.includes('encryption') && (channel.encryption || true)) {
+	if (graphicOptions.includes('encryption') && (channel.encryption)) {
 		elements.push(icons.encrypt)
 	}
 	if (graphicOptions.includes('battery')) {
