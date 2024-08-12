@@ -112,7 +112,7 @@ export default async function (self) {
 				feedbackOptions.recieverIcons,
 				feedbackOptions.recieverOrientation,
 			],
-			callback: (feedback) => {
+			callback: async (feedback) => {
 				const options = feedback.options
 				const metering = self.d6000.mm[`ch${options.reciever}`]
 				const reciever = self.d6000[`rx${options.reciever}`]
@@ -120,7 +120,7 @@ export default async function (self) {
 				let out = {
 					text: '',
 				}
-				const iBuffer = buildEM6000icon(
+				const iBuffer = await buildEM6000icon(
 					reciever,
 					metering,
 					feedback.image,

@@ -52,7 +52,7 @@ export const feedbackChoices = {
 		{ id: 'batteryRuntime', label: 'Battery Runtime' },
 		{ id: 'batteryPercent', label: 'Battery Percent' },
 	],
-	labelDefault: ['name', 'bank', 'carrier', 'txName', 'batteryRuntime', 'warning'],
+	labelDefault: ['name', 'bank', 'carrier', 'txName', 'batteryRuntime'],
 	meters: [
 		{ id: 'af', label: 'Audio Level' },
 		{ id: 'lqi', label: 'LQI' },
@@ -60,12 +60,12 @@ export const feedbackChoices = {
 	],
 	metersDefault: ['rf', 'af', 'lqi'],
 	icons: [
-		{ id: 'auto lock', label: 'Auto Lock' },
 		{ id: 'battery', label: 'Battery' },
 		{ id: 'encryption', label: 'Encryption' },
 		{ id: 'mute', label: 'Mute' },
+		{ id: 'warnings', label: 'Warnings (Borders)' },
 	],
-	iconDefault: ['battery', 'mute'],
+	iconDefault: ['battery', 'mute', 'warnings'],
 	orientation: [
 		{ id: 'left', label: 'Left' },
 		{ id: 'right', label: 'Right' },

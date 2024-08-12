@@ -1,12 +1,13 @@
 import { combineRgb } from '@companion-module/base'
+import { iconsEM6000, iconDims } from './icons-em6000.js'
 import { graphics } from 'companion-module-utils'
 
 const bar = {
 	width: 3,
 	space: 1, //between bars
-	offsetBase: 6, //from 'base' of the bar meter to the drawing edge (bottom or left). Must be <= bar.length
+	offsetBase: 6, //from 'base' of the bar meter to the drawing edge (bottom or left). Must be <= bar.lengthOffset
 	offsetSide: 4, //from 'side' of the bar meter to the drawing edge (top, bottom, left or right)
-	length: 12, //bar length is image height or width minus this value
+	lengthOffset: 12, //bar length is image height or width minus this value
 }
 
 const clipLED = graphics.circle({
@@ -44,6 +45,109 @@ function returnLed(type, x, y, image) {
 	})
 }
 
+function returnBorder(colour, image) {
+	return graphics.border({
+		width: image.width,
+		height: image.height,
+		color: colour,
+		size: 2,
+		opacity: 255,
+		type: 'border',
+	})
+}
+
+async function buildIcons(orientation, image) {
+	let images = {
+		battery: {
+			100: await graphics.parseBase64(iconsEM6000.battery[100]),
+			70: await graphics.parseBase64(iconsEM6000.battery[70]),
+			30: await graphics.parseBase64(iconsEM6000.battery[30]),
+			low: await graphics.parseBase64(iconsEM6000.battery.low),
+		},
+		muted: await graphics.parseBase64(iconsEM6000.muted),
+		encrypt: await graphics.parseBase64(iconsEM6000.encrypt),
+	}
+	
+	const iconOffset = {
+		battery:{
+			x: orientation === 'left' ? 4 * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + 2 * bar.space + iconDims.encrypt.x : image.width - (4 * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + iconDims.encrypt.x + iconDims.battery.x + 2 * bar.space),
+			y:orientation === 'top' ?  4 * (bar.width + bar.space) + bar.offsetSide : orientation === 'bottom' ? image.height - (4 * (bar.width + bar.space) + bar.offsetSide + iconDims.battery.y): image.height - (bar.offsetBase + iconDims.battery.y),
+		},
+		mute: {
+			x: orientation === 'left' ? 4 * (bar.width + bar.space) + bar.offsetSide : image.width - (4 * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x),
+			y: orientation === 'top' ?  4 * (bar.width + bar.space) + bar.offsetSide : orientation === 'bottom' ? image.height - (4 * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.y): image.height - (bar.offsetBase + iconDims.mute.y),
+		},
+		encrypt: {
+			x: orientation === 'left' ? 4 * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + bar.space : image.width - (4 * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + bar.space + iconDims.encrypt.x),
+			y:  orientation === 'top' ?  4 * (bar.width + bar.space) + bar.offsetSide : orientation === 'bottom' ? image.height - (4 * (bar.width + bar.space) + bar.offsetSide + iconDims.encrypt.y): image.height - (bar.offsetBase + iconDims.encrypt.y),
+		}
+	}
+	return {
+		battery: {
+			100: graphics.icon({
+				width: image.width,
+				height: image.height,
+				offsetX: iconOffset.battery.x,
+				offsetY: iconOffset.battery.y,
+				type: 'custom',
+				custom: images.battery[100],
+				customWidth: iconDims.battery.x,
+				customHeight: iconDims.battery.y,
+			}),
+			70: graphics.icon({
+				width: image.width,
+				height: image.height,
+				offsetX: iconOffset.battery.x,
+				offsetY: iconOffset.battery.y,
+				type: 'custom',
+				custom: images.battery[70],
+				customWidth: iconDims.battery.x,
+				customHeight: iconDims.battery.y,
+			}),
+			30: graphics.icon({
+				width: image.width,
+				height: image.height,
+				offsetX: iconOffset.battery.x,
+				offsetY: iconOffset.battery.y,
+				type: 'custom',
+				custom: images.battery[30],
+				customWidth: iconDims.battery.x,
+				customHeight: iconDims.battery.y,
+			}),
+			low: graphics.icon({
+				width: image.width,
+				height: image.height,
+				offsetX: iconOffset.battery.x,
+				offsetY: iconOffset.battery.y,
+				type: 'custom',
+				custom: images.battery.low,
+				customWidth: iconDims.battery.x,
+				customHeight: iconDims.battery.y,
+			}),
+		},
+		muted: graphics.icon({
+			width: image.width,
+			height: image.height,
+			offsetX: iconOffset.mute.x,
+			offsetY: iconOffset.mute.y,
+			type: 'custom',
+			custom: images.muted,
+			customWidth: iconDims.mute.x,
+				customHeight: iconDims.mute.y,
+		}),
+		encrypt: graphics.icon({
+			width: image.width,
+			height: image.height,
+			offsetX: iconOffset.encrypt.x,
+			offsetY: iconOffset.encrypt.y,
+			type: 'custom',
+			custom: images.encrypt,
+			customWidth: iconDims.encrypt.x,
+			customHeight: iconDims.encrypt.y,
+		}),
+	}
+}
+
 function offsetStep(offset) {
 	offset.x.position = offset.x.position + offset.x.step
 	offset.y.position = offset.y.position + offset.y.step
@@ -72,7 +176,7 @@ function calcOffset(orientation, image) {
 	switch (orientation) {
 		case 'top':
 			offset.x.position = bar.offsetBase
-			offset.x.positionPeak = image.width + bar.offsetBase - bar.length
+			offset.x.positionPeak = image.width + bar.offsetBase - bar.lengthOffset
 			offset.x.positionDiv = bar.offsetBase / 2 - bar.width / 2
 			offset.x.step = 0
 			offset.y.position = bar.offsetSide
@@ -82,7 +186,7 @@ function calcOffset(orientation, image) {
 			break
 		case 'bottom':
 			offset.x.position = bar.offsetBase
-			offset.x.positionPeak = image.width + bar.offsetBase - bar.length
+			offset.x.positionPeak = image.width + bar.offsetBase - bar.lengthOffset
 			offset.x.positionDiv = bar.offsetBase / 2 - bar.width / 2
 			offset.x.step = 0
 			offset.y.position = image.height - (bar.offsetSide + bar.width)
@@ -97,7 +201,7 @@ function calcOffset(orientation, image) {
 			offset.x.step = bar.width + bar.space
 			offset.y.position = bar.offsetBase
 			offset.y.positionPeak = bar.offsetBase / 3
-			offset.y.positionDiv = bar.offsetBase + image.height - bar.length
+			offset.y.positionDiv = bar.offsetBase + image.height - bar.lengthOffset
 			offset.y.step = 0
 			break
 		case 'right':
@@ -108,7 +212,7 @@ function calcOffset(orientation, image) {
 			offset.x.step = -(bar.width + bar.space)
 			offset.y.position = bar.offsetBase
 			offset.y.positionPeak = bar.offsetBase / 3
-			offset.y.positionDiv = bar.offsetBase + image.height - bar.length
+			offset.y.positionDiv = bar.offsetBase + image.height - bar.lengthOffset
 			offset.y.step = 0
 	}
 	return offset
@@ -118,7 +222,7 @@ function calcBarMeterDefaults(orientation, image) {
 	return {
 		width: image.width,
 		height: image.height,
-		barLength: orientation === 'top' || orientation === 'bottom' ? image.width - bar.length : image.height - bar.length,
+		barLength: orientation === 'top' || orientation === 'bottom' ? image.width - bar.lengthOffset : image.height - bar.lengthOffset,
 		barWidth: bar.width,
 		type: orientation === 'top' || orientation === 'bottom' ? 'horizontal' : 'vertical',
 		opacity: 255,
@@ -126,14 +230,10 @@ function calcBarMeterDefaults(orientation, image) {
 	}
 }
 
-export function buildEM6000icon(channel, metering, image, meteringOptions, graphicOptions, orientation) {
+export async function buildEM6000icon(channel, metering, image, meteringOptions, graphicOptions, orientation) {
 	let elements = []
-	if (meteringOptions.length < 1 && graphicOptions < 1) {
-		//nothing selected
-		return null
-	}
-	orientation = orientation || 'right'
 	const meterDefault = calcBarMeterDefaults(orientation, image)
+	const icons = await buildIcons(orientation, image)
 	let offset = calcOffset(orientation, image)
 
 	if (meteringOptions.includes('rf')) {
@@ -209,50 +309,44 @@ export function buildEM6000icon(channel, metering, image, meteringOptions, graph
 		if (metering.PEAK) {
 			elements.push(returnLed('clip', offset.x.positionPeak, offset.y.positionPeak, image))
 		}
-		if (metering.AF > -100) {
+		if (metering.AF > -100 && metering.AF !== null) {
 			//signal presence LED
 			elements.push(returnLed('diversity', offset.x.positionDiv, offset.y.positionDiv, image))
 		}
 		offset = offsetStep(offset)
 	}
-	if (graphicOptions.includes('mute')) {
-		/* let mute = {
-			width: image.width,
-			height: image.height,
-			offsetX: offset.x.position + offset.x.step,
-			offsetY: offset.y.position + offset.y.step,
-			type: 'mic5', // green mic
+	if (graphicOptions.includes('mute') && (channel.audio_mute || true)) {
+		elements.push(icons.muted)
+	}
+	if (graphicOptions.includes('encryption') && (channel.encryption || true)) {
+		elements.push(icons.encrypt)
+	}
+	if (graphicOptions.includes('battery')) {
+		if (channel.skx.battery.percent === '100%') {
+			elements.push(icons.battery[100])
+		} else if (channel.skx.battery.percent === '70%') {
+			elements.push(icons.battery[70])
+		} else if (channel.skx.battery.percent === '30%') {
+			elements.push(icons.battery[30])
+		} else if (channel.skx.battery.percent === 'low') {
+			elements.push(icons.battery.low)
 		}
-		if (channel.audio_mute) {s
-			mute.type = 'mic3' //grey mic with red dash
+	}
+
+	if (graphicOptions.includes('warnings')) {
+		if (channel.active_warnings.includes('LowBattery')) {
+			elements.push(returnBorder(combineRgb(255, 0, 0), image))
 		} else if (channel.active_warnings.includes('NoLink')) {
-			mute.type = 'mic1' //grey mic
-		} */
-		if (channel.audio_mute) {
-			elements.push(
-				graphics.border({
-					width: image.width,
-					height: image.height,
-					color: combineRgb(255, 0, 0),
-					size: 2,
-					opacity: 255,
-					type: 'border',
-				})
-			)
-		} else if (channel.active_warnings.includes('NoLink')) {
-			elements.push(
-				graphics.border({
-					width: image.width,
-					height: image.height,
-					color: combineRgb(110, 110, 110),
-					size: 2,
-					opacity: 255,
-					type: 'border',
-				})
-			)
+			elements.push(returnBorder(combineRgb(110, 110, 110), image))
+		} else if (channel.active_warnings.includes('LowSignal')) {
+			elements.push(returnBorder(combineRgb(255, 255, 0), image))
+		} else if (channel.active_warnings.includes('BadClock') || channel.active_warnings.includes('NoClock')) {
+			elements.push(returnBorder(combineRgb(204, 0, 204), image))
+		} else if (channel.active_warnings.includes('Aes256Error')) {
+			elements.push(returnBorder(combineRgb(0, 102, 0), image))
+		} else if (channel.active_warnings.includes('AnTxYBNCShorted')) {
+			elements.push(returnBorder(combineRgb(255, 223, 192), image))
 		}
-		//elements.push(graphics.icon(mute))
-		offset = offsetStep(offset)
 	}
 	return elements.length > 0 ? graphics.stackImage(elements) : null
 }
