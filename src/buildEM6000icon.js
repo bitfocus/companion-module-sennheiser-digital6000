@@ -209,6 +209,10 @@ export function buildEM6000icon(channel, metering, image, meteringOptions, graph
 		if (metering.PEAK) {
 			elements.push(returnLed('clip', offset.x.positionPeak, offset.y.positionPeak, image))
 		}
+		if (metering.AF > -100) {
+			//signal presence LED
+			elements.push(returnLed('diversity', offset.x.positionDiv, offset.y.positionDiv, image))
+		}
 		offset = offsetStep(offset)
 	}
 	if (graphicOptions.includes('mute')) {

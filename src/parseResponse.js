@@ -78,7 +78,7 @@ export function handleEM6000_data(data) {
 		}
 		this.d6000.sys.brightness = data.sys?.brightness ?? this.d6000.sys.brightness
 		this.d6000.sys.booster = data.sys?.booster ?? this.d6000.sys.booster
-		this.addFeedbacksToQueue(['booster'])
+		this.addFeedbacksToQueue('booster')
 		this.variablesToUpdate = true
 	}
 	if (responseKeys.includes('osc')) {
@@ -95,7 +95,7 @@ export function handleEM6000_data(data) {
 		this.statusCheck(InstanceStatus.Ok, '')
 		this.d6000.audio.out1 = { ...this.d6000.audio.out1, ...data.audio?.out1 }
 		this.d6000.audio.out2 = { ...this.d6000.audio.out2, ...data.audio?.out2 }
-		this.addFeedbacksToQueue(['recieverStatus'])
+		this.addFeedbacksToQueue('recieverStatus')
 		this.variablesToUpdate = true
 	}
 	for (let i = 1; i <= 2; i++) {
@@ -121,9 +121,15 @@ export function handleEM6000_data(data) {
 				data[`rx${i}`].skx?.cable_emulation ?? this.d6000[`rx${i}`].skx.cable_emulation
 			this.d6000[`rx${i}`].skx.autolock = data[`rx${i}`].skx?.autolock ?? this.d6000[`rx${i}`].skx.autolock
 			if (data[`rx${i}`].skx?.battery !== undefined) {
-				this.d6000[`rx${i}`].skx.battery.percent =
-					data[`rx${i}`].skx?.battery[0] ?? this.d6000[`rx${i}`].skx.battery.percent
-				this.d6000[`rx${i}`].skx.battery.time = data[`rx${i}`].skx?.battery[1] ?? this.d6000[`rx${i}`].skx.battery.time
+				if (data[`rx${i}`].skx?.battery.length === 2) {
+					this.d6000[`rx${i}`].skx.battery.percent =
+						data[`rx${i}`].skx?.battery[0] ?? this.d6000[`rx${i}`].skx.battery.percent
+					this.d6000[`rx${i}`].skx.battery.time =
+						data[`rx${i}`].skx?.battery[1] ?? this.d6000[`rx${i}`].skx.battery.time
+				} else if (data[`rx${i}`].skx?.battery.length === 0) {
+					this.d6000[`rx${i}`].skx.battery.percent = null
+					this.d6000[`rx${i}`].skx.battery.time = null
+				}
 			}
 			for (let j = 1; j <= 6; j++) {
 				this.d6000[`rx${i}`].freq[`b${j}`] = { ...this.d6000[`rx${i}`].freq[`b${j}`], ...data.rx1?.freq?.[`b${j}`] }
@@ -287,7 +293,7 @@ export function handleL6000_data(data) {
 				this.d6000[`slot${i}`][`subslot${j}`].accu_detection =
 					data[`slot${i}`][`subslot${j}`]?.accu_detection ?? this.d6000[`slot${i}`][`subslot${j}`].accu_detection
 			}
-			this.addFeedbacksToQueue(['batteryStatus'])
+			this.addFeedbacksToQueue('batteryStatus')
 			this.variablesToUpdate = true
 		}
 	}

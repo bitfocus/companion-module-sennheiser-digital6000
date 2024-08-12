@@ -14,7 +14,7 @@ export default async function (self) {
 				style: {
 					png64: null,
 					pngalignment: 'center:center',
-					alignment: 'left:top',
+					alignment: 'right:center',
 					text: `Reciever ${i} Status`,
 					textExpression: false,
 					color: colours.white,
@@ -44,7 +44,7 @@ export default async function (self) {
 							labels: feedbackChoices.labelDefault,
 							icons: feedbackChoices.iconDefault,
 							meters: feedbackChoices.metersDefault,
-							orientation: feedbackChoices.orientation[1].id,
+							orientation: feedbackChoices.orientation[0].id,
 						},
 					},
 					{
