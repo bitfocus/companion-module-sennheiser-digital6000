@@ -29,7 +29,7 @@ const meterColours = {
 		{ size: 16, color: combineRgb(255, 0, 0), background: combineRgb(255, 0, 0), backgroundOpacity: 48 },
 	],
 	rf: [{ size: 100, color: combineRgb(255, 255, 0), background: combineRgb(255, 255, 0), backgroundOpacity: 48 }],
-	lqi: [{ size: 100, color: combineRgb(0, 0, 255), background: combineRgb(0, 0, 255), backgroundOpacity: 0 }],
+	lqi: [{ size: 100, color: combineRgb(0, 0, 255), background: combineRgb(0, 0, 255), backgroundOpacity: 48 }],
 }
 
 function returnLed(type, x, y, image) {
@@ -56,33 +56,35 @@ function returnBorder(colour, image) {
 	})
 }
 
-async function buildIcons(orientation, image, meters) {
-	let images = {
+async function buildIcons(orientation, image, meters, iconOptions) {
+	const images = {
 		battery: {
-			100: await graphics.parseBase64(iconsEM6000.battery[100]),
-			70: await graphics.parseBase64(iconsEM6000.battery[70]),
-			30: await graphics.parseBase64(iconsEM6000.battery[30]),
+			full: await graphics.parseBase64(iconsEM6000.battery[100]),
+			seventy: await graphics.parseBase64(iconsEM6000.battery[70]),
+			thirty: await graphics.parseBase64(iconsEM6000.battery[30]),
 			low: await graphics.parseBase64(iconsEM6000.battery.low),
 		},
 		muted: await graphics.parseBase64(iconsEM6000.muted),
 		encrypt: await graphics.parseBase64(iconsEM6000.encrypt),
 	}
 	const mtrCount = meters.includes('rf') ? meters.length + 1 : meters.length
-
+	const xOffsetBat =
+		iconOptions.includes('mute') && iconOptions.includes('encryption')
+			? iconDims.mute.x + iconDims.encrypt.x + 2 * bar.space
+			: iconOptions.includes('mute')
+			? iconDims.mute.x + bar.space
+			: iconOptions.includes('encryption')
+			? iconDims.encrypt.x + bar.space
+			: 0
+	const xOffsetEncrypt = iconOptions.includes('mute') ? iconDims.mute.x + bar.space : 0
 	const iconOffset = {
 		battery: {
 			x:
 				orientation === 'left'
-					? mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + 2 * bar.space + iconDims.encrypt.x
+					? mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetBat
 					: orientation === 'top' || orientation === 'bottom'
-					? image.width - (bar.offsetSide + iconDims.mute.x + iconDims.encrypt.x + iconDims.battery.x + 2 * bar.space)
-					: image.width -
-					  (mtrCount * (bar.width + bar.space) +
-							bar.offsetSide +
-							iconDims.mute.x +
-							iconDims.encrypt.x +
-							iconDims.battery.x +
-							2 * bar.space),
+					? image.width - (bar.offsetSide + xOffsetBat + iconDims.battery.x)
+					: image.width - (mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetBat + iconDims.battery.x),
 			y:
 				orientation === 'top'
 					? mtrCount * (bar.width + bar.space) + bar.offsetSide
@@ -107,11 +109,10 @@ async function buildIcons(orientation, image, meters) {
 		encrypt: {
 			x:
 				orientation === 'left'
-					? mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + bar.space
+					? mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetEncrypt
 					: orientation === 'top' || orientation === 'bottom'
-					? image.width - (bar.offsetSide + iconDims.mute.x + bar.space + iconDims.encrypt.x)
-					: image.width -
-					  (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + bar.space + iconDims.encrypt.x),
+					? image.width - (bar.offsetSide + xOffsetEncrypt + iconDims.encrypt.x)
+					: image.width - (mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetEncrypt + iconDims.encrypt.x),
 			y:
 				orientation === 'top'
 					? mtrCount * (bar.width + bar.space) + bar.offsetSide
@@ -120,65 +121,49 @@ async function buildIcons(orientation, image, meters) {
 					: image.height - (bar.offsetBase + iconDims.encrypt.y),
 		},
 	}
+	const commonIconProps = {
+		width: image.width,
+		height: image.height,
+		type: 'custom',
+	}
+	const commonBatteryProps = {
+		...commonIconProps,
+		offsetX: iconOffset.battery.x,
+		offsetY: iconOffset.battery.y,
+		customWidth: iconDims.battery.x,
+		customHeight: iconDims.battery.y,
+	}
 	return {
 		battery: {
 			100: graphics.icon({
-				width: image.width,
-				height: image.height,
-				offsetX: iconOffset.battery.x,
-				offsetY: iconOffset.battery.y,
-				type: 'custom',
-				custom: images.battery[100],
-				customWidth: iconDims.battery.x,
-				customHeight: iconDims.battery.y,
+				...commonBatteryProps,
+				custom: images.battery.full,
 			}),
 			70: graphics.icon({
-				width: image.width,
-				height: image.height,
-				offsetX: iconOffset.battery.x,
-				offsetY: iconOffset.battery.y,
-				type: 'custom',
-				custom: images.battery[70],
-				customWidth: iconDims.battery.x,
-				customHeight: iconDims.battery.y,
+				...commonBatteryProps,
+				custom: images.battery.seventy,
 			}),
 			30: graphics.icon({
-				width: image.width,
-				height: image.height,
-				offsetX: iconOffset.battery.x,
-				offsetY: iconOffset.battery.y,
-				type: 'custom',
-				custom: images.battery[30],
-				customWidth: iconDims.battery.x,
-				customHeight: iconDims.battery.y,
+				...commonBatteryProps,
+				custom: images.battery.thirty,
 			}),
 			low: graphics.icon({
-				width: image.width,
-				height: image.height,
-				offsetX: iconOffset.battery.x,
-				offsetY: iconOffset.battery.y,
-				type: 'custom',
+				...commonBatteryProps,
 				custom: images.battery.low,
-				customWidth: iconDims.battery.x,
-				customHeight: iconDims.battery.y,
 			}),
 		},
 		muted: graphics.icon({
-			width: image.width,
-			height: image.height,
+			...commonIconProps,
 			offsetX: iconOffset.mute.x,
 			offsetY: iconOffset.mute.y,
-			type: 'custom',
 			custom: images.muted,
 			customWidth: iconDims.mute.x,
 			customHeight: iconDims.mute.y,
 		}),
 		encrypt: graphics.icon({
-			width: image.width,
-			height: image.height,
+			...commonIconProps,
 			offsetX: iconOffset.encrypt.x,
 			offsetY: iconOffset.encrypt.y,
-			type: 'custom',
 			custom: images.encrypt,
 			customWidth: iconDims.encrypt.x,
 			customHeight: iconDims.encrypt.y,
@@ -274,7 +259,7 @@ function calcBarMeterDefaults(orientation, image) {
 export async function buildEM6000icon(channel, metering, image, meteringOptions, graphicOptions, orientation) {
 	let elements = []
 	const meterDefault = calcBarMeterDefaults(orientation, image)
-	const icons = await buildIcons(orientation, image, meteringOptions)
+	const icons = await buildIcons(orientation, image, meteringOptions, graphicOptions)
 	let offset = calcOffset(orientation, image)
 
 	if (meteringOptions.includes('rf')) {
