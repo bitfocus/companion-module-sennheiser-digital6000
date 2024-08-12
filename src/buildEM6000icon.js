@@ -347,10 +347,10 @@ export async function buildEM6000icon(channel, metering, image, meteringOptions,
 		}
 		offset = offsetStep(offset)
 	}
-	if (graphicOptions.includes('mute') && (channel.audio_mute)) {
+	if (graphicOptions.includes('mute') && channel.audio_mute) {
 		elements.push(icons.muted)
 	}
-	if (graphicOptions.includes('encryption') && (channel.encryption)) {
+	if (graphicOptions.includes('encryption') && channel.encryption) {
 		elements.push(icons.encrypt)
 	}
 	if (graphicOptions.includes('battery')) {
