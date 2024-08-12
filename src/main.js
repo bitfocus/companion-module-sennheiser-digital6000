@@ -12,6 +12,7 @@ import * as digital6000 from './digital6000.js'
 import * as feedbackChecks from './feedbackChecks.js'
 import * as parseResponse from './parseResponse.js'
 import * as queue from './queue.js'
+import * as statusCheck from './statusCheck.js'
 import * as subscriptions from './subscriptions.js'
 import * as udp from './udp.js'
 
@@ -26,6 +27,7 @@ class Digital6000 extends InstanceBase {
 			...feedbackChecks,
 			...parseResponse,
 			...queue,
+			...statusCheck,
 			...subscriptions,
 			...udp,
 		})
@@ -33,13 +35,16 @@ class Digital6000 extends InstanceBase {
 	}
 
 	async init(config) {
+		this.currentStatus = {
+			status: 'unknown',
+			label: '',
+		}
 		this.configUpdated(config)
 	}
 	// When module gets deleted
 	async destroy() {
 		this.log('debug', `destroy ${this.id}`)
 		this.stopCmdQueue()
-		this.stopListeningTimer()
 		this.stopFeedbackChecks()
 		this.stopBlink()
 		this.stopFrame()
@@ -52,12 +57,11 @@ class Digital6000 extends InstanceBase {
 
 	async configUpdated(config) {
 		this.config = config
-		this.stopListeningTimer()
 		this.stopFeedbackChecks()
 		this.config.host = config.bonjour_host?.split(':')[0] || config.host
 		this.config.port = config.bonjour_host?.split(':')[1] || config.port
 		await this.cancelSubscriptions(this.config.device)
-		this.updateStatus(InstanceStatus.Connecting)
+		this.statusCheck(InstanceStatus.Connecting, '')
 		this.initDigital6000(this.config.device)
 		this.updateActions() // export actions
 		this.updateFeedbacks() // export feedbacks

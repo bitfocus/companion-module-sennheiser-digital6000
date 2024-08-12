@@ -25,7 +25,7 @@ export function parseResponse(msg) {
 		if (this.config.device !== this.d6000.device.identity.product) {
 			/* if device identity data present check it matches config */
 			this.log('warn', 'Config doesnt match device, updating config')
-			this.updateStatus(InstanceStatus.BadConfig, 'Device mismatch')
+			this.statusCheck(InstanceStatus.BadConfig, 'Device mismatch')
 			this.config.device = this.d6000.device.identity.product
 			this.saveConfig(this.config)
 			this.configUpdated(this.config)
@@ -33,13 +33,16 @@ export function parseResponse(msg) {
 	} catch {
 		/* do nothing if not present */
 	}
-	if (this.d6000.device.identity.product == choices.devices[0].id || this.d6000.device.identity.product == choices.devices[1].id) {
+	if (
+		this.d6000.device.identity.product == choices.devices[0].id ||
+		this.d6000.device.identity.product == choices.devices[1].id
+	) {
 		this.handleEM6000_data(data)
 	} else if (this.d6000.device.identity.product == choices.devices[2].id) {
 		this.handleL6000_data(data)
 	} else {
 		this.log('warn', `Unrecognised device! ${this.d6000.device.identity.product}`)
-		this.updateStatus(InstanceStatus.UnknownError, `Unrecognised device`)
+		this.statusCheck(InstanceStatus.UnknownError, `Unrecognised device`)
 		return
 	}
 }
@@ -47,7 +50,7 @@ export function parseResponse(msg) {
 export function handleEM6000_data(data) {
 	const responseKeys = Object.keys(data)
 	if (responseKeys.includes('device')) {
-		this.updateStatus(InstanceStatus.Ok)
+		this.statusCheck(InstanceStatus.Ok, '')
 		this.d6000.device.name = data.device?.name ?? this.d6000.device.name
 		this.d6000.device.language = data.device?.language ?? this.d6000.device.language
 		this.d6000.device.identity = { ...this.d6000.device.identity, ...data.device?.identity }
@@ -60,7 +63,7 @@ export function handleEM6000_data(data) {
 		this.variablesToUpdate = true
 	}
 	if (responseKeys.includes('sys')) {
-		this.updateStatus(InstanceStatus.Ok)
+		this.statusCheck(InstanceStatus.Ok, '')
 		this.d6000.sys.dante = { ...this.d6000.sys.dante, ...data.sys?.dante }
 		this.d6000.sys.wsm_master_cnt = data.sys?.wsm_master_cnt ?? this.d6000.sys.wsm_master_cnt
 		this.d6000.sys.clock_frequency_measured =
@@ -79,7 +82,7 @@ export function handleEM6000_data(data) {
 		this.variablesToUpdate = true
 	}
 	if (responseKeys.includes('osc')) {
-		this.updateStatus(InstanceStatus.Ok)
+		this.statusCheck(InstanceStatus.Ok, '')
 		this.d6000.osc.feature = { ...this.d6000.osc.feature, ...data.osc?.feature }
 		this.d6000.osc.state = { ...this.d6000.osc.state, ...data.osc?.state }
 		this.d6000.osc.limits = data.osc?.limits ?? this.d6000.osc.limits
@@ -89,7 +92,7 @@ export function handleEM6000_data(data) {
 		this.d6000.osc.error = data.osc?.error ?? this.d6000.osc.error
 	}
 	if (responseKeys.includes('audio')) {
-		this.updateStatus(InstanceStatus.Ok)
+		this.statusCheck(InstanceStatus.Ok, '')
 		this.d6000.audio.out1 = { ...this.d6000.audio.out1, ...data.audio?.out1 }
 		this.d6000.audio.out2 = { ...this.d6000.audio.out2, ...data.audio?.out2 }
 		this.addFeedbacksToQueue(['recieverStatus'])
@@ -97,7 +100,7 @@ export function handleEM6000_data(data) {
 	}
 	for (let i = 1; i <= 2; i++) {
 		if (responseKeys.includes(`rx${i}`)) {
-			this.updateStatus(InstanceStatus.Ok)
+			this.statusCheck(InstanceStatus.Ok, '')
 			this.d6000[`rx${i}`].scan = { ...this.d6000[`rx${i}`].scan, ...data[`rx${i}`]?.scan }
 
 			this.d6000[`rx${i}`].walktest = { ...this.d6000[`rx${i}`].walktest, ...data[`rx${i}`].walktest }
@@ -150,7 +153,7 @@ export function handleEM6000_data(data) {
 			this.variablesToUpdate = true
 		}
 		if (responseKeys.includes('mm')) {
-			this.updateStatus(InstanceStatus.Ok)
+			this.statusCheck(InstanceStatus.Ok, '')
 			this.d6000.mm[`ch${i}`].RF1 =
 				convert_RF_to_dBm(data.mm[i - 1][0]) !== null
 					? convert_RF_to_dBm(data.mm[i - 1][0])
@@ -181,7 +184,7 @@ export function handleEM6000_data(data) {
 export function handleL6000_data(data) {
 	const responseKeys = Object.keys(data)
 	if (responseKeys.includes('device')) {
-		this.updateStatus(InstanceStatus.Ok)
+		this.statusCheck(InstanceStatus.Ok, '')
 		this.d6000.device.name = data.device?.name ?? this.d6000.device.name
 		this.d6000.device.language = data.device?.language ?? this.d6000.device.language
 
@@ -194,7 +197,7 @@ export function handleL6000_data(data) {
 			for (const warning of warningsL6000) {
 				if (this.d6000.device.warnings.includes(warning.id)) {
 					this.log('warn', warning.label)
-					this.updateStatus(InstanceStatus.UnknownWarning, warning.label)
+					this.statusCheck(InstanceStatus.UnknownWarning, warning.label)
 				}
 			}
 			this.addFeedbacksToQueue(['slotWarning', 'fanWarning', 'deviceHot', 'batteryStatus'])
@@ -202,7 +205,7 @@ export function handleL6000_data(data) {
 		this.variablesToUpdate = true
 	}
 	if (responseKeys.includes('osc')) {
-		this.updateStatus(InstanceStatus.Ok)
+		this.statusCheck(InstanceStatus.Ok, '')
 		this.d6000.osc.feature = { ...this.d6000.osc.feature, ...data.osc?.feature }
 		this.d6000.osc.state = { ...this.d6000.osc.state, ...data.osc?.state }
 		this.d6000.osc.limits = data.osc.limits ?? this.d6000.osc.limits
@@ -213,7 +216,7 @@ export function handleL6000_data(data) {
 	}
 	for (let i = 1; i <= 4; i++) {
 		if (responseKeys.includes(`slot${i}`)) {
-			this.updateStatus(InstanceStatus.Ok)
+			this.statusCheck(InstanceStatus.Ok, '')
 			if (data[`slot${i}`].type !== undefined) {
 				for (const type of choices.type) {
 					if (data[`slot${i}`].type === type.id) {
@@ -274,7 +277,7 @@ export function handleL6000_data(data) {
 						this.d6000[`slot${i}`][`subslot${j}`].accu_parameter.time_to_full_m =
 							data[`slot${i}`][`subslot${j}`].accu_parameter[11]
 					} catch {
-						this.updateStatus(InstanceStatus.UnknownWarning)
+						this.statusCheck(InstanceStatus.UnknownWarning, '')
 					}
 				}
 				this.d6000[`slot${i}`][`subslot${j}`].led =

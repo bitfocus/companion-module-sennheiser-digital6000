@@ -1,5 +1,3 @@
-import { InstanceStatus } from '@companion-module/base'
-
 const msg_delay = 5
 
 export function addCmdtoQueue(cmd) {
@@ -38,29 +36,5 @@ export function stopCmdQueue() {
 	}
 	if (this.cmdQueue) {
 		delete this.cmdQueue
-	}
-}
-
-export function startListeningTimer() {
-	if (this.listenTimer) {
-		clearTimeout(this.listenTimer)
-	}
-	this.listenTimer = setTimeout(() => {
-		this.listening()
-	}, 4 * this.config.interval)
-}
-
-export function listening() {
-	if (this.listenTimer) {
-		clearTimeout(this.listenTimer)
-	}
-	this.updateStatus(InstanceStatus.ConnectionFailure, `No data for over ${4 * this.config.interval} ms`)
-	this.log('warn', `UDP Socket listening. No data recieved for at least ${4 * this.config.interval} ms`)
-}
-
-export function stopListeningTimer() {
-	if (this.listenTimer) {
-		clearTimeout(this.listenTimer)
-		delete this.listenTimer
 	}
 }
