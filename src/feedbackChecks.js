@@ -1,5 +1,5 @@
 import { InstanceStatus } from '@companion-module/base'
-//bulk check feedbacks once per polling invterval to reduce load on host
+//bulk check feedbacks & update variables once per polling invterval to reduce load on host
 export function startFeedbackChecks(interval) {
 	if (this.feedbackTimer) {
 		clearTimeout(this.feedbackTimer)
@@ -45,13 +45,15 @@ export function stopFeedbackChecks() {
 }
 
 export function addFeedbacksToQueue(feedbacks) {
-	if (!Array.isArray(feedbacks)) {
-		this.log('warn', `addFeedbacksToQueue must be passed an array ${feedbacks}`)
-		return
-	}
-	for (const fback of feedbacks) {
-		if (!this.feedbacksToUpdate.includes(fback)) {
-			this.feedbacksToUpdate.push(fback)
+	if (Array.isArray(feedbacks)) {
+		for (const fback of feedbacks) {
+			if (!this.feedbacksToUpdate.includes(fback)) {
+				this.feedbacksToUpdate.push(fback)
+			}
+		}
+	} else {
+		if (!this.feedbacksToUpdate.includes(feedbacks)) {
+			this.feedbacksToUpdate.push(feedbacks)
 		}
 	}
 }
