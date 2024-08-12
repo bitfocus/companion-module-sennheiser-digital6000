@@ -149,7 +149,7 @@ export default async function (self) {
 							break
 						case 'carrier':
 							var carrier = (Number(reciever.carrier) / 1000).toString()
-							out.text += !isNaN(Number(reciever.carrier)) ? carrier.padEnd(7, '0') + ' MHz\\n' : '---.--- MHz\\n'
+							out.text += reciever.carrier !== null ? carrier.padEnd(7, '0') + ' MHz\\n' : '---.--- MHz\\n'
 							break
 						case 'outputLevel':
 							out.text +=
