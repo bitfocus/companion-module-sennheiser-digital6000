@@ -56,7 +56,7 @@ function returnBorder(colour, image) {
 	})
 }
 
-async function buildIcons(orientation, image) {
+async function buildIcons(orientation, image, meters) {
 	let images = {
 		battery: {
 			100: await graphics.parseBase64(iconsEM6000.battery[100]),
@@ -67,20 +67,58 @@ async function buildIcons(orientation, image) {
 		muted: await graphics.parseBase64(iconsEM6000.muted),
 		encrypt: await graphics.parseBase64(iconsEM6000.encrypt),
 	}
-	
+	const mtrCount = meters.includes('rf') ? meters.length + 1 : meters.length
+
 	const iconOffset = {
-		battery:{
-			x: orientation === 'left' ? 4 * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + 2 * bar.space + iconDims.encrypt.x : image.width - (4 * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + iconDims.encrypt.x + iconDims.battery.x + 2 * bar.space),
-			y:orientation === 'top' ?  4 * (bar.width + bar.space) + bar.offsetSide : orientation === 'bottom' ? image.height - (4 * (bar.width + bar.space) + bar.offsetSide + iconDims.battery.y): image.height - (bar.offsetBase + iconDims.battery.y),
+		battery: {
+			x:
+				orientation === 'left'
+					? mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + 2 * bar.space + iconDims.encrypt.x
+					: orientation === 'top' || orientation === 'bottom'
+					? image.width - (bar.offsetSide + iconDims.mute.x + iconDims.encrypt.x + iconDims.battery.x + 2 * bar.space)
+					: image.width -
+					  (mtrCount * (bar.width + bar.space) +
+							bar.offsetSide +
+							iconDims.mute.x +
+							iconDims.encrypt.x +
+							iconDims.battery.x +
+							2 * bar.space),
+			y:
+				orientation === 'top'
+					? mtrCount * (bar.width + bar.space) + bar.offsetSide
+					: orientation === 'bottom'
+					? image.height - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.battery.y)
+					: image.height - (bar.offsetBase + iconDims.battery.y),
 		},
 		mute: {
-			x: orientation === 'left' ? 4 * (bar.width + bar.space) + bar.offsetSide : image.width - (4 * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x),
-			y: orientation === 'top' ?  4 * (bar.width + bar.space) + bar.offsetSide : orientation === 'bottom' ? image.height - (4 * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.y): image.height - (bar.offsetBase + iconDims.mute.y),
+			x:
+				orientation === 'left'
+					? mtrCount * (bar.width + bar.space) + bar.offsetSide
+					: orientation === 'top' || orientation === 'bottom'
+					? image.width - (bar.offsetSide + iconDims.mute.x)
+					: image.width - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x),
+			y:
+				orientation === 'top'
+					? mtrCount * (bar.width + bar.space) + bar.offsetSide
+					: orientation === 'bottom'
+					? image.height - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.y)
+					: image.height - (bar.offsetBase + iconDims.mute.y),
 		},
 		encrypt: {
-			x: orientation === 'left' ? 4 * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + bar.space : image.width - (4 * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + bar.space + iconDims.encrypt.x),
-			y:  orientation === 'top' ?  4 * (bar.width + bar.space) + bar.offsetSide : orientation === 'bottom' ? image.height - (4 * (bar.width + bar.space) + bar.offsetSide + iconDims.encrypt.y): image.height - (bar.offsetBase + iconDims.encrypt.y),
-		}
+			x:
+				orientation === 'left'
+					? mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + bar.space
+					: orientation === 'top' || orientation === 'bottom'
+					? image.width - (bar.offsetSide + iconDims.mute.x + bar.space + iconDims.encrypt.x)
+					: image.width -
+					  (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x + bar.space + iconDims.encrypt.x),
+			y:
+				orientation === 'top'
+					? mtrCount * (bar.width + bar.space) + bar.offsetSide
+					: orientation === 'bottom'
+					? image.height - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.encrypt.y)
+					: image.height - (bar.offsetBase + iconDims.encrypt.y),
+		},
 	}
 	return {
 		battery: {
@@ -133,7 +171,7 @@ async function buildIcons(orientation, image) {
 			type: 'custom',
 			custom: images.muted,
 			customWidth: iconDims.mute.x,
-				customHeight: iconDims.mute.y,
+			customHeight: iconDims.mute.y,
 		}),
 		encrypt: graphics.icon({
 			width: image.width,
@@ -222,7 +260,10 @@ function calcBarMeterDefaults(orientation, image) {
 	return {
 		width: image.width,
 		height: image.height,
-		barLength: orientation === 'top' || orientation === 'bottom' ? image.width - bar.lengthOffset : image.height - bar.lengthOffset,
+		barLength:
+			orientation === 'top' || orientation === 'bottom'
+				? image.width - bar.lengthOffset
+				: image.height - bar.lengthOffset,
 		barWidth: bar.width,
 		type: orientation === 'top' || orientation === 'bottom' ? 'horizontal' : 'vertical',
 		opacity: 255,
@@ -233,7 +274,7 @@ function calcBarMeterDefaults(orientation, image) {
 export async function buildEM6000icon(channel, metering, image, meteringOptions, graphicOptions, orientation) {
 	let elements = []
 	const meterDefault = calcBarMeterDefaults(orientation, image)
-	const icons = await buildIcons(orientation, image)
+	const icons = await buildIcons(orientation, image, meteringOptions)
 	let offset = calcOffset(orientation, image)
 
 	if (meteringOptions.includes('rf')) {

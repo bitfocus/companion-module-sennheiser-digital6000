@@ -12,16 +12,16 @@ export const iconsEM6000 = {
 }
 
 export const iconDims = {
-    battery: {
-        x: 26,
-        y: 10,
-    },
-    mute: {
-        x: 9,
-        y: 10,
-    },
-    encrypt:{
-        x: 8,
-        y: 10,
-    }
+	battery: {
+		x: 26,
+		y: 10,
+	},
+	mute: {
+		x: 9,
+		y: 10,
+	},
+	encrypt: {
+		x: 8,
+		y: 10,
+	},
 }
