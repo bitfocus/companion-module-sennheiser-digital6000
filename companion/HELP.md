@@ -22,7 +22,7 @@ Reciever Status
 
 - **Boolean Feedbacks**
 
-AF Peak, Audio Mute, Active Status, Active Warning, Booster, Clock Source, Diversity, Encryption, RF Peak
+AF Peak, Audio Mute, Active Status, Active Warning, Booster, Clock Source, Diversity, Encryption, RF Peak, Test Tone Active
 
 #### L 6000
 
@@ -48,7 +48,7 @@ Level
 
 - **Recieve Channel**
 
-Active Bank, Active Channel, Carrier Frequency, Name, RF 1 Level, RF 2 Level, AF Level, LQI
+Active Bank, Active Channel, Carrier Frequency, Name, Test Tone Level, RF 1 Level, RF 2 Level, AF Level, LQI
 
 - **SKX Transmitter**
 
@@ -88,9 +88,7 @@ The following controls or feedbacks are not supported by the SSC API.
 
 #### EM 6000
 
-Transmission Mode (LR, LD). Command Mode. Tx Sync Settings (Name, Power LED Mode, RF Power).
-
-#### L 6000
+Transmission Mode (LR, LD). Command Mode. Tx Sync Settings: Name, Power LED Mode, RF Power.
 
 ### Release History
 

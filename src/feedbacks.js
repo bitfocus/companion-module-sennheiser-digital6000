@@ -70,6 +70,18 @@ export default async function (self) {
 				return self.d6000[`rx${options.reciever}`].active_status.includes(options.status)
 			},
 		}
+		feedbackDefinitions['testTone'] = {
+			name: 'Test Tone Active',
+			type: 'boolean',
+			label: 'Test Tone Active',
+			defaultStyle: styles.red,
+			options: [feedbackOptions.reciever],
+			callback: ({ options }) => {
+				return (
+					self.d6000[`rx${options.reciever}`].testtone !== null && self.d6000[`rx${options.reciever}`].testtone <= 0
+				)
+			},
+		}
 		feedbackDefinitions['afPeak'] = {
 			name: 'Audio Peak',
 			type: 'boolean',

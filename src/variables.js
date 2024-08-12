@@ -15,6 +15,7 @@ export default async function (self) {
 				{ variableId: `rx${i}_rf2`, name: `RX${i} RF2 (dBm)` },
 				{ variableId: `rx${i}_lqi`, name: `RX${i} LQI (%)` },
 				{ variableId: `rx${i}_af`, name: `RX${i} AF (dBFS)` },
+				{ variableId: `rx${i}_testtone`, name: `RX${i} Test Tone (dBFS)` },
 				{ variableId: `skx${i}_name`, name: `SKX${i} Name` },
 				{ variableId: `skx${i}_lowcut`, name: `SKX${i} Lowcut (Hz)` },
 				{ variableId: `skx${i}_gain`, name: `SKX${i} Gain (dB)` },

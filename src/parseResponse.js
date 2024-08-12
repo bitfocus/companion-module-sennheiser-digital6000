@@ -155,7 +155,14 @@ export function handleEM6000_data(data) {
 					: data[`rx${i}`].active_warnings
 			this.d6000[`rx${i}`].active_status =
 				data[`rx${i}`].active_status === undefined ? this.d6000[`rx${i}`].active_status : data[`rx${i}`].active_status
-			this.addFeedbacksToQueue(['audioMute', 'encryption', 'activeWarning', 'activeStatus', 'recieverStatus'])
+			this.addFeedbacksToQueue([
+				'audioMute',
+				'encryption',
+				'activeWarning',
+				'activeStatus',
+				'recieverStatus',
+				'testTone',
+			])
 			this.variablesToUpdate = true
 		}
 		if (responseKeys.includes('mm')) {
