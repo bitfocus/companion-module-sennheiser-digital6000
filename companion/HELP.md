@@ -22,7 +22,7 @@ Reciever Status
 
 - RF Meters (Yellow) range -100dBm to -50dBm. RF A always on top/left side regardless of orientation. Includes Diversity & Peak LEDs.
 - LQI Meter (Blue) range 0% to 100%
-- AF meter (Tri-colour) range -50dBFS to 0dBFS. Includes Signal Presence ( > -100dBFS ) and Peak LEDS.
+- AF meter (Tri-colour) range -50dBFS to 0dBFS. Includes Signal Presence ( > -100dBFS ) and Peak LEDs.
 
 - **Boolean Feedbacks**
 
