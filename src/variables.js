@@ -17,7 +17,7 @@ export default async function (self) {
 				{ variableId: `rx${i}_af`, name: `RX${i} AF (dBFS)` },
 				{ variableId: `rx${i}_testtone`, name: `RX${i} Test Tone (dBFS)` },
 				{ variableId: `skx${i}_name`, name: `SKX${i} Name` },
-				{ variableId: `skx${i}_type`, name: `SKX${i} Type` }
+				{ variableId: `skx${i}_type`, name: `SKX${i} Type` },
 				{ variableId: `skx${i}_lowcut`, name: `SKX${i} Lowcut (Hz)` },
 				{ variableId: `skx${i}_gain`, name: `SKX${i} Gain (dB)` },
 				{ variableId: `skx${i}_capsule`, name: `SKX${i} Capsule` },
