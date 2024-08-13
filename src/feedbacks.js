@@ -1,5 +1,3 @@
-//import { combineRgb } from '@companion-module/base'
-//import { graphics } from 'companion-module-utils'
 import { choices } from './consts.js'
 import { colours, feedbackOptions, styles } from './feedbackOptions.js'
 import { warningsL6000, warningsEM6000, activeStatusEM6000 } from './errors.js'

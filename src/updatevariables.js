@@ -14,6 +14,8 @@ export default async function (self) {
 			variableValues[`rx${i}_rf2`] = self.d6000.mm[`ch${i}`].RF2
 			variableValues[`rx${i}_lqi`] = self.d6000.mm[`ch${i}`].LQI
 			variableValues[`rx${i}_af`] = self.d6000.mm[`ch${i}`].AF
+			variableValues[`rx${i}_testtone`] =
+				self.d6000.mm[`ch${i}`].testtone === 1 ? 'Off' : self.d6000.mm[`ch${i}`].testtone
 			variableValues[`skx${i}_name`] = self.d6000[`rx${i}`].skx.name
 			variableValues[`skx${i}_lowcut`] = self.d6000[`rx${i}`].skx.lowcut
 			variableValues[`skx${i}_gain`] = self.d6000[`rx${i}`].skx.gain

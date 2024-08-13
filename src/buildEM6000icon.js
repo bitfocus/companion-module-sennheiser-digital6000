@@ -38,6 +38,17 @@ const meterColours = {
 	lqi: [{ size: 100, color: combineRgb(0, 0, 255), background: combineRgb(0, 0, 255), backgroundOpacity: 48 }],
 }
 
+const images = {
+	battery: {
+		full: await graphics.parseBase64(iconsEM6000.battery[100], { alpha: true }),
+		seventy: await graphics.parseBase64(iconsEM6000.battery[70], { alpha: true }),
+		thirty: await graphics.parseBase64(iconsEM6000.battery[30], { alpha: true }),
+		low: await graphics.parseBase64(iconsEM6000.battery.low, { alpha: true }),
+	},
+	muted: await graphics.parseBase64(iconsEM6000.muted, { alpha: true }),
+	encrypt: await graphics.parseBase64(iconsEM6000.encrypt, { alpha: true }),
+}
+
 function returnLed(type, x, y, image) {
 	return graphics.icon({
 		width: image.width,
@@ -63,16 +74,6 @@ function returnBorder(colour, image) {
 }
 
 async function buildIcons(orientation, image, meters, iconOptions) {
-	const images = {
-		battery: {
-			full: await graphics.parseBase64(iconsEM6000.battery[100], { alpha: true }),
-			seventy: await graphics.parseBase64(iconsEM6000.battery[70], { alpha: true }),
-			thirty: await graphics.parseBase64(iconsEM6000.battery[30], { alpha: true }),
-			low: await graphics.parseBase64(iconsEM6000.battery.low, { alpha: true }),
-		},
-		muted: await graphics.parseBase64(iconsEM6000.muted, { alpha: true }),
-		encrypt: await graphics.parseBase64(iconsEM6000.encrypt, { alpha: true }),
-	}
 	const mtrCount = meters.includes('rf') ? meters.length + 1 : meters.length
 	const xOffsetBat =
 		iconOptions.includes('mute') && iconOptions.includes('encryption')
@@ -88,8 +89,10 @@ async function buildIcons(orientation, image, meters, iconOptions) {
 			x:
 				orientation === 'left'
 					? mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetBat
-					: orientation === 'top' || orientation === 'bottom'
-					? image.width - (bar.offsetSide + xOffsetBat + iconDims.battery.x)
+					: orientation === 'top'
+					? image.width - (bar.lengthOffset - bar.offsetBase + xOffsetBat + iconDims.battery.x)
+					: orientation === 'bottom'
+					? bar.offsetBase + xOffsetBat
 					: image.width - (mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetBat + iconDims.battery.x),
 			y:
 				orientation === 'top'
@@ -102,8 +105,10 @@ async function buildIcons(orientation, image, meters, iconOptions) {
 			x:
 				orientation === 'left'
 					? mtrCount * (bar.width + bar.space) + bar.offsetSide
-					: orientation === 'top' || orientation === 'bottom'
-					? image.width - (bar.offsetSide + iconDims.mute.x)
+					: orientation === 'top'
+					? image.width - (bar.lengthOffset - bar.offsetBase + iconDims.mute.x)
+					: orientation === 'bottom'
+					? bar.offsetBase
 					: image.width - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x),
 			y:
 				orientation === 'top'
@@ -116,8 +121,10 @@ async function buildIcons(orientation, image, meters, iconOptions) {
 			x:
 				orientation === 'left'
 					? mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetEncrypt
-					: orientation === 'top' || orientation === 'bottom'
-					? image.width - (bar.offsetSide + xOffsetEncrypt + iconDims.encrypt.x)
+					: orientation === 'top'
+					? image.width - (bar.lengthOffset - bar.offsetBase + xOffsetEncrypt + iconDims.encrypt.x)
+					: orientation === 'bottom'
+					? bar.offsetBase + xOffsetEncrypt
 					: image.width - (mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetEncrypt + iconDims.encrypt.x),
 			y:
 				orientation === 'top'
