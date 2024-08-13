@@ -21,6 +21,15 @@
 	},
 	"legacyIds": [],
 	"manufacturer": "Sennheiser",
-	"products": ["EM 6000", "EM 6000 Dante", "L6000"],
-	"keywords": ["RF", "Radio Microphone"]
+	"products": ["EM 6000", "EM 6000 Dante", "L 6000"],
+	"keywords": ["RF", "Radio Microphone"],
+	"bonjourQueries": {
+		"bonjour_host": {
+			"type": "ssc",
+			"protocol": "udp",
+			"txt": {
+				"Model": "EM6000"
+			}
+		}
+	}
 }

@@ -4,37 +4,75 @@ import UpdateActions from './actions.js'
 import UpdateFeedbacks from './feedbacks.js'
 import UpdatePresets from './presets.js'
 import UpdateVariableDefinitions from './variables.js'
+import UpdateVariableValues from './updatevariables.js'
+import * as blink from './blink.js'
 import * as config from './config.js'
+import * as device from './device.js'
 import * as digital6000 from './digital6000.js'
+import * as feedbackChecks from './feedbackChecks.js'
+import * as parseResponse from './parseResponse.js'
+import * as queue from './queue.js'
+import * as statusCheck from './statusCheck.js'
+import * as subscriptions from './subscriptions.js'
 import * as udp from './udp.js'
 
 class Digital6000 extends InstanceBase {
 	constructor(internal) {
 		super(internal)
-		Object.assign(this, { ...config, ...digital6000, ...udp })
+		Object.assign(this, {
+			...blink,
+			...config,
+			...device,
+			...digital6000,
+			...feedbackChecks,
+			...parseResponse,
+			...queue,
+			...statusCheck,
+			...subscriptions,
+			...udp,
+		})
+		this.frame = 0
 	}
 
 	async init(config) {
+		this.currentStatus = {
+			status: 'unknown',
+			label: '',
+		}
 		this.configUpdated(config)
 	}
 	// When module gets deleted
 	async destroy() {
 		this.log('debug', `destroy ${this.id}`)
-		if (this.udp) {
-			this.udp.destroy()
-			delete this.udp
+		this.stopCmdQueue()
+		this.stopFeedbackChecks()
+		this.stopBlink()
+		this.stopFrame()
+		await this.cancelSubscriptions(this.config.device)
+		if (this.socket) {
+			this.socket.destroy()
+			delete this.socket
 		}
 	}
 
 	async configUpdated(config) {
 		this.config = config
-		this.updateStatus(InstanceStatus.Connecting)
+		this.stopFeedbackChecks()
+		this.config.host = config.bonjour_host?.split(':')[0] || config.host
+		this.config.port = config.bonjour_host?.split(':')[1] || config.port
+		await this.cancelSubscriptions(this.config.device)
+		this.statusCheck(InstanceStatus.Connecting, '')
 		this.initDigital6000(this.config.device)
 		this.updateActions() // export actions
 		this.updateFeedbacks() // export feedbacks
 		this.updatePresets() // export presets
 		this.updateVariableDefinitions() // export variable definitions
-		this.init_udp(this.config.host, this.config.port)
+		this.init_udp(this.config.host, this.config.port, this.config.interval)
+		if (this.socket) {
+			this.startCmdQueue()
+			this.checkDeviceIdentity()
+			this.setupInitialSubscriptions(this.config.device, this.config.interval)
+		}
 	}
 
 	updateActions() {
@@ -51,6 +89,9 @@ class Digital6000 extends InstanceBase {
 
 	updateVariableDefinitions() {
 		UpdateVariableDefinitions(this)
+	}
+	updateVariableValues() {
+		UpdateVariableValues(this)
 	}
 }
 
