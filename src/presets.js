@@ -31,6 +31,7 @@ export default async function (self) {
 									reciever: i,
 								},
 								delay: 0,
+								headline: `Identify Reciever ${i} `,
 							},
 						],
 						up: [],
@@ -46,16 +47,18 @@ export default async function (self) {
 							meters: feedbackChoices.metersDefault,
 							orientation: feedbackChoices.orientation[0].id,
 						},
+						headline: `Reciever ${i} Status`,
 					},
 					{
 						feedbackId: 'activeStatus',
 						options: {
 							reciever: i,
-							status: 'Identified',
+							status: `Identified`,
 						},
 						style: {
 							bgcolor: colours.darkblue,
 						},
+						headline: `Reciever ${i} Identified`,
 					},
 				],
 			}
@@ -89,6 +92,7 @@ export default async function (self) {
 										subslot: j,
 									},
 									delay: 0,
+									headline: `Identify Slot ${i}/${j}`,
 								},
 							],
 							up: [],
@@ -101,6 +105,7 @@ export default async function (self) {
 								slot: i,
 								subslot: j,
 							},
+							headline: `Battery Status Slot ${i}/${j}`,
 						},
 					],
 				}
@@ -141,6 +146,7 @@ export default async function (self) {
 						text: `Fan 1 Defect`,
 						size: 14,
 					},
+					headline: 'Fan 1 Defect',
 				},
 				{
 					feedbackId: 'fanWarning',
@@ -154,6 +160,7 @@ export default async function (self) {
 						text: `Fan 2 Defect`,
 						size: 14,
 					},
+					headline: 'Fan 2 Defect',
 				},
 				{
 					feedbackId: 'fanWarning',
@@ -167,6 +174,7 @@ export default async function (self) {
 						text: `Fan 3 Defect`,
 						size: 14,
 					},
+					headline: 'Fan 3 Defect',
 				},
 				{
 					feedbackId: 'fanWarning',
@@ -180,6 +188,7 @@ export default async function (self) {
 						text: `Fan 4 Defect`,
 						size: 14,
 					},
+					headline: 'Fan 4 Defect',
 				},
 				{
 					feedbackId: 'deviceHot',
@@ -191,6 +200,7 @@ export default async function (self) {
 						text: `Device Hot`,
 						size: 14,
 					},
+					headline: 'Device Hot',
 				},
 			],
 		}
