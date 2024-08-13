@@ -44,6 +44,7 @@ const images = {
 		seventy: await graphics.parseBase64(iconsEM6000.battery[70], { alpha: true }),
 		thirty: await graphics.parseBase64(iconsEM6000.battery[30], { alpha: true }),
 		low: await graphics.parseBase64(iconsEM6000.battery.low, { alpha: true }),
+		empty: await graphics.parseBase64(iconsEM6000.battery.empty, { alpha: true }),
 	},
 	muted: await graphics.parseBase64(iconsEM6000.muted, { alpha: true }),
 	encrypt: await graphics.parseBase64(iconsEM6000.encrypt, { alpha: true }),
@@ -163,6 +164,10 @@ async function buildIcons(orientation, image, meters, iconOptions) {
 			low: graphics.icon({
 				...commonBatteryProps,
 				custom: images.battery.low,
+			}),
+			empty: graphics.icon({
+				...commonBatteryProps,
+				custom: images.battery.empty,
 			}),
 		},
 		muted: graphics.icon({
@@ -369,6 +374,8 @@ export async function buildEM6000icon(channel, metering, image, meteringOptions,
 			elements.push(icons.battery[30])
 		} else if (channel.skx.battery.percent === 'low') {
 			elements.push(icons.battery.low)
+		} else {
+			elements.push(icons.battery.empty)
 		}
 	}
 

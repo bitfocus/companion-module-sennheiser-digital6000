@@ -125,7 +125,7 @@ export function setupInitialSubscriptions(device, interval) {
 				},
 			}
 			this.addCmdtoQueue(sub)
-			let msg = { [`rx${i}`]: { carrier: query, active_bank_channel: query } }
+			let msg = { [`rx${i}`]: { carrier: query, active_bank_channel: query, testtone: query } }
 			this.addCmdtoQueue(msg)
 			msg = { sys: { booster: query, brightness: query, clock: query, clock_frequency_measured: query } }
 			this.addCmdtoQueue(msg)

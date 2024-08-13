@@ -65,7 +65,7 @@ export const feedbackChoices = {
 		{ id: 'mute', label: 'Mute' },
 		{ id: 'warnings', label: 'Warnings (Borders)' },
 	],
-	iconDefault: ['battery', 'mute', 'warnings'],
+	iconDefault: ['battery', 'encryption', 'mute', 'warnings'],
 	orientation: [
 		{ id: 'left', label: 'Left' },
 		{ id: 'right', label: 'Right' },
