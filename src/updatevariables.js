@@ -17,6 +17,8 @@ export default async function (self) {
 			variableValues[`rx${i}_testtone`] = self.d6000[`rx${i}`].testtone === 1 ? 'Off' : self.d6000[`rx${i}`].testtone
 			variableValues[`skx${i}_name`] = self.d6000[`rx${i}`].skx.name
 			variableValues[`skx${i}_type`] = self.d6000[`rx${i}`].skx.type.type
+			variableValues[`skx${i}_limit_low`] = self.d6000[`rx${i}`].skx.type.low
+			variableValues[`skx${i}_limit_high`] = self.d6000[`rx${i}`].skx.type.high
 			variableValues[`skx${i}_lowcut`] = self.d6000[`rx${i}`].skx.lowcut
 			variableValues[`skx${i}_gain`] = self.d6000[`rx${i}`].skx.gain
 			variableValues[`skx${i}_capsule`] = self.d6000[`rx${i}`].skx.capsule

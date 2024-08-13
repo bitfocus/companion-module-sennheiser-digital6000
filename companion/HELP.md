@@ -56,7 +56,7 @@ Active Bank, Active Channel, Carrier Frequency, Name, Test Tone Level, RF 1 Leve
 
 - **SKX Transmitter**
 
-Battery - Percent, Battery - Time, Capsule, Gain, Lowcut, Name, Type
+Battery - Percent, Battery - Time, Capsule, Gain, Limit - Low, Limit - High, Lowcut, Name, Type
 
 - **System**
 
