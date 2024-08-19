@@ -5,8 +5,8 @@
 	"description": "Control the Digital 6000 Radio Microphone System",
 	"version": "0.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/phillipivan/companion-module-sennheiser-digital6000.git",
-	"bugs": "https://github.com/phillipivan/companion-module-sennheiser-digital6000/issues",
+	"repository": "git+https://github.com/bitfocus/companion-module-sennheiser-digital6000.git",
+	"bugs": "https://github.com/bitfocus/companion-module-sennheiser-digital6000/issues",
 	"maintainers": [
 		{
 			"name": "Phillip Ivan Pietruschka",
