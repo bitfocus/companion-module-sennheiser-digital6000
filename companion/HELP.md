@@ -116,6 +116,7 @@ AF meter (Tri-colour) range -50dBFS to 0dBFS. Includes Signal Presence ( > -100d
 - Type
 
 **Battery**
+
 - Capacity
 - Current
 - Cycle Count
