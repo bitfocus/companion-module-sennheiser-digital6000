@@ -10,6 +10,7 @@ export function getConfigFields() {
 			label: 'Bonjour Host',
 			width: 8,
 			regex: Regex.HOSTNAME,
+			isVisible: () => false,
 		},
 		{
 			type: 'textinput',
