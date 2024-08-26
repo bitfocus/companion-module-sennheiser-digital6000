@@ -24,12 +24,21 @@
 	"products": ["EM 6000", "EM 6000 Dante", "L 6000"],
 	"keywords": ["RF", "Radio Microphone"],
 	"bonjourQueries": {
-		"bonjour_host": {
-			"type": "ssc",
-			"protocol": "udp",
-			"txt": {
-				"Model": "EM6000"
+		"bonjour_host": [
+			{
+				"type": "ssc",
+				"protocol": "udp",
+				"txt": {
+					"Model": "EM6000"
+				}
+			},
+			{
+				"type": "ssc",
+				"protocol": "udp",
+				"txt": {
+					"Model": "L6000"
+				}
 			}
-		}
+		]
 	}
 }
