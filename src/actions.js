@@ -29,7 +29,7 @@ export default function (self) {
 				}
 				self.addCmdtoQueue(msg)
 			},
-			subscribe: ({ options }) => {
+			subscribe: () => {
 				const msg = {
 					sys: {
 						booster: query,
@@ -61,7 +61,7 @@ export default function (self) {
 				}
 				self.addCmdtoQueue(msg)
 			},
-			subscribe: ({ options }) => {
+			subscribe: () => {
 				const msg = {
 					sys: {
 						brightness: query,
@@ -239,8 +239,7 @@ export default function (self) {
 			callback: async ({ options }) => {
 				const channel = parseInt(await self.parseVariablesInString(options.channel))
 				if (isNaN(channel) || channel > limits.active_bank_channel.max || channel < limits.active_bank_channel.min) {
-					const channel = parseInt(await self.parseVariablesInString(options.channel))
-					self.log('warn', `rxActiveBankChannel passed an invalid variable ${carrier}. `)
+					self.log('warn', `rxActiveBankChannel passed an invalid variable ${options.channel}:${channel}. `)
 					return undefined
 				}
 				const msg = {
