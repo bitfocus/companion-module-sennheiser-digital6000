@@ -13,7 +13,7 @@ export function parseResponse(msg) {
 		} else if (data.osc.xid !== undefined) {
 			this.log(
 				'warn',
-				`Message recieved with unexpected xid. Expected ${this.id} Recieved ${data.osc.xid}\nFrom ${msg.toString()}`
+				`Message recieved with unexpected xid. Expected ${this.id} Recieved ${data.osc.xid}\nFrom ${msg.toString()}`,
 			)
 			return
 		}

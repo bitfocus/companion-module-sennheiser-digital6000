@@ -22,6 +22,6 @@ export function convert_LQI_to_percent(lqi) {
 }
 
 export function safeName(dirtyName) {
-	const regexpName = new RegExp(/[()[\]{}~`!@%&_\\\^:'".?]/g)
+	const regexpName = new RegExp(/[()[\]{}~`!@%&_\\^:'".?]/g)
 	return dirtyName.trim().replaceAll(regexpName, '').slice(0, 8)
 }

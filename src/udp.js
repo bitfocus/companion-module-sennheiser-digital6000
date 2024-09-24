@@ -5,7 +5,7 @@ export async function sendCommand(msg) {
 		if (msg.osc === undefined) {
 			msg.osc = { xid: this.id }
 		}
-		if (this.socket !== undefined && !this.socket.isDestoryed) {
+		if (this.socket !== undefined && !this.socket.isDestroyed) {
 			await this.socket
 				.send(JSON.stringify(msg))
 				.then(() => {

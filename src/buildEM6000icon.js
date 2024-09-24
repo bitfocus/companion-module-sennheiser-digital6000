@@ -80,10 +80,10 @@ async function buildIcons(orientation, image, meters, iconOptions) {
 		iconOptions.includes('mute') && iconOptions.includes('encryption')
 			? iconDims.mute.x + iconDims.encrypt.x + 2 * bar.space
 			: iconOptions.includes('mute')
-			? iconDims.mute.x + bar.space
-			: iconOptions.includes('encryption')
-			? iconDims.encrypt.x + bar.space
-			: 0
+				? iconDims.mute.x + bar.space
+				: iconOptions.includes('encryption')
+					? iconDims.encrypt.x + bar.space
+					: 0
 	const xOffsetEncrypt = iconOptions.includes('mute') ? iconDims.mute.x + bar.space : 0
 	const iconOffset = {
 		battery: {
@@ -91,48 +91,49 @@ async function buildIcons(orientation, image, meters, iconOptions) {
 				orientation === 'left'
 					? mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetBat
 					: orientation === 'top'
-					? image.width - (bar.lengthOffset - bar.offsetBase + xOffsetBat + iconDims.battery.x)
-					: orientation === 'bottom'
-					? bar.offsetBase + xOffsetBat
-					: image.width - (mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetBat + iconDims.battery.x),
+						? image.width - (bar.lengthOffset - bar.offsetBase + xOffsetBat + iconDims.battery.x)
+						: orientation === 'bottom'
+							? bar.offsetBase + xOffsetBat
+							: image.width - (mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetBat + iconDims.battery.x),
 			y:
 				orientation === 'top'
 					? mtrCount * (bar.width + bar.space) + bar.offsetSide
 					: orientation === 'bottom'
-					? image.height - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.battery.y)
-					: image.height - (bar.offsetBase + iconDims.battery.y),
+						? image.height - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.battery.y)
+						: image.height - (bar.offsetBase + iconDims.battery.y),
 		},
 		mute: {
 			x:
 				orientation === 'left'
 					? mtrCount * (bar.width + bar.space) + bar.offsetSide
 					: orientation === 'top'
-					? image.width - (bar.lengthOffset - bar.offsetBase + iconDims.mute.x)
-					: orientation === 'bottom'
-					? bar.offsetBase
-					: image.width - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x),
+						? image.width - (bar.lengthOffset - bar.offsetBase + iconDims.mute.x)
+						: orientation === 'bottom'
+							? bar.offsetBase
+							: image.width - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.x),
 			y:
 				orientation === 'top'
 					? mtrCount * (bar.width + bar.space) + bar.offsetSide
 					: orientation === 'bottom'
-					? image.height - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.y)
-					: image.height - (bar.offsetBase + iconDims.mute.y),
+						? image.height - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.mute.y)
+						: image.height - (bar.offsetBase + iconDims.mute.y),
 		},
 		encrypt: {
 			x:
 				orientation === 'left'
 					? mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetEncrypt
 					: orientation === 'top'
-					? image.width - (bar.lengthOffset - bar.offsetBase + xOffsetEncrypt + iconDims.encrypt.x)
-					: orientation === 'bottom'
-					? bar.offsetBase + xOffsetEncrypt
-					: image.width - (mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetEncrypt + iconDims.encrypt.x),
+						? image.width - (bar.lengthOffset - bar.offsetBase + xOffsetEncrypt + iconDims.encrypt.x)
+						: orientation === 'bottom'
+							? bar.offsetBase + xOffsetEncrypt
+							: image.width -
+								(mtrCount * (bar.width + bar.space) + bar.offsetSide + xOffsetEncrypt + iconDims.encrypt.x),
 			y:
 				orientation === 'top'
 					? mtrCount * (bar.width + bar.space) + bar.offsetSide
 					: orientation === 'bottom'
-					? image.height - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.encrypt.y)
-					: image.height - (bar.offsetBase + iconDims.encrypt.y),
+						? image.height - (mtrCount * (bar.width + bar.space) + bar.offsetSide + iconDims.encrypt.y)
+						: image.height - (bar.offsetBase + iconDims.encrypt.y),
 		},
 	}
 	const commonIconProps = {

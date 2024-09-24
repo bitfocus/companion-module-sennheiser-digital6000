@@ -24,7 +24,7 @@ export function startFeedbackChecks(interval) {
 			this.statusCheck(InstanceStatus.ConnectionFailure, `No data`)
 			this.log(
 				'warn',
-				`UDP Socket listening. No data recieved for at least ${this.quietPeriod * this.config.interval} ms`
+				`UDP Socket listening. No data recieved for at least ${this.quietPeriod * this.config.interval} ms`,
 			)
 		}
 	}

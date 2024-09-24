@@ -136,7 +136,7 @@ export default async function (self) {
 					feedback.image,
 					options.meters,
 					options.icons,
-					options.orientation
+					options.orientation,
 				)
 
 				if (iBuffer !== null) {

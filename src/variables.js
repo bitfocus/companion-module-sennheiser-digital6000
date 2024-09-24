@@ -24,7 +24,7 @@ export default async function (self) {
 				{ variableId: `skx${i}_gain`, name: `SKX${i} Gain (dB)` },
 				{ variableId: `skx${i}_capsule`, name: `SKX${i} Capsule` },
 				{ variableId: `skx${i}_battery_percent`, name: `SKX${i} Battery (%)` },
-				{ variableId: `skx${i}_battery_time`, name: `SKX${i} Battery Time` }
+				{ variableId: `skx${i}_battery_time`, name: `SKX${i} Battery Time` },
 			)
 		}
 		variableDefinitions.push(
@@ -32,7 +32,7 @@ export default async function (self) {
 			{ variableId: 'device_name', name: 'Device Name' },
 			{ variableId: 'sys_brightness', name: 'System Brightness' },
 			{ variableId: 'sys_clock', name: 'System Clock' },
-			{ variableId: 'sys_clock_frequency', name: 'System Clock Frequency' }
+			{ variableId: 'sys_clock_frequency', name: 'System Clock Frequency' },
 		)
 	} else if (self.config.device === choices.devices[2].id) {
 		//set L6000 variables
@@ -56,13 +56,13 @@ export default async function (self) {
 					{ variableId: `slot${i}_${j}_battery_cycle_count`, name: `Slot ${i}/${j} Battery Cycle Count` },
 					{ variableId: `slot${i}_${j}_battery_state_of_health`, name: `Slot ${i}/${j} State Of Health (%)` },
 					{ variableId: `slot${i}_${j}_battery_time_to_full_h`, name: `Slot ${i}/${j} Time to Full (H)` },
-					{ variableId: `slot${i}_${j}_battery_time_to_full_min`, name: `Slot ${i}/${j} Time to Full (Min)` }
+					{ variableId: `slot${i}_${j}_battery_time_to_full_min`, name: `Slot ${i}/${j} Time to Full (Min)` },
 				)
 			}
 		}
 		variableDefinitions.push(
 			{ variableId: 'device_version', name: 'Device Version' },
-			{ variableId: 'device_name', name: 'Device Name' }
+			{ variableId: 'device_name', name: 'Device Name' },
 		)
 	}
 

@@ -176,9 +176,12 @@ export function setupInitialSubscriptions(device, interval) {
 		},
 	}
 	this.addCmdtoQueue(sub)
-	this.subscriptionTimer = setTimeout(() => {
-		this.setupInitialSubscriptions(device, interval)
-	}, (subscriptions.lifetime - 1) * 1000)
+	this.subscriptionTimer = setTimeout(
+		() => {
+			this.setupInitialSubscriptions(device, interval)
+		},
+		(subscriptions.lifetime - 1) * 1000,
+	)
 }
 
 export async function cancelSubscriptions(device) {
