@@ -1,6 +1,6 @@
 {
 	"name": "sennheiser-digital6000",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"main": "src/main.js",
 	"type": "module",
 	"scripts": {
@@ -15,14 +15,18 @@
 		"url": "git+https://github.com/bitfocus/companion-module-sennheiser-digital6000.git"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.10.0",
-		"companion-module-utils": "~0.5.0"
+		"@companion-module/base": "~1.11.3",
+		"companion-module-utils": "~0.5.0",
+		"p-queue": "~8.0.1"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^2.0.4",
-		"eslint": "^9.11.0",
-		"prettier": "~3.3.3"
+		"@companion-module/tools": "^2.1.1",
+		"eslint": "^9.17.0",
+		"prettier": "~3.4.2"
+	},
+	"engines": {
+		"node": "^22.12"
 	},
 	"prettier": "@companion-module/tools/.prettierrc.json",
-	"packageManager": "yarn@4.5.0"
+	"packageManager": "yarn@4.5.3"
 }
