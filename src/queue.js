@@ -4,7 +4,7 @@ const queue = new PQueue({ concurrency: 1, interval: msg_delay, intervalCap: 1 }
 
 export async function addCmdtoQueue(cmd) {
 	if (cmd !== undefined && cmd instanceof Object) {
-		return await queue.add(async() => { 
+		return await queue.add(async () => {
 			return await this.sendCommand(cmd)
 		})
 	}

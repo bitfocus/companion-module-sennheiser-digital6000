@@ -67,7 +67,7 @@ export function setupInitialSubscriptions(device, interval) {
 				},
 			},
 		}
-		this.addCmdtoQueue(sub).catch(()=> {})
+		this.addCmdtoQueue(sub).catch(() => {})
 		sub = {
 			osc: {
 				state: {
