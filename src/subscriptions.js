@@ -67,7 +67,7 @@ export function setupInitialSubscriptions(device, interval) {
 				},
 			},
 		}
-		this.addCmdtoQueue(sub)
+		this.addCmdtoQueue(sub).catch(() => {})
 		sub = {
 			osc: {
 				state: {
@@ -83,7 +83,7 @@ export function setupInitialSubscriptions(device, interval) {
 				},
 			},
 		}
-		this.addCmdtoQueue(sub)
+		this.addCmdtoQueue(sub).catch(() => {})
 		for (let i = 1; i <= 2; i++) {
 			let sub = {
 				osc: {
@@ -103,7 +103,7 @@ export function setupInitialSubscriptions(device, interval) {
 					},
 				},
 			}
-			this.addCmdtoQueue(sub)
+			this.addCmdtoQueue(sub).catch(() => {})
 			sub = {
 				osc: {
 					state: {
@@ -118,17 +118,17 @@ export function setupInitialSubscriptions(device, interval) {
 					},
 				},
 			}
-			this.addCmdtoQueue(sub)
+			this.addCmdtoQueue(sub).catch(() => {})
 			sub = {
 				[`rx${i}`]: {
 					sync_settings: sync_settingsFields,
 				},
 			}
-			this.addCmdtoQueue(sub)
+			this.addCmdtoQueue(sub).catch(() => {})
 			let msg = { [`rx${i}`]: { carrier: query, active_bank_channel: query, testtone: query } }
-			this.addCmdtoQueue(msg)
+			this.addCmdtoQueue(msg).catch(() => {})
 			msg = { sys: { booster: query, brightness: query, clock: query, clock_frequency_measured: query } }
-			this.addCmdtoQueue(msg)
+			this.addCmdtoQueue(msg).catch(() => {})
 		}
 	} else if (device === choices.devices[2].id) {
 		//set L6000 subscriptions
@@ -145,7 +145,7 @@ export function setupInitialSubscriptions(device, interval) {
 					},
 				},
 			}
-			this.addCmdtoQueue(sub)
+			this.addCmdtoQueue(sub).catch(() => {})
 			sub = {
 				osc: {
 					state: {
@@ -158,9 +158,9 @@ export function setupInitialSubscriptions(device, interval) {
 					},
 				},
 			}
-			this.addCmdtoQueue(sub)
+			this.addCmdtoQueue(sub).catch(() => {})
 			sub = { [`slot${i}`]: { type: query } }
-			this.addCmdtoQueue(sub)
+			this.addCmdtoQueue(sub).catch(() => {})
 		}
 	}
 	let sub = {
@@ -175,7 +175,7 @@ export function setupInitialSubscriptions(device, interval) {
 			},
 		},
 	}
-	this.addCmdtoQueue(sub)
+	this.addCmdtoQueue(sub).catch(() => {})
 	this.subscriptionTimer = setTimeout(
 		() => {
 			this.setupInitialSubscriptions(device, interval)

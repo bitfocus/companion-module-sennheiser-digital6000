@@ -15,7 +15,7 @@ export default function (self) {
 						identify: query,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				return await self.addCmdtoQueue(msg)
 			},
 		}
 		ActionDefinitions['booster'] = {
@@ -27,15 +27,15 @@ export default function (self) {
 						booster: options.booster,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				return await self.addCmdtoQueue(msg)
 			},
-			subscribe: () => {
+			subscribe: async () => {
 				const msg = {
 					sys: {
 						booster: query,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				await self.addCmdtoQueue(msg)
 			},
 			learn: ({ options }) => {
 				return {
@@ -59,15 +59,15 @@ export default function (self) {
 						brightness: brightness,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				return await self.addCmdtoQueue(msg)
 			},
-			subscribe: () => {
+			subscribe: async () => {
 				const msg = {
 					sys: {
 						brightness: query,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				await self.addCmdtoQueue(msg)
 			},
 			learn: ({ options }) => {
 				return {
@@ -94,9 +94,9 @@ export default function (self) {
 						},
 					},
 				}
-				self.addCmdtoQueue(msg)
+				return await self.addCmdtoQueue(msg)
 			},
-			subscribe: ({ options }) => {
+			subscribe: async ({ options }) => {
 				const msg = {
 					audio: {
 						[`out${options.out}`]: {
@@ -104,7 +104,7 @@ export default function (self) {
 						},
 					},
 				}
-				self.addCmdtoQueue(msg)
+				await self.addCmdtoQueue(msg)
 			},
 			learn: ({ options }) => {
 				return {
@@ -123,15 +123,15 @@ export default function (self) {
 						audio_mute: options.mute,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				return await self.addCmdtoQueue(msg)
 			},
-			subscribe: ({ options }) => {
+			subscribe: async ({ options }) => {
 				const msg = {
 					[`rx${options.reciever}`]: {
 						audio_mute: query,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				await self.addCmdtoQueue(msg)
 			},
 			learn: ({ options }) => {
 				return {
@@ -149,15 +149,15 @@ export default function (self) {
 						encryption: options.encrypt,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				return await self.addCmdtoQueue(msg)
 			},
-			subscribe: ({ options }) => {
+			subscribe: async ({ options }) => {
 				const msg = {
 					[`rx${options.reciever}`]: {
 						encryption: query,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				await self.addCmdtoQueue(msg)
 			},
 			learn: ({ options }) => {
 				return {
@@ -180,15 +180,15 @@ export default function (self) {
 						name: name,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				return await self.addCmdtoQueue(msg)
 			},
-			subscribe: ({ options }) => {
+			subscribe: async ({ options }) => {
 				const msg = {
 					[`rx${options.reciever}`]: {
 						name: query,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				await self.addCmdtoQueue(msg)
 			},
 			learn: ({ options }) => {
 				return {
@@ -216,15 +216,15 @@ export default function (self) {
 						carrier: carrier,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				return await self.addCmdtoQueue(msg)
 			},
-			subscribe: ({ options }) => {
+			subscribe: async ({ options }) => {
 				const msg = {
 					[`rx${options.reciever}`]: {
 						carrier: query,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				await self.addCmdtoQueue(msg)
 			},
 			learn: ({ options }) => {
 				return {
@@ -247,15 +247,15 @@ export default function (self) {
 						active_bank_channel: [options.bank, channel],
 					},
 				}
-				self.addCmdtoQueue(msg)
+				return await self.addCmdtoQueue(msg)
 			},
-			subscribe: ({ options }) => {
+			subscribe: async ({ options }) => {
 				const msg = {
 					[`rx${options.reciever}`]: {
 						active_bank_channel: query,
 					},
 				}
-				self.addCmdtoQueue(msg)
+				await self.addCmdtoQueue(msg)
 			},
 			learn: ({ options }) => {
 				return {
@@ -323,7 +323,7 @@ export default function (self) {
 					msg[`rx${options.reciever}`].sync_settings.low_cut_frequency = options.low_cut_frequency
 					msg[`rx${options.reciever}`].sync_settings.ignore_low_cut_frequency = options.low_cut_frequency_ignore
 				}
-				self.addCmdtoQueue(msg)
+				return await self.addCmdtoQueue(msg)
 			},
 			subscribe: async ({ options }) => {
 				const msg = {
@@ -342,7 +342,7 @@ export default function (self) {
 						},
 					},
 				}
-				self.addCmdtoQueue(msg)
+				await self.addCmdtoQueue(msg)
 			},
 			learn: ({ options }) => {
 				return {
@@ -373,7 +373,7 @@ export default function (self) {
 						},
 					},
 				}
-				self.addCmdtoQueue(msg)
+				return await self.addCmdtoQueue(msg)
 			},
 		}
 	}

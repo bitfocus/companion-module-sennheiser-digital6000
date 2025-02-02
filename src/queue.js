@@ -1,40 +1,23 @@
+import PQueue from 'p-queue'
 const msg_delay = 5
+const queue = new PQueue({ concurrency: 1, interval: msg_delay, intervalCap: 1 })
 
-export function addCmdtoQueue(cmd) {
+export async function addCmdtoQueue(cmd) {
 	if (cmd !== undefined && cmd instanceof Object) {
-		this.cmdQueue.push(cmd)
-		return true
+		return await queue.add(async () => {
+			return await this.sendCommand(cmd)
+		})
 	}
 	this.log('warn', `Invalid command: ${cmd}`)
 	return false
 }
 
-export function processCmdQueue() {
-	if (this.cmdQueue.length > 0) {
-		//dont send command if still waiting for response from last command
-		this.sendCommand(this.cmdQueue.shift())
-	}
-	this.cmdTimer = setTimeout(() => {
-		this.processCmdQueue()
-	}, msg_delay)
-}
-
 export function startCmdQueue() {
-	if (this.cmdTimer) {
-		clearTimeout(this.cmdTimer)
-	}
-	this.cmdQueue = []
-	this.cmdTimer = setTimeout(() => {
-		this.processCmdQueue()
-	}, msg_delay)
+	queue.clear()
+	queue.start()
 }
 
 export function stopCmdQueue() {
-	if (this.cmdTimer) {
-		clearTimeout(this.cmdTimer)
-		delete this.cmdTimer
-	}
-	if (this.cmdQueue) {
-		delete this.cmdQueue
-	}
+	queue.clear()
+	queue.pause()
 }
