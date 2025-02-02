@@ -160,4 +160,5 @@ Initial Release
 #### 1.0.6
 
 Support sequential actions
+
 Use Node 22
