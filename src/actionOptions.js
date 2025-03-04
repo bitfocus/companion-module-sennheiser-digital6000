@@ -65,7 +65,7 @@ export const actionOptions = {
 		type: 'textinput',
 		label: 'Level',
 		default: '0',
-		useVariables: true,
+		useVariables: { local: true },
 		tooltip: 'AF Output level range -10 to + 18',
 	},
 	relative: {
@@ -99,7 +99,7 @@ export const actionOptions = {
 		type: 'textinput',
 		label: `Brightness (${limits.brightness.units})`,
 		default: `${limits.brightness.max}`,
-		useVariables: true,
+		useVariables: { local: true },
 		tooltip: `Min: ${limits.brightness.min} Max: ${limits.brightness.max} Step: ${limits.brightness.step}`,
 	},
 	activeBank: {
@@ -114,7 +114,7 @@ export const actionOptions = {
 		type: 'textinput',
 		label: `Channel (${limits.active_bank_channel.units})`,
 		default: `${limits.active_bank_channel.min}`,
-		useVariables: true,
+		useVariables: { local: true },
 		tooltip: `Min: ${limits.active_bank_channel.min} Max: ${limits.active_bank_channel.max} Step: ${limits.active_bank_channel.step}`,
 	},
 	mute: {
@@ -134,7 +134,7 @@ export const actionOptions = {
 		type: 'textinput',
 		label: 'Name',
 		default: '',
-		useVariables: true,
+		useVariables: { local: true },
 		tooltip: 'Max Length: 8 Chars. Forbidden Characters: {}[]()~`!@$%^&_\\:\'".?',
 	},
 	carrier: {
@@ -142,7 +142,7 @@ export const actionOptions = {
 		type: 'textinput',
 		label: `Carrier (${limits.carrier.units})`,
 		default: `${limits.carrier.min}`,
-		useVariables: true,
+		useVariables: { local: true },
 		tooltip: `Range: ${limits.carrier.min} to ${limits.carrier.max}. Step: ${limits.carrier.step}${limits.carrier.units}`,
 	},
 	syncSettings: {

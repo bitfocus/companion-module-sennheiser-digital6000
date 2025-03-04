@@ -47,8 +47,8 @@ export default function (self) {
 		ActionDefinitions['brightness'] = {
 			name: 'Display Brightness',
 			options: [actionOptions.brightness],
-			callback: async ({ options }) => {
-				let brightness = parseInt(await self.parseVariablesInString(options.brightness))
+			callback: async ({ options }, context) => {
+				let brightness = parseInt(await context.parseVariablesInString(options.brightness))
 				if (isNaN(brightness)) {
 					this.log('warn', `Brightness passed a NaN ${brightness}`)
 					return undefined
@@ -79,8 +79,8 @@ export default function (self) {
 		ActionDefinitions['audioOutLevel'] = {
 			name: 'Audio Output Level',
 			options: [actionOptions.output, actionOptions.level, actionOptions.relative],
-			callback: async ({ options }) => {
-				let level = parseInt(await self.parseVariablesInString(options.level))
+			callback: async ({ options }, context) => {
+				let level = parseInt(await context.parseVariablesInString(options.level))
 				if (isNaN(level)) {
 					self.log('warn', `audioOutLevel must be passed a numbed`)
 					return undefined
@@ -169,8 +169,8 @@ export default function (self) {
 		ActionDefinitions['rxName'] = {
 			name: 'Reciever Name',
 			options: [actionOptions.reciever, actionOptions.name],
-			callback: async ({ options }) => {
-				const name = safeName(await self.parseVariablesInString(options.name))
+			callback: async ({ options }, context) => {
+				const name = safeName(await context.parseVariablesInString(options.name))
 				if (name === null) {
 					self.log('warn', `rxName has been passed an invalid name ${name}`)
 					return undefined
@@ -200,8 +200,8 @@ export default function (self) {
 		ActionDefinitions['rxCarrier'] = {
 			name: 'Reciever Carrier Frequency',
 			options: [actionOptions.reciever, actionOptions.carrier],
-			callback: async ({ options }) => {
-				const carrier = parseInt(await self.parseVariablesInString(options.name))
+			callback: async ({ options }, context) => {
+				const carrier = parseInt(await context.parseVariablesInString(options.name))
 				if (
 					isNaN(carrier) ||
 					carrier > limits.carrier.max ||
@@ -236,8 +236,8 @@ export default function (self) {
 		ActionDefinitions['rxActiveBankChannel'] = {
 			name: 'Reciever Bank & Channel',
 			options: [actionOptions.reciever, actionOptions.activeBank, actionOptions.activeChannel],
-			callback: async ({ options }) => {
-				const channel = parseInt(await self.parseVariablesInString(options.channel))
+			callback: async ({ options }, context) => {
+				const channel = parseInt(await context.parseVariablesInString(options.channel))
 				if (isNaN(channel) || channel > limits.active_bank_channel.max || channel < limits.active_bank_channel.min) {
 					self.log('warn', `rxActiveBankChannel passed an invalid variable ${options.channel}:${channel}. `)
 					return undefined
@@ -281,7 +281,7 @@ export default function (self) {
 				actionOptions.low_cut_frequency,
 				actionOptions.low_cut_frequency_ignore,
 			],
-			callback: async ({ options }) => {
+			callback: async ({ options }, context) => {
 				let msg = {
 					[`rx${options.reciever}`]: {
 						sync_settings: {
@@ -311,7 +311,7 @@ export default function (self) {
 					msg[`rx${options.reciever}`].sync_settings.ignore_display = options.display_ignore
 				}
 				if (options.syncSettings.includes(actionChoices.syncSettings[3].id)) {
-					const gain = parseInt(await self.parseVariablesInString(options.gain))
+					const gain = parseInt(await context.parseVariablesInString(options.gain))
 					if (isNaN(gain) || gain > limits.gain.max || gain < limits.gain.min || gain % limits.gain.step !== 0) {
 						self.log('warm', `rxSyncSettings has been passed an invalid gain setting ${gain}`)
 						return undefined
