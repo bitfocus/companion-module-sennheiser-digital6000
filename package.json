@@ -20,7 +20,7 @@
 		"p-queue": "~8.1.0"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^2.1.1",
+		"@companion-module/tools": "^2.6.1",
 		"eslint": "^9.21.0",
 		"prettier": "~3.5.3"
 	},
